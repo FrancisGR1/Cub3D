@@ -1,0 +1,8 @@
+# build objects
+*.o
+*.a
+*.out
+obj/
+
+# editor
+*.swp
