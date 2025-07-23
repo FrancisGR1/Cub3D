@@ -6,3 +6,7 @@ obj/
 
 # editor
 *.swp
+
+# files
+*.pdf
+*.md
