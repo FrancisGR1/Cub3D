@@ -98,6 +98,8 @@ fclean: clean
 
 re: fclean all
 
+fast: clean $(NAME)
+
 leaks: $(NAME)
 	valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full $(NAME) $(TEST_MAP)
 
