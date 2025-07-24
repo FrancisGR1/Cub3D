@@ -48,7 +48,7 @@ LIBFT_LINKS = -L$(LIBFT_DIR) -lft
 INCLUDES = -I$(SRC_DIR) -I$(LOGGER_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -I/usr/include
 
 # tests
-TEST_MAP = maps/2x2.cub
+TEST_MAP = assets/maps/subject_pdf_example.cub
 
 # Colors for pretty output
 RED = \033[0;31m
