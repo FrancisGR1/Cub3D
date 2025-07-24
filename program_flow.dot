@@ -1,0 +1,59 @@
+digraph ControlFlow {
+  rankdir=TB
+  node [shape=box, style=filled, fontname="Arial"];
+  edge [fontname="Arial", fontsize=10];
+  
+  // Color scheme
+  Start [label="Start", shape=ellipse, fillcolor="#90EE90"];
+  Exit [label="Exit", shape=ellipse, fillcolor="#FF6B6B"];
+  
+  // Main phases with different colors
+  Parse [label="Parse Map\n& Config", fillcolor="#87CEEB"];
+  Validate [label="Validate\nMap Rules", fillcolor="#DDA0DD"];
+  InitGraphics [label="Initialize\nMLX & Graphics", fillcolor="#F0E68C"];
+  GameLoop [label="Game Loop", shape=ellipse, fillcolor="#FFB347"];
+  
+  // Game loop internals
+  HandleInput [label="Handle\nUser Input", fillcolor="#98FB98"];
+  UpdatePlayer [label="Update Player\nPosition", fillcolor="#98FB98"];
+  Raycasting [label="Raycasting\nCalculation", fillcolor="#87CEFA"];
+  Render [label="Render Frame\nto Window", fillcolor="#F0E68C"];
+  
+  // Error handling
+  ParseError [label="Parse Error", fillcolor="#FF6B6B"];
+  ValidationError [label="Validation Error", fillcolor="#FF6B6B"];
+  
+  // Flow connections
+  Start -> Parse;
+  Parse -> ParseError [label="Invalid format", color="red"];
+  Parse -> Validate [label="Success", color="green"];
+  
+  Validate -> ValidationError [label="Invalid map", color="red"];
+  Validate -> InitGraphics [label="Valid", color="green"];
+  
+  InitGraphics -> GameLoop [label="Ready", color="green"];
+  
+  // Game loop cycle
+  GameLoop -> HandleInput;
+  HandleInput -> UpdatePlayer [label="Move/Rotate"];
+  HandleInput -> Exit [label="ESC/Close", color="red"];
+  UpdatePlayer -> Raycasting;
+  Raycasting -> Render;
+  Render -> GameLoop [label="Next frame", color="blue"];
+  
+  // Error exits
+  ParseError -> Exit [color="red"];
+  ValidationError -> Exit [color="red"];
+  InitGraphics -> Exit [label="MLX Error", color="red"];
+  
+  // Styling
+  {rank=same; ParseError, ValidationError}
+  
+  // Subgraph for main game loop
+  subgraph cluster_gameloop {
+    label="Main Game Loop";
+    style=dashed;
+    color=navy;
+    HandleInput; UpdatePlayer; Raycasting; Render;
+  }
+}
