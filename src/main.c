@@ -1,12 +1,26 @@
 #include "cub3d.h"
 
-int main(void)
+//@TEMP: delete loggers before evaluation
+int main(int argc, char **argv)
 {
-    logger_initConsoleLogger(stderr);
-    logger_setLevel(LOG_LEVEL);
-    LOG_INFO("console logging");
-    int i = 324;
-    LOG_WARN("TEST: %d", i);
-    LOG_FATAL("TEST: %d", i);
-    return 0;
+	t_map *map;
+	logger_initConsoleLogger(stderr);
+	logger_setLevel(LOG_LEVEL);
+	ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
+	if (argc != 2)
+	{
+		ft_fprintf(STDERR, "Error\n");
+		LOG_ERROR("Error: Need 1 arg: ./cub3d <path_to_map>\n");
+		return (1);
+	}
+	logger_exitFileLogger();
+	map = extract_map_data(argv[1]);
+	if (map == NULL)
+	{
+		return (1);
+	}
+	cleanup_map(map);
+	//initialization
+	//render
+	return 0;
 }

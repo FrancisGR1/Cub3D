@@ -1,6 +1,6 @@
 NAME = cub3d
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 OPTIMIZE = -O3
 
 # directories
@@ -10,13 +10,15 @@ LIBFT_DIR = libs/libft
 MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
-# log level defaults to fatal 
-LOG_LEVEL ?= 5
+# log level defaults to trace
+LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources
 SRC_FILES = \
-	    main.c
+	    main.c \
+	    parse.c \
+	    debug.c
 
 # need this for print debugging
 LOGGER_FILE = \
@@ -101,7 +103,7 @@ re: fclean all
 fast: clean $(NAME)
 
 leaks: $(NAME)
-	valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full $(NAME) $(TEST_MAP)
+	valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
 
 norm:
 	@norminette $(SRC_DIR) | grep -E "(Error|Warning)" || echo "$(GREEN)Norminette OK!$(RESET)"

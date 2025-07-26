@@ -7,7 +7,13 @@
 [submodule "libs/c-logger"]
 	path = libs/c-logger
 	url = git@github.com:FrancisGR1/c-logger.git
-[submodule "cub3d-tester"]
+#[submodule "cub3d-tester"]
+#	path = tests/cub3d-tester
+#	url = git@github.com:romslf/cub3d-tester.git
+#[submodule "tests/cub3D_leaks_maps_tester"]
+#	path = tests/cub3D_leaks_maps_tester
+#	url = git@github.com:mlaraki/cub3D_leaks_maps_tester.git
+[submodule "tests/cub3d-tester"]
 	path = tests/cub3d-tester
 	url = git@github.com:romslf/cub3d-tester.git
 [submodule "tests/cub3D_leaks_maps_tester"]

@@ -2,6 +2,7 @@
 *.o
 *.a
 *.out
+cub3d
 obj/
 
 # editor
@@ -10,3 +11,7 @@ obj/
 # files
 *.pdf
 *.md
+*.txt
+
+# folders
+learn/*
