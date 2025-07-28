@@ -43,10 +43,49 @@ typedef struct s_game
 # define LOG_LEVEL 5
 #endif
 
-// parse
-t_map *extract_map_data(char *file_path);
+// =====================
+// Data Extraction
+// =====================
+
+// initialization
+t_map *init_map(void);
+
+// data extraction
+t_map *extract_map_data(char *file_path, t_map *map);
+//-utils
+int map_value_from_char(char c);
+
+// validate
+//-map data
+bool is_valid_map_num(char c);
+bool is_valid_map_player_pos(char c);
+bool is_valid_texture_path(t_string *line);
+//-file
+int is_valid_file_path(const char *path);
+
+// rgb
+bool is_rgb(t_string *line);
+bool rgb_str_is_valid(t_string **colors, int colors_num);
+bool extract_rgb(t_map *map, t_string *id, t_string *colors);
+
+// free
 void cleanup_map(t_map *map);
 
+// =====================
+// MLX
+// =====================
+
+// =====================
+// Raycast
+// =====================
+
+// =====================
+// Render
+// =====================
+
+// =====================
+// User Input
+// =====================
 
 //debug
 void LOG_DEBUG_MAP_NUMS(t_map *map);
