@@ -14,11 +14,16 @@ void cleanup_map(t_map *map)
 	i = 0;
 	while (i < MAX_TEXTURES)
 	{
-		LOG_TRACE("Cleaning texture: %s", map->textures[i]->data);
-		if (map->textures[i] != NULL)
+		LOG_TRACE("Looking to clean texture at: %zu\n", i);
+		if (map->textures[i] != NULL && map->textures[i]->data != NULL)
+		{
+			LOG_TRACE("Cleaned texture: %zu: %s", i, map->textures[i]->data);
 			str_deallocate(map->textures[i]);
+		}
 		else
-			LOG_WARN("Tried to clean up null ptr");
+		{
+			LOG_WARN("Tried to clean up null ptr at: %zu", i);
+		}
 		i++;
 	}
 	i = 0;

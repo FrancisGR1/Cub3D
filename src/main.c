@@ -1,30 +1,6 @@
 #include "cub3d.h"
 
 
-t_map *init_map(void)
-{
-	t_map *map;
-
-	map = ft_calloc(sizeof(t_map), 1);
-	if (map == NULL)
-	{
-		LOG_FATAL("Error: failed allocation for map");
-		return (NULL);
-
-	}
-	map->rows = darr_init(sizeof(t_dynamic_array*), MAP_INITIAL_ROWS); 
-	if (map->rows == NULL)
-	{
-		LOG_FATAL("Error: failed allocation for map rows");
-		return (NULL);
-
-	}
-	map->player_position_is_set = false;
-	map->floor = (t_rgb){-1, -1, -1};  
-	map->ceiling = (t_rgb){-1, -1, -1};
-	return (map);
-}
-
 //@TEMP: delete loggers before evaluation
 int main(int argc, char **argv)
 {
@@ -43,7 +19,17 @@ int main(int argc, char **argv)
 	{
 		return (1);
 	}
-	extract_map_data(argv[1], map);
+	int fd = open(argv[1], O_RDONLY);
+	//@TODO: func para validar input
+	if (fd <= 2)
+	{
+		LOG_ERROR("Error: invalid fd: %d", fd);
+		close(fd);
+		cleanup_map(map);
+		return (1);
+	}
+	extract_map_data(fd, map);
+	close(fd);
 	cleanup_map(map);
 	//initialization
 	//render

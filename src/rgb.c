@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-bool is_rgb(t_string *line)
+bool is_rgb_id(t_string *line)
 {
 	return (str_starts_with(line, "F ")
 			|| str_starts_with(line, "C "));
@@ -39,12 +39,12 @@ bool extract_rgb(t_map *map, t_string *id, t_string *colors)
 	int split_nums;
 
 	LOG_DEBUG("Extracting RGBs: %s %s", id->data, colors->data);
-	if (ft_strncmp(id->data, "C", id->size) == 0)
+	if (ft_strncmp(id->data, "C", id->size) == 0 && map->ceiling.r == -1)
 	{
 		rgb_ptr = &map->ceiling;
 		LOG_DEBUG("Loading: Ceiling");
 	}
-	else if (ft_strncmp(id->data, "F", id->size) == 0)
+	else if (ft_strncmp(id->data, "F", id->size) == 0 && map->floor.r == -1)
 	{
 		rgb_ptr = &map->floor;
 		LOG_DEBUG("Loading: Floor");

@@ -5,34 +5,31 @@ static bool should_extract_colors(t_map *map);
 static bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 static bool extract_map_nums(t_map *map, t_string *line);
 
-t_map *extract_map_data(char *file_path, t_map *map)
+//@TODO: o bloco if else precisa de um refactor
+t_map *extract_map_data(int fd, t_map *map)
 {
-	int fd;
-
 	LOG_INFO("Extracting map info");
-	if (file_path == NULL)
-	{
-		LOG_FATAL("Error: file path is NULL");
-		return (NULL);
-	}
-	fd = open(file_path, O_RDONLY);
-	if (fd <= 2)
-	{
-		LOG_ERROR("Error: invalid fd: %d", fd);
-		return (NULL);
-	}
-	//@TODO: mudar a alocação e inicialização para fora, esta função deve receber
-	//não alocar o mapa
 	while (true)
 	{
 		//@TODO: fazer uma gnl que devolva t_string
 		char *l = get_next_line(fd);
+		LOG_DEBUG(BLU "Extracting from line: %s" RESET, l);
 		if (l == NULL)
+		{
+			LOG_DEBUG("Line is null");
 			break ;
+		}
 		t_string *line = str_create(l);
 		free(l);
 		str_trim(line);
-		if (should_extract_textures(map) || should_extract_colors(map))
+		if (line->size == 0)
+		{
+			//@FIXME: se estivers a processar o mapa,
+			//isto deve dar erro
+			str_deallocate(line);
+			continue;
+		}
+		else if (should_extract_textures(map) || should_extract_colors(map))
 		{
 
 			int split_count;
@@ -40,13 +37,16 @@ t_map *extract_map_data(char *file_path, t_map *map)
 			//@TODO: se fizer o todo abaixo não preciso disto
 			if (split_count != 2)
 			{
-				LOG_ERROR("Error: Wrong format: %zu strings instead of 2", split_strs);
+				//@BUG: com este input: 
+				//
+				LOG_ERROR("Error: Wrong format: %zu strings instead of 2", split_count);
 				str_array_deallocate(split_strs, split_count);
 				str_deallocate(line);
+				map->parse_error = true;
 				return (map);
 
 			}
-			if (is_texture_path(line))
+			if (is_valid_texture_path(line))
 			{
 				//@TODO: passar split_count em vez de strs[0] e [1]
 				if (!extract_texture(map, split_strs[0], split_strs[1]))
@@ -55,24 +55,27 @@ t_map *extract_map_data(char *file_path, t_map *map)
 					//@IDEA: em vez de repetir estas 3 linhas, posso usar uma variável booleana "error" e retornar no fim
 					str_array_deallocate(split_strs, split_count);
 					str_deallocate(line);
+					map->parse_error = true;
 					return (map);
 				}
 			}
-			else if (is_rgb(line))
+			else if (is_rgb_id(line))
 			{
 				if (!extract_rgb(map, split_strs[0], split_strs[1]))
 				{
-					LOG_ERROR("Error: color extraction failed. Line: %s", line);
+					LOG_ERROR("Error: color extraction failed. Line: %s", line->data);
 					str_array_deallocate(split_strs, split_count);
 					str_deallocate(line);
+					map->parse_error = true;
 					return (map);
 				}
 			}
 			else
 			{
-				LOG_ERROR("Error: is it a texture or color? Can't recognize this: %s", line);
+				LOG_ERROR("Error: what is this?: %s", line->data);
 				str_array_deallocate(split_strs, split_count);
 				str_deallocate(line);
+				map->parse_error = true;
 				return (map);
 			}
 			str_array_deallocate(split_strs, split_count);
@@ -84,12 +87,13 @@ t_map *extract_map_data(char *file_path, t_map *map)
 			{
 				LOG_ERROR("Error: something went wrong with map numbers extraction");
 				str_deallocate(line);
+				map->parse_error = true;
 				return (map);
 			}
 		}
 		str_deallocate(line);
 	}
-	close(fd);
+	//@TODO: os retornos anteriores também têm de fechar o ficheiro
 	LOG_INFO("Success: Map info extracted");
 	LOG_DEBUG("Textures:\n\t%s\n\t%s\n\t%s\n\t%s", map->textures[0]->data, map->textures[1]->data, map->textures[2]->data, map->textures[3]->data);
 	LOG_DEBUG("RGB: Ceiling: %d; Floor: %d", map->ceiling, map->floor);
@@ -162,7 +166,7 @@ static bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 	if (map->textures[idx] == NULL)
 	{
 		map->textures[idx] = str_create(texture_path->data);
-		LOG_DEBUG("Success: Loaded: %s %s", id->data, texture_path->data);
+		LOG_DEBUG("Success: Loaded: %d %s %s", idx, id->data, texture_path->data);
 	}
 	else
 	{

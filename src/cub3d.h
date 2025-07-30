@@ -5,9 +5,16 @@
 #include "logger.h"
 #include "mlx.h"
 
+
+//@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
+//de modo a evitar realocações, embora os maps que levem a isso sejam raros
 # define MAP_INITIAL_ROWS 30
 # define MAP_INITIAL_COLS 30
 
+//@QUESTION: é possível fazer isto?
+//eles não dizem no subject o tamanho máximo
+# define MAX_ROWS 100
+# define MAX_COLS 100
 typedef struct s_rgb
 {
 	int r;
@@ -31,6 +38,7 @@ typedef struct s_map
 	t_rgb ceiling;
 	t_dynamic_array *rows;
 	bool player_position_is_set;
+	bool parse_error;
 } t_map;
 
 typedef struct s_game
@@ -51,7 +59,7 @@ typedef struct s_game
 t_map *init_map(void);
 
 // data extraction
-t_map *extract_map_data(char *file_path, t_map *map);
+t_map *extract_map_data(int fd, t_map *map);
 //-utils
 int map_value_from_char(char c);
 
@@ -64,7 +72,7 @@ bool is_valid_texture_path(t_string *line);
 int is_valid_file_path(const char *path);
 
 // rgb
-bool is_rgb(t_string *line);
+bool is_rgb_id(t_string *line);
 bool rgb_str_is_valid(t_string **colors, int colors_num);
 bool extract_rgb(t_map *map, t_string *id, t_string *colors);
 
@@ -72,7 +80,7 @@ bool extract_rgb(t_map *map, t_string *id, t_string *colors);
 void cleanup_map(t_map *map);
 
 // =====================
-// MLX
+// Window
 // =====================
 
 // =====================
@@ -87,7 +95,17 @@ void cleanup_map(t_map *map);
 // User Input
 // =====================
 
-//debug
+// =====================
+// Utils
+// =====================
+
+//accessors
+int get_map_value(t_dynamic_array *map, int row, int col);
+void set_map_value(t_dynamic_array *map, int value, int row, int col);
+int get_map_size(t_dynamic_array *map);
+int get_map_row_size(t_dynamic_array *map, int row);
+
+//-debug
 void LOG_DEBUG_MAP_NUMS(t_map *map);
 
 #endif /*CUB3D_H*/

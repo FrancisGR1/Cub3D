@@ -16,9 +16,16 @@ CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources
 SRC_FILES = \
+	    accessors.c \
+	    data_extraction.c \
+	    data_extraction_utils.c \
+	    debug.c \
+	    file_is_valid.c \
+	    free.c  \
+	    init.c \
+	    is_valid.c \
 	    main.c \
-	    parse.c \
-	    debug.c
+	    rgb.c
 
 # need this for print debugging
 LOGGER_FILE = \
