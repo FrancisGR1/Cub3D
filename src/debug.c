@@ -14,5 +14,4 @@ void LOG_DEBUG_MAP_NUMS(t_map *map)
 		}
 		LOG_TRACE("---");
 	}
-	(void) map;
 }

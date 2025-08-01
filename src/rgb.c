@@ -78,6 +78,6 @@ bool extract_rgb(t_map *map, t_string *id, t_string *colors)
 	rgb_ptr->g = str_to_int(split_colors[1]);
 	rgb_ptr->b = str_to_int(split_colors[2]);
 	str_array_deallocate(split_colors, split_nums);
-	LOG_INFO("Success: RGBs extracted: %d %d %d", rgb_ptr->r, rgb_ptr->g, rgb_ptr->b);
+	LOG_DEBUG("Success: RGBs extracted: %d %d %d", rgb_ptr->r, rgb_ptr->g, rgb_ptr->b);
 	return (true);
 }

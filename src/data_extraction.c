@@ -5,7 +5,7 @@ static bool should_extract_colors(t_map *map);
 static bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 static bool extract_map_nums(t_map *map, t_string *line);
 
-//@TODO: o bloco if else precisa de um refactor
+//@TODO: refactor
 t_map *extract_map_data(int fd, t_map *map)
 {
 	LOG_INFO("Extracting map info");
@@ -46,7 +46,7 @@ t_map *extract_map_data(int fd, t_map *map)
 				return (map);
 
 			}
-			if (is_valid_texture_path(line))
+			if (starts_with_texture_id(line))
 			{
 				//@TODO: passar split_count em vez de strs[0] e [1]
 				if (!extract_texture(map, split_strs[0], split_strs[1]))
@@ -144,9 +144,9 @@ static bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 	size_t idx;
 
 	LOG_DEBUG("Extracting texture path: %s %s", id->data, texture_path->data);
-	if (is_valid_file_path(texture_path->data) != 1)
+	if (is_valid_file_path(texture_path->data) != 1 && !is_valid_extension(texture_path->data, TEXTURE_EXTENSION))
 	{
-		LOG_FATAL("Error: invalid texutre path");
+		LOG_FATAL("Error: invalid texture path: %s", texture_path->data);
 		return (false);
 	}
 	if      (ft_strncmp(id->data, "NO", id->size) == 0)
@@ -173,7 +173,7 @@ static bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 		LOG_WARN("Error: texture already loaded at index: %zu", idx);
 		return (false);
 	}
-	LOG_INFO("Success: Texture paths extracted");
+	LOG_DEBUG("Success: Texture paths extracted");
 	return (true);
 }
 

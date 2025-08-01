@@ -6,12 +6,12 @@ int main(int argc, char **argv)
 {
 	t_map *map;
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LOG_LEVEL);
+	logger_setLevel(LogLevel_INFO);
 	ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
 	if (argc != 2)
 	{
 		ft_fprintf(STDERR, "Error\n");
-		LOG_ERROR("Error: Need 1 arg: ./cub3d <path_to_map>\n");
+		LOG_ERROR("Error: ./cub3d <path_to_map>.cub\n");
 		return (1);
 	}
 	map = init_map();
@@ -31,7 +31,8 @@ int main(int argc, char **argv)
 	extract_map_data(fd, map);
 	close(fd);
 	cleanup_map(map);
-	//initialization
+	//window
 	//render
+	LOG_DEBUG("Success: exiting off main");
 	return 0;
 }

@@ -22,7 +22,7 @@ void cleanup_map(t_map *map)
 		}
 		else
 		{
-			LOG_WARN("Tried to clean up null ptr at: %zu", i);
+			LOG_TRACE("Skipping null ptr at: %zu", i);
 		}
 		i++;
 	}

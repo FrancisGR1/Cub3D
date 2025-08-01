@@ -15,6 +15,11 @@
 //eles não dizem no subject o tamanho máximo
 # define MAX_ROWS 100
 # define MAX_COLS 100
+
+
+# define TEXTURE_EXTENSION "xpm"
+# define MAP_DATA_EXTENSION "cub"
+
 typedef struct s_rgb
 {
 	int r;
@@ -67,9 +72,10 @@ int map_value_from_char(char c);
 //-map data
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
-bool is_valid_texture_path(t_string *line);
+bool starts_with_texture_id(t_string *line);
 //-file
 int is_valid_file_path(const char *path);
+bool is_valid_extension(const char *path, const char *extension);
 
 // rgb
 bool is_rgb_id(t_string *line);
