@@ -38,24 +38,24 @@ t_rgb g_expected_nothing = {-1, -1, -1};
 
 // Map layout
 int g_expected_map[][MAX_COLS_TEST] = {
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1},
-    {1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
-    {1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
-    {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
-    {1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
-    {1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,-1},
-    {1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
-    {1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,1,-1},
-    {1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,-1},
-    {1,1,0,0,0,0,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,78,0,1,1,1,-1},
-    {1,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1,0,0,0,1,-1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1},
-    {-1}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1},
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
+	{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
+	{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
+	{1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,-1},
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,-1},
+	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
+	{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,1,-1},
+	{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,-1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,-1},
+	{1,1,0,0,0,0,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,78,0,1,1,1,-1},
+	{1,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1,0,0,0,1,-1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1},
+	{-1}
 };
 
-#define EXPECTED_ROWS (sizeof(g_expected_map) / sizeof(g_expected_map[0]))
+#define EXPECTED_ROWS ((sizeof(g_expected_map) - 1) / sizeof(g_expected_map[0]))
 
 
 // Utils
@@ -78,12 +78,12 @@ MU_TEST(test_extract_map_data_textures_2_equal_ids)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	//@TODO este check mais os dois últimos antes de cleanup_map() podem
-	//ser só uma função
+	//@TODO este check mais os dois últimos antes de cleanup_map() 
+	//podem ser só uma função
 	mu_check(map->parse_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] != NULL);
-	mu_check(map->textures[WEST] == NULL); //dá erro a partir do west
+	mu_check(map->textures[WEST] == NULL); //@ASSUMPTION: dá erro a partir do west
 	mu_check(map->textures[EAST] == NULL);
 	test_extracted_rgb(g_expected_nothing, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling);
@@ -145,8 +145,33 @@ MU_TEST(test_extract_map_data_textures_wrong_path)
 	mu_check(map->player_position_is_set == false);
 	cleanup_map(map);
 }
-//@TODO:
-//MU_TEST(test_extract_map_data_textures_wrong_extension);
+MU_TEST(test_extract_map_data_textures_wrong_extension)
+{
+	LOG_INFO(BHBLU "textures_error_wrong_extension" RESET);
+	// testar 2 ids das iguais das texturas
+	const char *test_file = TEST_ASSETS_DIR "textures_error_wrong_extension.cub";
+	LOG_DEBUG("Testing with file: %s", test_file);
+	int fd = open(test_file, O_RDONLY);
+	if (fd <= 2)
+	{
+		fprintf(stderr, "Error: Can't find %s\n", test_file);
+		exit(1);
+	}
+	t_map *map = init_map();
+	extract_map_data(fd, map);
+	mu_check(map != NULL);
+	mu_check(map->parse_error == true);
+	mu_check(map->textures[NORTH] != NULL);
+	mu_check(map->textures[SOUTH] == NULL); //@ASSUMPTION: dá error a partir de SO
+	mu_check(map->textures[WEST] == NULL);
+	mu_check(map->textures[EAST] == NULL);
+	test_extracted_rgb(g_expected_nothing, map->floor);
+	test_extracted_rgb(g_expected_nothing, map->ceiling);
+	mu_check(map->rows->len == 0);
+	mu_check(map->player_position_is_set == false);
+	cleanup_map(map);
+
+}
 
 MU_TEST(test_extract_map_data_textures_more_than_2_strings)
 {
@@ -208,8 +233,7 @@ MU_TEST_SUITE(test_suite_error_extract_textures)
 	MU_RUN_TEST(test_extract_map_data_textures_2_equal_ids);
 	MU_RUN_TEST(test_extract_map_data_textures_wrong_id);
 	MU_RUN_TEST(test_extract_map_data_textures_wrong_path);
-	//@TODO: tenho de implementar o código para passar este teste:
-	//MU_RUN_TEST(test_extract_map_data_textures_wrong_extension);
+	MU_RUN_TEST(test_extract_map_data_textures_wrong_extension);
 	MU_RUN_TEST(test_extract_map_data_textures_more_than_2_strings);
 	MU_RUN_TEST(test_extract_map_data_textures_1_string);
 }
@@ -473,7 +497,6 @@ MU_TEST_SUITE(test_suite_textures_and_colors_mixed)
 	MU_RUN_TEST(test_extract_map_data_mixed_colors_in_between_textures);
 }
 
-
 // MAPA
 //file position
 MU_TEST(test_extract_map_data_map_at_beginning_of_file)
@@ -660,8 +683,6 @@ MU_TEST(test_extract_map_data_map_player_no_position)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	//@TODO: isto está mal - não devia dar erro;
-	//@FIXME: o programa não está a mandar erro quando falta a posição do jogador
 	mu_check(map->parse_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
@@ -672,7 +693,6 @@ MU_TEST(test_extract_map_data_map_player_no_position)
 }
 
 //size
-//@TODO: o que é um mapa demasiado pequeno?
 MU_TEST(test_extract_map_data_map_smallest)
 {
 	LOG_INFO(BHBLU "Test: map_data_map_smallest" RESET);
@@ -702,8 +722,6 @@ MU_TEST(test_extract_map_data_map_smallest)
 	cleanup_map(map);
 }
 
-//@TODO: o que é um mapa demasiado grande?
-//tenho de definir o tamanho se não o for definido por mim
 MU_TEST(test_extract_map_data_map_too_big)
 {
 	LOG_INFO(BHBLU "Test: map_data_map_too_big" RESET);
@@ -724,13 +742,10 @@ MU_TEST(test_extract_map_data_map_too_big)
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
 	mu_check(map->rows->len == EXPECTED_ROWS);
 	mu_check(map->player_position_is_set == false);
-	//@TODO: test extracted map
 	cleanup_map(map);
 }
 
 //shape
-//@TODO: criar array de ints congruentes com os novos mapas, mudar rows->len
-//todos estes maps são válidos
 MU_TEST(test_extract_map_data_map_non_rectangular1)
 {
 	LOG_INFO(BHBLU "Test: map_non_rectangular1" RESET);
@@ -789,24 +804,14 @@ MU_TEST(test_extract_map_data_map_non_rectangular2)
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 15); //@ASSUMPTION: mapa tem 15l
+	mu_check(map->rows->len == 5); //@ASSUMPTION: mapa tem 5l
 	mu_check(map->player_position_is_set == true);
 	int expected_map[][MAX_COLS_TEST] = {
 		{1, 1, 1, 1, 1,-1},
-		{1, 0, 0, 83, 0, 0, 0,-1},
-		{1, 0, 0, 0, 0, -1},
-		{1, 0, 0, 0, 1, -1},
+		{1, 0, 0, 83, 0, 0, 1,-1},
 		{1, 0, 0, 0, 1, -1},
 		{1, 0, 1, -1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1},
-		{1, 1},
+		{1, -1},
 		{-1}
 	};
 	test_extracted_map(expected_map, map->rows);
@@ -833,10 +838,6 @@ MU_TEST(test_extract_map_data_map_longest_rows)
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
 	mu_check(map->rows->len == 7); //@ASSUMPTION: este mapa tem 7l
 	mu_check(map->player_position_is_set == true);
-	//@TODO - NOW
-	//@BUG: porque é que isto não estã a passar os 1s todos da primeira linha?
-	//para no 8º
-	//-> é provável que tenha a ver com realocações no darr
 	test_extracted_map(g_expected_map_longest_rows, map->rows);
 	LOG_DEBUG_MAP_NUMS(map);
 	cleanup_map(map);
@@ -860,7 +861,7 @@ MU_TEST(test_extract_map_data_map_row_too_long)
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 2); //@ASSUMPTION: erro na 2ª linha
+	mu_check(map->rows->len == 1); //@ASSUMPTION: erro na 2ª linha
 	mu_check(map->player_position_is_set == false);
 	cleanup_map(map);
 }
@@ -914,11 +915,11 @@ MU_TEST(test_extract_map_data_map_too_many_rows)
 
 //walls
 //todos estes maps são inválidos
-//@TODO: não sei bem se este é inválido? só paredes?
+//@QUESTION: não sei bem se este é inválido? só paredes?
 MU_TEST(test_extract_map_data_map_only_walls)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_only_walls" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_only_walls.cub";
+	LOG_INFO(BHBLU "Test: map_only_walls" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_only_walls.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -929,19 +930,20 @@ MU_TEST(test_extract_map_data_map_only_walls)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false); //@ASSUMPTION: só paredes não dá erro
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
 	mu_check(map->rows->len == EXPECTED_ROWS);
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->player_position_is_set == true);
+	test_extracted_map(g_expected_map_only_walls, map->rows);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_no_walls)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_no_walls" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_no_walls.cub";
+	LOG_INFO(BHBLU "Test: map_no_walls" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_no_walls.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -952,19 +954,19 @@ MU_TEST(test_extract_map_data_map_no_walls)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
 	mu_check(map->rows->len == EXPECTED_ROWS);
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_middle_top)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_middle_top" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_middle_top.cub";
+	LOG_INFO(BHBLU "Test: map_open_middle_top" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_middle_top.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -975,19 +977,19 @@ MU_TEST(test_extract_map_data_map_open_middle_top)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 0);
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_middle_right)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_middle_right" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_middle_right.cub";
+	LOG_INFO(BHBLU "Test: map_open_middle_right" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_middle_right.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -998,19 +1000,19 @@ MU_TEST(test_extract_map_data_map_open_middle_right)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 6); //@ASSUMPTION: falha na linha 6
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_middle_left)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_middle_left" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_middle_left.cub";
+	LOG_INFO(BHBLU "Test: map_open_middle_left" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_middle_left.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1021,19 +1023,19 @@ MU_TEST(test_extract_map_data_map_open_middle_left)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 6); //@ASSUMPTION: falha na linha 6
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_middle_bottom)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_middle_bottom" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_middle_bottom.cub";
+	LOG_INFO(BHBLU "Test: map_open_middle_bottom" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_middle_bottom.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1044,19 +1046,19 @@ MU_TEST(test_extract_map_data_map_open_middle_bottom)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == EXPECTED_ROWS); //@ASSUMPTION: falha na última linha
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_top_right_corner)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_top_right_corner" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_top_right_corner.cub";
+	LOG_INFO(BHBLU "Test: map_open_top_right_corner" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_top_right_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1067,19 +1069,19 @@ MU_TEST(test_extract_map_data_map_open_top_right_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 1); //@ASSUMPTION: falha na 1a linha
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_top_left_corner)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_top_left_corner" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_top_left_corner.cub";
+	LOG_INFO(BHBLU "Test: map_open_top_left_corner" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_top_left_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1090,19 +1092,19 @@ MU_TEST(test_extract_map_data_map_open_top_left_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == 1); //@ASSUMPTION: falha na 1a linha
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_bottom_right_corner)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_bottom_right_corner" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_bottom_right_corner.cub";
+	LOG_INFO(BHBLU "Test: map_open_bottom_right_corner" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_bottom_right_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1113,19 +1115,19 @@ MU_TEST(test_extract_map_data_map_open_bottom_right_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == EXPECTED_ROWS); //@ASSUMPTION: falha na útlima linha
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
 MU_TEST(test_extract_map_data_map_open_bottom_left_corner)
 {
-	LOG_INFO(BHBLU "Test: map_data_map_open_bottom_left_corner" RESET);
-	const char *test_file = TEST_ASSETS_DIR "map_data_map_open_bottom_left_corner.cub";
+	LOG_INFO(BHBLU "Test: map_open_bottom_left_corner" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_open_bottom_left_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	int fd = open(test_file, O_RDONLY);
 	if (fd <= 2)
@@ -1136,12 +1138,12 @@ MU_TEST(test_extract_map_data_map_open_bottom_left_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parse_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
-	mu_check(map->rows->len == EXPECTED_ROWS); //@ASSUMPTION: falha na útlima linha
-	mu_check(map->player_position_is_set == false);
+	mu_check(map->rows->len == EXPECTED_ROWS);
+	mu_check(map->player_position_is_set == true);
 	cleanup_map(map);
 }
 
@@ -1221,58 +1223,50 @@ MU_TEST_SUITE(test_suite_map)
 {
 	//testar linhas de cores e texturas sem ordem lógica
 	//file position
-	//MU_RUN_TEST(test_extract_map_data_map_at_beginning_of_file);
-	//MU_RUN_TEST(test_extract_map_data_map_at_middle_of_file);
-	//@FIXME: devia dar erro
-	//as linhas vazias não podem existir
-	//na fase de extração do mapa
-	//MU_RUN_TEST(test_extract_map_data_map_with_empty_lines);
-	//MU_RUN_TEST(test_extract_map_data_map_divided_in_multiple_parts_throughout_file);
+	MU_RUN_TEST(test_extract_map_data_map_at_beginning_of_file);
+	MU_RUN_TEST(test_extract_map_data_map_at_middle_of_file);
+	MU_RUN_TEST(test_extract_map_data_map_with_empty_lines);
+	MU_RUN_TEST(test_extract_map_data_map_divided_in_multiple_parts_throughout_file);
 	//player
-	//MU_RUN_TEST(test_extract_map_data_map_with_multiple_player_positions);
-	//MU_RUN_TEST(test_extract_map_data_map_player_position_case_sensitivity);
-	//MU_RUN_TEST(test_extract_map_data_map_player_orientation_invalid_character);
-	//@FIXME - dá erro porque não considera
-	//"parse_error" se faltar a posição do jogador
-	//MU_RUN_TEST(test_extract_map_data_map_player_no_position);
-	////size
-	///@TODO NOW estes:
-	//MU_RUN_TEST(test_extract_map_data_map_smallest);
+	MU_RUN_TEST(test_extract_map_data_map_with_multiple_player_positions);
+	MU_RUN_TEST(test_extract_map_data_map_player_position_case_sensitivity);
+	MU_RUN_TEST(test_extract_map_data_map_player_orientation_invalid_character);
+	MU_RUN_TEST(test_extract_map_data_map_player_no_position);
+	//size
+	MU_RUN_TEST(test_extract_map_data_map_smallest);
 	MU_RUN_TEST(test_extract_map_data_map_longest_rows);
-	//MU_RUN_TEST(test_extract_map_data_map_row_too_long);
-	//MU_RUN_TEST(test_extract_map_data_map_max_rows);
-	//MU_RUN_TEST(test_extract_map_data_map_too_many_rows);
+	MU_RUN_TEST(test_extract_map_data_map_row_too_long);
+	MU_RUN_TEST(test_extract_map_data_map_max_rows);
+	MU_RUN_TEST(test_extract_map_data_map_too_many_rows);
 	////shape
-	//MU_RUN_TEST(test_extract_map_data_map_non_rectangular1);
-	//MU_RUN_TEST(test_extract_map_data_map_non_rectangular2);
-	////walls
-	///@TODO: fazer func que teste a validade das linhas
-	///durante o parsing
-	//MU_RUN_TEST(test_extract_map_data_map_only_walls);
-	//MU_RUN_TEST(test_extract_map_data_map_no_walls);
-	//MU_RUN_TEST(test_extract_map_data_map_open_middle_top);
-	//MU_RUN_TEST(test_extract_map_data_map_open_middle_right);
-	//MU_RUN_TEST(test_extract_map_data_map_open_middle_left);
-	//MU_RUN_TEST(test_extract_map_data_map_open_middle_bottom);
-	//MU_RUN_TEST(test_extract_map_data_map_open_top_right_corner);
-	//MU_RUN_TEST(test_extract_map_data_map_open_top_left_corner);
-	//MU_RUN_TEST(test_extract_map_data_map_open_bottom_right_corner);
-	//MU_RUN_TEST(test_extract_map_data_map_open_bottom_left_corner);
+	MU_RUN_TEST(test_extract_map_data_map_non_rectangular1);
+	MU_RUN_TEST(test_extract_map_data_map_non_rectangular2);
+	//walls
+	MU_RUN_TEST(test_extract_map_data_map_only_walls);
+	//@NOTE: nestes não é suposto dar erro no momento de extração 
+	MU_RUN_TEST(test_extract_map_data_map_no_walls);
+	MU_RUN_TEST(test_extract_map_data_map_open_middle_top);
+	MU_RUN_TEST(test_extract_map_data_map_open_middle_right);
+	MU_RUN_TEST(test_extract_map_data_map_open_middle_left);
+	MU_RUN_TEST(test_extract_map_data_map_open_middle_bottom);
+	MU_RUN_TEST(test_extract_map_data_map_open_top_right_corner);
+	MU_RUN_TEST(test_extract_map_data_map_open_top_left_corner);
+	MU_RUN_TEST(test_extract_map_data_map_open_bottom_right_corner);
+	MU_RUN_TEST(test_extract_map_data_map_open_bottom_left_corner);
 	//whitespaces
-	//MU_RUN_TEST(test_extract_map_data_map_one_space_in_each_line);
-	//MU_RUN_TEST(test_extract_map_data_map_multiple_spaces_in_each_line);
-	//MU_RUN_TEST(test_extract_map_data_map_tabs_in_each_line);
+	MU_RUN_TEST(test_extract_map_data_map_one_space_in_each_line);
+	MU_RUN_TEST(test_extract_map_data_map_multiple_spaces_in_each_line);
+	MU_RUN_TEST(test_extract_map_data_map_tabs_in_each_line);
 }
 
 int main()
 {
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(0);
+	logger_setLevel(LogLevel_ERROR);
 	// Grupos de Testes
-	//MU_RUN_TEST(test_suite_error_extract_textures);
-	//MU_RUN_TEST(test_suite_error_extract_colors);
-	//
-	//MU_RUN_TEST(test_suite_textures_and_colors_mixed);
+	MU_RUN_TEST(test_suite_error_extract_textures);
+	MU_RUN_TEST(test_suite_error_extract_colors);
+	MU_RUN_TEST(test_suite_textures_and_colors_mixed);
 	MU_RUN_TEST(test_suite_map);
 	MU_REPORT();
 	//@NOTE: limpo todos os fds abertos no fim

@@ -20,7 +20,6 @@ SRC_FILES = \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
-	    file_is_valid.c \
 	    free.c  \
 	    init.c \
 	    is_valid.c \

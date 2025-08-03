@@ -5,15 +5,17 @@ static bool should_extract_colors(t_map *map);
 static bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 static bool extract_map_nums(t_map *map, t_string *line);
 
-//@TODO: refactor
+//@TODO: very sloppy,
+//refactor!
 t_map *extract_map_data(int fd, t_map *map)
 {
+	static int debug_idx;
 	LOG_INFO("Extracting map info");
 	while (true)
 	{
 		//@TODO: fazer uma gnl que devolva t_string
 		char *l = get_next_line(fd);
-		LOG_DEBUG(BLU "Extracting from line: %s" RESET, l);
+		LOG_DEBUG(BLU "Extracting from line: %d: %s" RESET, debug_idx++, l);
 		if (l == NULL)
 		{
 			LOG_DEBUG("Line is null");
@@ -24,10 +26,17 @@ t_map *extract_map_data(int fd, t_map *map)
 		str_trim(line);
 		if (line->size == 0)
 		{
-			//@FIXME: se estivers a processar o mapa,
-			//isto deve dar erro
 			str_deallocate(line);
-			continue;
+			if (map->extraction_phase == TEXTURES_AND_COLORS)
+			{
+				continue;
+			}
+			else
+			{
+				LOG_ERROR("Error: found an empty line in MAP_VALUES phase");
+				map->parse_error = true;
+				return (map);
+			}
 		}
 		else if (should_extract_textures(map) || should_extract_colors(map))
 		{
@@ -83,6 +92,7 @@ t_map *extract_map_data(int fd, t_map *map)
 		}
 		else
 		{
+			map->extraction_phase = MAP_VALUES;
 			if (!extract_map_nums(map, line))
 			{
 				LOG_ERROR("Error: something went wrong with map numbers extraction");
@@ -93,7 +103,12 @@ t_map *extract_map_data(int fd, t_map *map)
 		}
 		str_deallocate(line);
 	}
-	//@TODO: os retornos anteriores também têm de fechar o ficheiro
+	map->extraction_phase = EXTRACTION_FINISHED;
+	if (map->player_position_is_set == false)
+	{
+		LOG_ERROR("Error: Player position not set");
+		map->parse_error = true;
+	}
 	LOG_INFO("Success: Map info extracted");
 	LOG_DEBUG("Textures:\n\t%s\n\t%s\n\t%s\n\t%s", map->textures[0]->data, map->textures[1]->data, map->textures[2]->data, map->textures[3]->data);
 	LOG_DEBUG("RGB: Ceiling: %d; Floor: %d", map->ceiling, map->floor);
@@ -185,11 +200,22 @@ static bool extract_map_nums(t_map *map, t_string *line)
 	size_t i;
 
 	LOG_DEBUG("Extracting map numbers from line: %s", line->data);
-	str_replace_all(line," ", "");
-	LOG_TRACE("After trimming whitespaces:       %s", line->data);
+	str_erase_if(line, ft_isspace, 0);
+	LOG_TRACE("After erasing whitespaces:        %s", line->data);
 	if (map->player_position_is_set == true && !str_is_digit(line))
 	{
 		LOG_ERROR("Error: string is not a digit");
+		return (false);
+	}
+	if (get_map_size(map->rows) == MAX_ROWS)
+	{
+		LOG_ERROR("Error: map rows at max rows: %zu", MAX_ROWS);
+		return (false);
+	}
+	//@ASSUMPTION: os espaços à esq., dir. e meio foram eliminados
+	if (line->size > MAX_COLS)
+	{
+		LOG_ERROR("Error: line size larger than max cols: %zu > %zu", line->size, MAX_COLS);
 		return (false);
 	}
 	cols = darr_init(sizeof(int), MAP_INITIAL_COLS); 
@@ -217,6 +243,6 @@ static bool extract_map_nums(t_map *map, t_string *line)
 		i++;
 	}
 	darr_append(map->rows, &cols);
-	LOG_DEBUG("Success: extracted map numbers from line into array");
+	LOG_DEBUG("Success: extracted map numbers from line into array at %zu size", map->rows->len);
 	return (true);
 }

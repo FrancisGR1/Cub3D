@@ -18,6 +18,7 @@ bool starts_with_texture_id(t_string *line)
 			|| str_starts_with(line, "EA ")));
 }
 
+//@TODO: substituir por bool
 int is_valid_file_path(const char *path)
 {
 	int fd;
@@ -54,4 +55,3 @@ bool is_valid_extension(const char *path, const char *extension)
 	is_intended_extension = ft_strncmp(find_dot_from_end, extension, ft_strlen(extension)) == 0;
 	return (is_valid_file_path(path) && has_one_dot && is_intended_extension);
 }
-

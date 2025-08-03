@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+int get_col_value(t_dynamic_array *row, int col)
+{
+	//@WARNING: proteger contra out of bound idx!
+    return (((int *)row->data)[col]);
+}
+
 int get_map_value(t_dynamic_array *map, int row, int col)
 {
 	//@WARNING: proteger contra out of bound idx!

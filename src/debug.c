@@ -10,7 +10,7 @@ void LOG_DEBUG_MAP_NUMS(t_map *map)
 		for (size_t j = 0; j < cols->len; j++)
 		{
 			int num = ((int *)cols->data)[j];
-			LOG_TRACE(" %d", num);
+			LOG_TRACE("[%d][%d] %d", i, j, num);
 		}
 		LOG_TRACE("---");
 	}

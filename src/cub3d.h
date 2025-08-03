@@ -36,12 +36,20 @@ enum e_textures
 	MAX_TEXTURES
 };
 
+enum e_extraction_phase
+{
+	TEXTURES_AND_COLORS = 0,
+	MAP_VALUES,
+	EXTRACTION_FINISHED,
+};
+
 typedef struct s_map
 {
 	t_string *textures[MAX_TEXTURES];
 	t_rgb floor;
 	t_rgb ceiling;
 	t_dynamic_array *rows;
+	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
 	bool parse_error;
 } t_map;
@@ -73,6 +81,7 @@ int map_value_from_char(char c);
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
+bool is_valid_row(t_map *map, t_string *line);
 //-file
 int is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
@@ -106,6 +115,7 @@ void cleanup_map(t_map *map);
 // =====================
 
 //accessors
+int get_col_value(t_dynamic_array *row, int col);
 int get_map_value(t_dynamic_array *map, int row, int col);
 void set_map_value(t_dynamic_array *map, int value, int row, int col);
 int get_map_size(t_dynamic_array *map);

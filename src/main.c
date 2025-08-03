@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 {
 	t_map *map;
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LogLevel_INFO);
+	logger_setLevel(LogLevel_ERROR);
 	ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
 	if (argc != 2)
 	{
