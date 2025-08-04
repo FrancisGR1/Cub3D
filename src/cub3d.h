@@ -81,7 +81,7 @@ int map_value_from_char(char c);
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
-bool is_valid_row(t_map *map, t_string *line);
+bool check_if_map_nums_are_valid(t_map *map);
 //-file
 int is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
