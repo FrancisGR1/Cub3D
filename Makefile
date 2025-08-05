@@ -10,8 +10,8 @@ LIBFT_DIR = libs/libft
 MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
-# log level defaults to nothing
-LOG_LEVEL ?= 7
+# log level default 
+LOG_LEVEL ?= 0
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources

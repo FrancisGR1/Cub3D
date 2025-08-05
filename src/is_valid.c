@@ -53,5 +53,5 @@ bool is_valid_extension(const char *path, const char *extension)
 	find_dot_from_end = ft_strrchr(path, '.');
 	has_one_dot = find_dot_from_beginning == find_dot_from_end;
 	is_intended_extension = ft_strncmp(find_dot_from_end, extension, ft_strlen(extension)) == 0;
-	return (is_valid_file_path(path) && has_one_dot && is_intended_extension);
+	return (has_one_dot && is_intended_extension);
 }

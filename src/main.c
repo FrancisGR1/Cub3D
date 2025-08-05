@@ -10,10 +10,9 @@ int main(int argc, char **argv)
 	logger_setLevel(LOG_LEVEL);
 	if (LOG_LEVEL < 7)
 		ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
-	if (argc != 2)
+	if (!is_valid_input(argc, argv))
 	{
 		ft_fprintf(STDERR, "Error\n");
-		LOG_ERROR("Error: ./cub3d <path_to_map>.cub\n");
 		return (1);
 	}
 	map = init_map();

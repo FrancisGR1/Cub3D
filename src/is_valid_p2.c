@@ -72,3 +72,24 @@ bool check_if_map_nums_are_valid(t_map *map)
 	LOG_INFO("Success: map nums are valid");
 	return (true);
 }
+
+bool is_valid_input(int argc, char **argv)
+{
+	LOG_DEBUG("Check: program input is valid?");
+	if (argc != 2)
+	{
+		LOG_ERROR("Error: ./cub3d <path_to_map>.cub\n");
+		return (false);
+	}
+	if (!is_valid_file_path(argv[1]))
+	{
+		return (false);
+	}
+	if (!is_valid_extension(argv[1], MAP_DATA_EXTENSION))
+	{
+		LOG_ERROR("Invalid extension: have \"%s\" and need \"%s\"", ft_strrchr(argv[1], '.'), MAP_DATA_EXTENSION);
+		return (false);
+	}
+	LOG_TRACE("Success: program input is valid");
+	return (true);
+}

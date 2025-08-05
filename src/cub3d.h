@@ -17,8 +17,9 @@
 # define MAX_COLS 100
 
 
-# define TEXTURE_EXTENSION "xpm"
-# define MAP_DATA_EXTENSION "cub"
+//@BUG: isto estava xpm e a funcionar? não devia ser .xpm?
+# define TEXTURE_EXTENSION ".xpm"
+# define MAP_DATA_EXTENSION ".cub"
 
 typedef struct s_rgb
 {
@@ -85,6 +86,8 @@ bool check_if_map_nums_are_valid(t_map *map);
 //-file
 int is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
+//-program args
+bool is_valid_input(int argc, char **argv);
 
 // rgb
 bool is_rgb_id(t_string *line);
