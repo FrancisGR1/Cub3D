@@ -1,6 +1,6 @@
 NAME = cub3d
 
-CFLAGS = -g #-Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g
 OPTIMIZE = -O3
 
 # directories
@@ -11,7 +11,7 @@ MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
 # log level default 
-LOG_LEVEL ?= 0
+LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources

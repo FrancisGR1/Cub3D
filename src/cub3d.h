@@ -17,7 +17,6 @@
 # define MAX_COLS 100
 
 
-//@BUG: isto estava xpm e a funcionar? não devia ser .xpm?
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
 
@@ -65,16 +64,18 @@ typedef struct s_game
 # define LOG_LEVEL 5
 #endif
 
-// =====================
+// ===============
 // Data Extraction
-// =====================
+// ===============
 
 // initialization
 t_map *init_map(void);
 
 // data extraction
 t_map *extract_map_data(int fd, t_map *map);
+t_map *extract_map_data_new(int fd, t_map *map);
 //-utils
+bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 int map_value_from_char(char c);
 
 // validate
@@ -97,25 +98,25 @@ bool extract_rgb(t_map *map, t_string *id, t_string *colors);
 // free
 void cleanup_map(t_map *map);
 
-// =====================
+// ======
 // Window
-// =====================
+// ======
 
-// =====================
+// =======
 // Raycast
-// =====================
+// =======
 
-// =====================
+// ======
 // Render
-// =====================
+// ======
 
-// =====================
+// ==========
 // User Input
-// =====================
+// ==========
 
-// =====================
+// =====
 // Utils
-// =====================
+// =====
 
 //accessors
 int get_col_value(t_dynamic_array *row, int col);

@@ -32,6 +32,7 @@ bool rgb_str_is_valid(t_string **colors, int colors_num)
 	return (true);
 }
 
+//@REFACTOR
 bool extract_rgb(t_map *map, t_string *id, t_string *colors)
 {
 	t_rgb *rgb_ptr;
@@ -55,6 +56,8 @@ bool extract_rgb(t_map *map, t_string *id, t_string *colors)
 		return  (false);
 	}
 	//dividr colors
+	//@FIXME: parece que pode processar várias vírgulas
+	//ex: 255,,,300,,,,,,,,,1
 	split_colors = str_split_using_char_as_delim(colors, ",", &split_nums);
 	if (split_colors == NULL)
 	{

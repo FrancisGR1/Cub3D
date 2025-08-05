@@ -190,7 +190,7 @@ MU_TEST(test_extract_map_data_textures_more_than_2_strings)
 	mu_check(map != NULL);
 	mu_check(map->parse_error == true);
 	mu_check(map->textures[NORTH] != NULL);
-	mu_check(map->textures[SOUTH] == NULL); //dá erro a partir de south
+	mu_check(map->textures[SOUTH] == NULL); //@ASSUMPTION: dá erro a partir de south
 	mu_check(map->textures[WEST] == NULL);
 	mu_check(map->textures[EAST] == NULL);
 	test_extracted_rgb(g_expected_nothing, map->floor);
@@ -1262,7 +1262,7 @@ MU_TEST_SUITE(test_suite_map)
 int main()
 {
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LogLevel_ERROR);
+	logger_setLevel(LogLevel_TRACE);
 	// Grupos de Testes
 	MU_RUN_TEST(test_suite_error_extract_textures);
 	MU_RUN_TEST(test_suite_error_extract_colors);
