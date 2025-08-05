@@ -42,16 +42,12 @@ int is_valid_file_path(const char *path)
 
 bool is_valid_extension(const char *path, const char *extension)
 {
-	bool has_one_dot;
 	bool is_intended_extension;
-	char *find_dot_from_beginning;
-	char *find_dot_from_end;
+	char *find_dot;
 
 	if (path == NULL)
 		return (false);
-	find_dot_from_beginning = ft_strchr(path, '.');
-	find_dot_from_end = ft_strrchr(path, '.');
-	has_one_dot = find_dot_from_beginning == find_dot_from_end;
-	is_intended_extension = ft_strncmp(find_dot_from_end, extension, ft_strlen(extension)) == 0;
-	return (has_one_dot && is_intended_extension);
+	find_dot = ft_strrchr(path, '.');
+	is_intended_extension = ft_strncmp(find_dot, extension, ft_strlen(extension)) == 0;
+	return (is_intended_extension);
 }
