@@ -159,10 +159,9 @@ static bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 	size_t idx;
 
 	LOG_DEBUG("Extracting texture path: %s %s", id->data, texture_path->data);
-	//@FIXME: is_valid_extension não está a verificar bem, maps com outras cenas passam
-	if (is_valid_file_path(texture_path->data) != 1 && !is_valid_extension(texture_path->data, TEXTURE_EXTENSION))
+	if (!is_valid_file_path(texture_path->data) || !is_valid_extension(texture_path->data, TEXTURE_EXTENSION))
 	{
-		LOG_FATAL("Error: invalid texture path: %s", texture_path->data);
+		LOG_FATAL("Error: invalid texture file: %s", texture_path->data);
 		return (false);
 	}
 	if      (ft_strncmp(id->data, "NO", id->size) == 0)

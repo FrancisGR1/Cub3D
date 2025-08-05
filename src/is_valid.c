@@ -35,7 +35,7 @@ int is_valid_file_path(const char *path)
 		LOG_ERROR("Couldn't open: %s", path);
 		return (0);
 	}
-	LOG_DEBUG("Success: valid: %s", path);
+	LOG_DEBUG("Success: valid file path: %s", path);
 	close(fd);
 	return (1);
 }
