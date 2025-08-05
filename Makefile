@@ -1,6 +1,6 @@
 NAME = cub3d
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -g #-Wall -Werror -Wextra -g
 OPTIMIZE = -O3
 
 # directories
@@ -10,7 +10,7 @@ LIBFT_DIR = libs/libft
 MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
-# log level defaults to trace
+# log level defaults to nothing
 LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
@@ -23,6 +23,7 @@ SRC_FILES = \
 	    free.c  \
 	    init.c \
 	    is_valid.c \
+	    is_valid_p2.c \
 	    main.c \
 	    rgb.c
 

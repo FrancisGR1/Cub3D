@@ -30,13 +30,15 @@ bool check_if_map_nums_are_valid(t_map *map)
 	while (row < map->rows->len)
 	{
 		row_size = get_map_row_size(map->rows, row);
-		if (row == 0 || row == map->rows->len)
+		LOG_TRACE("Checking [%zu] row of size %zu", row, row_size);
+		if (row == 0 || row == map->rows->len - 1)
 		{
-			val = get_map_value(map->rows, row, col);
+			LOG_TRACE("Checking %s row", row == 0 ? "first" : "last");
 			col = 0;
 			while (col < row_size)
 			{
-				col = get_map_value(map->rows, row, col);
+				val = get_map_value(map->rows, row, col);
+				LOG_TRACE("Checking val of:%zu == [%zu][%zu] == 1", val, row, col);
 				if (val != 1)
 				{
 					LOG_ERROR("Value (%zu) at [%zu][%zu] should be 1", val, row, col);

@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	t_map *map;
 
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LogLevel_ERROR);
+	logger_setLevel(LOG_LEVEL);
 	if (LOG_LEVEL < 7)
 		ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
 	if (argc != 2)
@@ -18,9 +18,7 @@ int main(int argc, char **argv)
 	}
 	map = init_map();
 	if (map == NULL)
-	{
 		return (1);
-	}
 	//@REFACTOR: isto pode ir possivelmente
 	//para dentro de extract_map_data
 	int fd = open(argv[1], O_RDONLY);
