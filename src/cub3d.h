@@ -51,7 +51,7 @@ typedef struct s_map
 	t_dynamic_array *rows;
 	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
-	bool parse_error;
+	bool parser_error;
 } t_map;
 
 typedef struct s_game
@@ -84,6 +84,7 @@ bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
 bool check_if_map_nums_are_valid(t_map *map);
+
 //-file
 int is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);

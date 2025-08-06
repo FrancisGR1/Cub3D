@@ -21,7 +21,7 @@ t_map *extract_map_data(int fd, t_map *map)
 			if (map->extraction_phase != TEXTURES_AND_COLORS)
 			{
 				LOG_ERROR("Error: found an empty line in MAP_VALUES phase");
-				map->parse_error = true;
+				map->parser_error = true;
 			}
 			else
 			{
@@ -37,7 +37,7 @@ t_map *extract_map_data(int fd, t_map *map)
 			if (split_count != 2)
 			{
 				LOG_ERROR("Error: Wrong format: %zu strings instead of 2", split_count);
-				map->parse_error = true;
+				map->parser_error = true;
 
 			}
 			else if (starts_with_texture_id(line))
@@ -45,7 +45,7 @@ t_map *extract_map_data(int fd, t_map *map)
 				if (!extract_texture(map, split_strs[0], split_strs[1]))
 				{
 					LOG_ERROR("Error: texture extraction failed. Line: %s", line->data);
-					map->parse_error = true;
+					map->parser_error = true;
 				}
 			}
 			else if (is_rgb_id(line))
@@ -53,13 +53,13 @@ t_map *extract_map_data(int fd, t_map *map)
 				if (!extract_rgb(map, split_strs[0], split_strs[1]))
 				{
 					LOG_ERROR("Error: color extraction failed. Line: %s", line->data);
-					map->parse_error = true;
+					map->parser_error = true;
 				}
 			}
 			else
 			{
 				LOG_ERROR("Error: what is this?: %s", line->data);
-				map->parse_error = true;
+				map->parser_error = true;
 			}
 			str_array_deallocate(split_strs, split_count);
 
@@ -70,21 +70,21 @@ t_map *extract_map_data(int fd, t_map *map)
 			if (!extract_map_nums(map, line))
 			{
 				LOG_ERROR("Error: something went wrong with map numbers extraction");
-				map->parse_error = true;
+				map->parser_error = true;
 			}
 		}
 		str_deallocate(line);
-		if (map->parse_error)
+		if (map->parser_error)
 			break ;
 		line = get_next_line_to_str(fd);
 	}
 	map->extraction_phase = EXTRACTION_FINISHED;
-	if (map->player_position_is_set == false && map->parse_error == false)
+	if (map->player_position_is_set == false && map->parser_error == false)
 	{
 		LOG_ERROR("Error: Player position not set");
-		map->parse_error = true;
+		map->parser_error = true;
 	}
-	if (map->parse_error == false)
+	if (map->parser_error == false)
 	{
 		LOG_INFO("Success: Map info extracted");
 		LOG_DEBUG("Textures:\n\t%s\n\t%s\n\t%s\n\t%s", map->textures[0]->data, map->textures[1]->data, map->textures[2]->data, map->textures[3]->data);
@@ -94,44 +94,44 @@ t_map *extract_map_data(int fd, t_map *map)
 	return (map);
 }
 
-//@NOTE version for norminette
-//@FIXME não está compatível com a de cima
-//t_map *extract_map_data_new(int fd, t_map *map)
+//@NOTE: extract_map_data() version for norminette
+//t_map *extract_map_data(int fd, t_map *map)
 //{
 //	t_string *line;
 //
-//	line = get_next_line_to_str(fd);
-//	while (line != NULL && map->parse_error != true)
+//	while (!map->parser_error)
 //	{
+//		line = get_next_line_to_str(fd);
+//		if (line == NULL)
+//			break ;
 //		str_trim(line);
 //		if (line->size == 0)
-//			if (map->rows->len == 0)
-//				map->parse_error = true;
+//		{
+//			if (map->rows->len != 0)
+//				map->parser_error = true;
+//		}
 //		else if (should_extract_textures(map) || should_extract_colors(map))
 //			extract_map_data_texture_or_color(map, line);
 //		else
 //			if (!extract_map_nums(map, line))
-//				map->parse_error = true;
+//				map->parser_error = true;
 //		str_deallocate(line);
-//		if (map->parse_error)
-//			break ;
-//		line = get_next_line_to_str(fd);
 //	}
-//	if (map->player_position_is_set == false && map->parse_error == false)
-//		map->parse_error = true;
+//	if (map->player_position_is_set == false)
+//		map->parser_error = true;
 //	return (map);
 //}
 //
 //static void extract_map_data_texture_or_color(t_map *map, t_string *line)
 //{
 //	t_string **split_strs;
-//	size_t split_count;
-//	
+//	int split_count;
+//
 //	split_strs = str_split_using_char_as_delim(line, STRING_WHITESPACE, &split_count);
 //	if (split_count != 2)
 //	{
 //		LOG_ERROR("Error: Wrong format: %zu strings instead of 2", split_count);
-//		map->parse_error = true;
+//		map->parser_error = true;
 //
 //	}
 //	else if (starts_with_texture_id(line))
@@ -139,7 +139,7 @@ t_map *extract_map_data(int fd, t_map *map)
 //		if (!extract_texture(map, split_strs[0], split_strs[1]))
 //		{
 //			LOG_ERROR("Error: texture extraction failed. Line: %s", line->data);
-//			map->parse_error = true;
+//			map->parser_error = true;
 //		}
 //	}
 //	else if (is_rgb_id(line))
@@ -147,13 +147,13 @@ t_map *extract_map_data(int fd, t_map *map)
 //		if (!extract_rgb(map, split_strs[0], split_strs[1]))
 //		{
 //			LOG_ERROR("Error: color extraction failed. Line: %s", line->data);
-//			map->parse_error = true;
+//			map->parser_error = true;
 //		}
 //	}
 //	else
 //	{
 //		LOG_ERROR("Error: what is this?: %s", line->data);
-//		map->parse_error = true;
+//		map->parser_error = true;
 //	}
 //	str_array_deallocate(split_strs, split_count);
 //}

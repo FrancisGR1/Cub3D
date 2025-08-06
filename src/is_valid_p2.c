@@ -12,16 +12,16 @@ bool check_if_map_nums_are_valid(t_map *map)
 	if (map == NULL)
 	{
 		LOG_FATAL("Map ptr is null");
-		map->parse_error = true;
+		map->parser_error = true;
 		return (false);
 	}
 	if (map->rows == NULL)
 	{
 		LOG_FATAL("Map rows ptr is null");
-		map->parse_error = true;
+		map->parser_error = true;
 		return (false);
 	}
-	if (map->parse_error == true)
+	if (map->parser_error == true)
 	{
 		LOG_ERROR("Error: there was a parse error before");
 		return (false);
@@ -42,7 +42,7 @@ bool check_if_map_nums_are_valid(t_map *map)
 				if (val != 1)
 				{
 					LOG_ERROR("Value (%zu) at [%zu][%zu] should be 1", val, row, col);
-					map->parse_error = true;
+					map->parser_error = true;
 					return (false);
 				}
 				col++;
@@ -56,14 +56,14 @@ bool check_if_map_nums_are_valid(t_map *map)
 			if (val != 1)
 			{
 				LOG_ERROR("Value (%zu) at [%zu][%zu] should be 1", val, row, last_col);
-				map->parse_error = true;
+				map->parser_error = true;
 				return (false);
 			}
 			val = get_map_value(map->rows, row, 0);
 			if (val != 1)
 			{
 				LOG_ERROR("Value (%zu) at [%zu][%zu] should be 1", val, row, 0);
-				map->parse_error = true;
+				map->parser_error = true;
 				return (false);
 			}
 		}
@@ -72,6 +72,35 @@ bool check_if_map_nums_are_valid(t_map *map)
 	LOG_INFO("Success: map nums are valid");
 	return (true);
 }
+
+//@NOTE check_if_map_nums_are_valid() version for norminette
+//void check_if_map_nums_are_valid_new(t_map *map)
+//{
+//	size_t row;
+//	size_t row_size;
+//	size_t col;
+//
+//	if (map == NULL || map->rows == NULL || map->parser_error == true)
+//		return ;
+//	row = 0;
+//	while (!map->parser_error && row < map->rows->len)
+//	{
+//		row_size = get_map_row_size(map->rows, row);
+//		if (row == 0 || row == map->rows->len - 1)
+//		{
+//			col = 0;
+//			while (!map->parser_error && col < row_size)
+//			{
+//				if (get_map_value(map->rows, row, col) != 1)
+//					map->parser_error = true;
+//				col++;
+//			}
+//		}
+//		else if (get_map_value(map->rows, row, row_size - 1) != 1 || get_map_value(map->rows, row, 0) != 1)
+//			map->parser_error = true;
+//		row++;
+//	}
+//}
 
 bool is_valid_input(int argc, char **argv)
 {

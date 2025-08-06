@@ -1,7 +1,6 @@
 #include "cub3d.h"
 
 
-//@TEMP: delete loggers before evaluation
 int main(int argc, char **argv)
 {
 	t_map *map;
@@ -24,7 +23,7 @@ int main(int argc, char **argv)
 	extract_map_data(fd, map);
 	close(fd);
 	check_if_map_nums_are_valid(map);
-	if (map->parse_error)
+	if (map->parser_error)
 	{
 		ft_fprintf(STDERR, "Error\n");
 		cleanup_map(map);

@@ -21,7 +21,7 @@ t_map *init_map(void)
 
 	}
 	map->player_position_is_set = false;
-	map->parse_error = false;
+	map->parser_error = false;
 	map->extraction_phase = TEXTURES_AND_COLORS;
 	map->floor = (t_rgb){-1, -1, -1};  
 	map->ceiling = (t_rgb){-1, -1, -1};
