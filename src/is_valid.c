@@ -18,8 +18,7 @@ bool starts_with_texture_id(t_string *line)
 			|| str_starts_with(line, "EA ")));
 }
 
-//@TODO: substituir por bool
-int is_valid_file_path(const char *path)
+bool is_valid_file_path(const char *path)
 {
 	int fd;
 
@@ -27,17 +26,17 @@ int is_valid_file_path(const char *path)
 	if (!path)
 	{
 		LOG_ERROR("Path to file is null");
-		return (0);
+		return (false);
 	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
 		LOG_ERROR("Couldn't open: %s", path);
-		return (0);
+		return (false);
 	}
 	LOG_DEBUG("Success: valid file path: %s", path);
 	close(fd);
-	return (1);
+	return (true);
 }
 
 bool is_valid_extension(const char *path, const char *extension)

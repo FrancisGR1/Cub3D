@@ -86,7 +86,7 @@ bool starts_with_texture_id(t_string *line);
 bool check_if_map_nums_are_valid(t_map *map);
 
 //-file
-int is_valid_file_path(const char *path);
+bool is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
 //-program args
 bool is_valid_input(int argc, char **argv);

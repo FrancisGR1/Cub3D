@@ -194,6 +194,7 @@ static bool should_extract_textures(t_map *map)
 	return (false);
 }
 
+//@REFACTOR too long for norminette
 static bool extract_map_nums(t_map *map, t_string *line)
 {
 	t_dynamic_array *cols;

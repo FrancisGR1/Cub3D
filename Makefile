@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 CFLAGS = -Wall -Werror -Wextra -g
 OPTIMIZE = -O3

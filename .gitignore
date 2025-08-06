@@ -12,6 +12,7 @@ obj/
 *.pdf
 *.md
 *.txt
+*.dot
 
 # folders
 learn/*

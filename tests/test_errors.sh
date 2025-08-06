@@ -1,4 +1,6 @@
-EXECUTABLE="cub3d"
+# we'll cd to here
+ROOT_FOLDER="../"
+EXECUTABLE="cub3D"
 
 VAL_OUT_PREFIX="valgrind"
 
@@ -9,7 +11,7 @@ TESTS_PASSED=0
 TESTS_FAILED=0
 
 # mapas para testes
-TEST_ASSETS_DIR="./test_assets/"
+MAPS_DIR="assets/maps/"
 
 RED="\033[0;31m"
 GREEN="\033[0;32m"
@@ -23,7 +25,7 @@ RESET="\033[0m"
 test_should_pass() {
 	# make path to test map
 	local map_to_test=$1
-	local map_path="${TEST_ASSETS_DIR}${map_to_test}"
+	local map_path="${MAPS_DIR}${map_to_test}"
 
 	# 1st run -> catch stderr
 	local found_error=$(./"${EXECUTABLE}" "$map_path" 2>&1 >/dev/null)
@@ -81,7 +83,7 @@ test_should_fail() {
 	# $1: ficheiro para dar ao executável
 	local map_to_test=$1
 
-	local map_path="${TEST_ASSETS_DIR}${map_to_test}"
+	local map_path="${MAPS_DIR}${map_to_test}"
 
 	#1st run -> catch stderr
 	local found_error=$(./"${EXECUTABLE}" "$map_path" 2>&1 >/dev/null)
@@ -144,8 +146,7 @@ test_should_fail() {
 	fi
 }
 
-cp ../${EXECUTABLE} .
-
+cd $ROOT_FOLDER 
 echo "Reminder: set console logs to nothing"
 echo "Testing: [Stderror Output][Exit Code][Leaks]"
 echo "==========="
