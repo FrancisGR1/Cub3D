@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:23:28 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/07/30 11:26:48 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:27:38 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ MU_TEST(test_extract_map_data_textures_2_equal_ids)
 	mu_check(map != NULL);
 	//@TODO este check mais os dois últimos antes de cleanup_map() 
 	//podem ser só uma função
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] != NULL);
 	mu_check(map->textures[WEST] == NULL); //@ASSUMPTION: dá erro a partir do west
@@ -107,7 +107,7 @@ MU_TEST(test_extract_map_data_textures_wrong_id)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] != NULL);
 	mu_check(map->textures[WEST] == NULL); //dá erro a partir do west
@@ -134,7 +134,7 @@ MU_TEST(test_extract_map_data_textures_wrong_path)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] != NULL);
 	mu_check(map->textures[WEST] != NULL);
@@ -160,7 +160,7 @@ MU_TEST(test_extract_map_data_textures_wrong_extension)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] == NULL); //@ASSUMPTION: dá error a partir de SO
 	mu_check(map->textures[WEST] == NULL);
@@ -188,7 +188,7 @@ MU_TEST(test_extract_map_data_textures_more_than_2_strings)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] == NULL); //@ASSUMPTION: dá erro a partir de south
 	mu_check(map->textures[WEST] == NULL);
@@ -215,7 +215,7 @@ MU_TEST(test_extract_map_data_textures_1_string)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[SOUTH] != NULL); 
 	mu_check(map->textures[WEST] == NULL); //dá erro a partir de south
@@ -253,7 +253,7 @@ MU_TEST(test_extract_map_data_colors_more_than_3_values)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
@@ -276,7 +276,7 @@ MU_TEST(test_extract_map_data_colors_less_than_3_values)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_nothing, map->floor); // o erro acontece aqui
 	test_extracted_rgb(g_expected_nothing, map->ceiling);
@@ -299,7 +299,7 @@ MU_TEST(test_extract_map_data_colors_wrong_id)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
@@ -322,7 +322,7 @@ MU_TEST(test_extract_map_data_colors_equal_ids)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
@@ -345,7 +345,7 @@ MU_TEST(test_extract_map_data_colors_more_than_2_strings)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
@@ -368,7 +368,7 @@ MU_TEST(test_extract_map_data_colors_1_string)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
@@ -391,7 +391,7 @@ MU_TEST(test_extract_map_data_colors_above_255)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	t_rgb expected_floor = {220, 100, 255};
 	test_extracted_rgb(expected_floor, map->floor);
@@ -416,11 +416,35 @@ MU_TEST(test_extract_map_data_colors_below_0)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	t_rgb expected_floor = {220, 100, 255};
 	test_extracted_rgb(expected_floor, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling); // o erro acontece aqui
+	mu_check(map->rows->len == 0);
+	mu_check(map->player_position_is_set == false);
+	cleanup_map(map);
+}
+
+MU_TEST(test_extract_map_data_colors_multiple_comas)
+{
+	LOG_INFO(BHBLU "Test: colors_multiple_comas" RESET);
+	const char *test_file = TEST_ASSETS_DIR "colors_multiple_comas.cub";
+	LOG_DEBUG("Testing with file: %s", test_file);
+	int fd = open(test_file, O_RDONLY);
+	if (fd <= 2)
+	{
+		fprintf(stderr, "Error: Can't find %s\n", test_file);
+		exit(1);
+	}
+	t_map *map = init_map();
+	extract_map_data(fd, map);
+	mu_check(map != NULL);
+	mu_check(map->parser_error == true);
+	test_extracted_textures(g_expected_textures, map->textures);
+	t_rgb expected_floor = {220, 100, 255};
+	test_extracted_rgb(g_expected_nothing, map->floor); // o erro acontece aqui
+	test_extracted_rgb(g_expected_nothing, map->ceiling);
 	mu_check(map->rows->len == 0);
 	mu_check(map->player_position_is_set == false);
 	cleanup_map(map);
@@ -437,6 +461,7 @@ MU_TEST_SUITE(test_suite_error_extract_colors)
 	MU_RUN_TEST(test_extract_map_data_colors_1_string);
 	MU_RUN_TEST(test_extract_map_data_colors_above_255);
 	MU_RUN_TEST(test_extract_map_data_colors_below_0);
+	MU_RUN_TEST(test_extract_map_data_colors_multiple_comas);
 }
 
 
@@ -455,7 +480,7 @@ MU_TEST(test_extract_map_data_mixed_colors_first)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -480,7 +505,7 @@ MU_TEST(test_extract_map_data_mixed_colors_in_between_textures)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -513,7 +538,7 @@ MU_TEST(test_extract_map_data_map_at_beginning_of_file)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] == NULL);
 	mu_check(map->textures[SOUTH] == NULL);
 	mu_check(map->textures[WEST] == NULL);
@@ -539,7 +564,7 @@ MU_TEST(test_extract_map_data_map_at_middle_of_file)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_nothing, map->floor);
 	test_extracted_rgb(g_expected_nothing, map->ceiling);
@@ -562,7 +587,7 @@ MU_TEST(test_extract_map_data_map_with_empty_lines)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -585,7 +610,7 @@ MU_TEST(test_extract_map_data_map_divided_in_multiple_parts_throughout_file)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	mu_check(map->textures[NORTH] != NULL);
 	mu_check(map->textures[NORTH]->data != NULL);
 	mu_assert_string_eq(g_expected_textures[NORTH], map->textures[NORTH]->data);
@@ -614,7 +639,7 @@ MU_TEST(test_extract_map_data_map_with_multiple_player_positions)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -637,7 +662,7 @@ MU_TEST(test_extract_map_data_map_player_position_case_sensitivity)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -660,7 +685,7 @@ MU_TEST(test_extract_map_data_map_player_orientation_invalid_character)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -683,7 +708,7 @@ MU_TEST(test_extract_map_data_map_player_no_position)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -707,7 +732,7 @@ MU_TEST(test_extract_map_data_map_smallest)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -736,7 +761,7 @@ MU_TEST(test_extract_map_data_map_too_big)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -760,7 +785,7 @@ MU_TEST(test_extract_map_data_map_non_rectangular1)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -800,7 +825,7 @@ MU_TEST(test_extract_map_data_map_non_rectangular2)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -832,7 +857,7 @@ MU_TEST(test_extract_map_data_map_longest_rows)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -857,7 +882,7 @@ MU_TEST(test_extract_map_data_map_row_too_long)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -880,7 +905,7 @@ MU_TEST(test_extract_map_data_map_max_rows)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -904,7 +929,7 @@ MU_TEST(test_extract_map_data_map_too_many_rows)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == true);
+	mu_check(map->parser_error == true);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -930,7 +955,7 @@ MU_TEST(test_extract_map_data_map_only_walls)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false); //@ASSUMPTION: só paredes não dá erro
+	mu_check(map->parser_error == false); //@ASSUMPTION: só paredes não dá erro
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -954,7 +979,7 @@ MU_TEST(test_extract_map_data_map_no_walls)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -977,7 +1002,7 @@ MU_TEST(test_extract_map_data_map_open_middle_top)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1000,7 +1025,7 @@ MU_TEST(test_extract_map_data_map_open_middle_right)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1023,7 +1048,7 @@ MU_TEST(test_extract_map_data_map_open_middle_left)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1046,7 +1071,7 @@ MU_TEST(test_extract_map_data_map_open_middle_bottom)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1069,7 +1094,7 @@ MU_TEST(test_extract_map_data_map_open_top_right_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1092,7 +1117,7 @@ MU_TEST(test_extract_map_data_map_open_top_left_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1115,7 +1140,7 @@ MU_TEST(test_extract_map_data_map_open_bottom_right_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1138,7 +1163,7 @@ MU_TEST(test_extract_map_data_map_open_bottom_left_corner)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1161,7 +1186,7 @@ MU_TEST(test_extract_map_data_map_one_space_in_each_line)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1185,7 +1210,7 @@ MU_TEST(test_extract_map_data_map_multiple_spaces_in_each_line)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1209,7 +1234,7 @@ MU_TEST(test_extract_map_data_map_tabs_in_each_line)
 	t_map *map = init_map();
 	extract_map_data(fd, map);
 	mu_check(map != NULL);
-	mu_check(map->parse_error == false);
+	mu_check(map->parser_error == false);
 	test_extracted_textures(g_expected_textures, map->textures);
 	test_extracted_rgb(g_expected_floor, map->floor);
 	test_extracted_rgb(g_expected_ceiling, map->ceiling);
@@ -1219,8 +1244,54 @@ MU_TEST(test_extract_map_data_map_tabs_in_each_line)
 	cleanup_map(map);
 }
 
-MU_TEST_SUITE(test_suite_map)
+MU_TEST(test_extract_map_data_map_non_binary_nums)
 {
+	LOG_INFO(BHBLU "Test: map_non_binary_nums" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_non_binary_nums.cub";
+	LOG_DEBUG("Testing with file: %s", test_file);
+	int fd = open(test_file, O_RDONLY);
+	if (fd <= 2)
+	{
+		fprintf(stderr, "Error: Can't find %s\n", test_file);
+		exit(1);
+	}
+	t_map *map = init_map();
+	extract_map_data(fd, map);
+	mu_check(map != NULL);
+	mu_check(map->parser_error == true);
+	test_extracted_textures(g_expected_textures, map->textures);
+	test_extracted_rgb(g_expected_floor, map->floor);
+	test_extracted_rgb(g_expected_ceiling, map->ceiling);
+	mu_check(map->rows->len == 1); //@ASSUMPTION: erro na segunda linha
+	mu_check(map->player_position_is_set == false);
+	cleanup_map(map);
+}
+
+MU_TEST(test_extract_map_data_map_negative_nums)
+{
+	LOG_INFO(BHBLU "Test: map_negative_nums" RESET);
+	const char *test_file = TEST_ASSETS_DIR "map_negative_nums.cub";
+	LOG_DEBUG("Testing with file: %s", test_file);
+	int fd = open(test_file, O_RDONLY);
+	if (fd <= 2)
+	{
+		fprintf(stderr, "Error: Can't find %s\n", test_file);
+		exit(1);
+	}
+	t_map *map = init_map();
+	extract_map_data(fd, map);
+	mu_check(map != NULL);
+	mu_check(map->parser_error == true);
+	test_extracted_textures(g_expected_textures, map->textures);
+	test_extracted_rgb(g_expected_floor, map->floor);
+	test_extracted_rgb(g_expected_ceiling, map->ceiling);
+	mu_check(map->rows->len == 1); //@ASSUMPTION: erro na segunda linha
+	mu_check(map->player_position_is_set == false);
+	cleanup_map(map);
+}
+
+MU_TEST_SUITE(test_suite_map)
+ {
 	//testar linhas de cores e texturas sem ordem lógica
 	//file position
 	MU_RUN_TEST(test_extract_map_data_map_at_beginning_of_file);
@@ -1257,12 +1328,14 @@ MU_TEST_SUITE(test_suite_map)
 	MU_RUN_TEST(test_extract_map_data_map_one_space_in_each_line);
 	MU_RUN_TEST(test_extract_map_data_map_multiple_spaces_in_each_line);
 	MU_RUN_TEST(test_extract_map_data_map_tabs_in_each_line);
+	MU_RUN_TEST(test_extract_map_data_map_non_binary_nums);
+	MU_RUN_TEST(test_extract_map_data_map_negative_nums);
 }
 
 int main()
 {
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LogLevel_TRACE);
+	logger_setLevel(LogLevel_ERROR);
 	// Grupos de Testes
 	MU_RUN_TEST(test_suite_error_extract_textures);
 	MU_RUN_TEST(test_suite_error_extract_colors);
