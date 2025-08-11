@@ -17,6 +17,9 @@
 # define MAX_COLS 100
 
 
+# define SCREENWIDTH 1280
+# define SCREENHEIGHT 1024
+
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
 
@@ -43,6 +46,7 @@ enum e_extraction_phase
 	EXTRACTION_FINISHED,
 };
 
+//@REFACTOR: mudar isto para parsed_data
 typedef struct s_map
 {
 	t_string *textures[MAX_TEXTURES];
@@ -54,9 +58,59 @@ typedef struct s_map
 	bool parser_error;
 } t_map;
 
+typedef struct s_vec2f
+{
+	float x;
+	float y;
+} t_vec2f;
+
+typedef struct s_vec2i
+{
+	int x;
+	int y;
+} t_vec2i;
+
+typedef struct s_vec2d
+{
+	double x;
+	double y;
+} t_vec2d;
+
+typedef struct s_player
+{
+	t_vec2d position;
+	t_vec2d direction;
+	t_vec2d plane;
+	float fov;
+
+} t_player;
+
+typedef struct s_ray
+{
+	t_vec2d direction;
+	int camera_x;
+	t_vec2i map_position;
+	t_vec2d side_dist;
+	t_vec2d delta_dist;
+	t_vec2i step;
+	int perp_wall_dis; //@NOTE: corrected distance to avoid fish eye effect
+	int side;
+	bool hit_wall;
+} t_ray;
+
+typedef struct s_draw_info
+{
+	int line_height;
+	int draw_start;
+	int draw_end;
+} t_draw_info;
+
 typedef struct s_game
 {
-	t_map *map;
+	t_dynamic_array *map;
+	t_player *player;
+	t_ray *r;
+	t_draw_info *draw;
 } t_game;
 
 //@TEMP:
