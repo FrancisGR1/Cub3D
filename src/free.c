@@ -42,3 +42,14 @@ void cleanup_map(t_map *map)
 	LOG_INFO("Success: Cleaned up map");
 }
 
+int	end_game(void *data)
+{
+	t_game *game = (t_game *)data;
+	mlx_destroy_image(game->win->mlx, game->win->img);
+	mlx_destroy_window(game->win->mlx, game->win->mlx_win);
+	mlx_destroy_display(game->win->mlx);
+	free(game->win->mlx);
+	cleanup_map(game->cub_file_data);
+	//@TODO: limpar game aqui
+	exit(EXIT_SUCCESS);
+}

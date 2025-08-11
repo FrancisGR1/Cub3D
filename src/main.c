@@ -30,10 +30,14 @@ int main(int argc, char **argv)
 		LOG_ERROR("Error: exiting off main");
 		return (1);
 	}
-	//@TODO: fazer cenas aqui
+	//@TODO: posso libertar a informação 
+	//do mapa se copiar o necessário para
+	//a struct principal
 	//inicializar janela
 	t_window *win = ft_calloc(1, sizeof(t_window));
 	init_window(win);
+	//@TODO: criar estrutura de jogo
+	setup_mlx_hooks(win, NULL);
 	mlx_loop(win->mlx);
 	free(win);
 	//inicializar jogo

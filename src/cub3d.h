@@ -69,7 +69,7 @@ typedef struct s_window
 
 typedef struct s_game
 {
-	t_map *map;
+	t_map *extracted_data;
 } t_game;
 
 //@TEMP:
@@ -110,6 +110,7 @@ bool rgb_str_is_valid(t_string **colors, int colors_num);
 bool extract_rgb(t_map *map, t_string *id, t_string *colors);
 
 // free
+//@TODO: mudar nome
 void cleanup_map(t_map *map);
 
 // ======
@@ -126,8 +127,9 @@ void init_window(t_window *win);
 // ======
 
 // ==========
-// User Input
+// Event Loop
 // ==========
+void event_loop(t_game *g);
 
 // =====
 // Utils
