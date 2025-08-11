@@ -30,14 +30,16 @@ int main(int argc, char **argv)
 		LOG_ERROR("Error: exiting off main");
 		return (1);
 	}
-	else
-	{
-		//@TODO: fazer cenas aqui
-		//inicializar jogo
-		//game loop:
-		//renderizar
-		//esperar por input
-	}
+	//@TODO: fazer cenas aqui
+	//inicializar janela
+	t_window *win = ft_calloc(1, sizeof(t_window));
+	init_window(win);
+	mlx_loop(win->mlx);
+	free(win);
+	//inicializar jogo
+	//game loop:
+	//renderizar
+	//esperar por input
 	cleanup_map(map);
 	LOG_DEBUG("Success: exiting off main");
 	return 0;

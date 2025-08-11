@@ -25,7 +25,8 @@ SRC_FILES = \
 	    is_valid.c \
 	    is_valid_p2.c \
 	    main.c \
-	    rgb.c
+	    rgb.c \
+	    window.c
 
 # need this for print debugging
 LOGGER_FILE = \

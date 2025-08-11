@@ -54,6 +54,19 @@ typedef struct s_map
 	bool parser_error;
 } t_map;
 
+typedef struct s_window
+{
+	void *mlx;
+	void *mlx_win;
+	void *img;
+	char *addr;
+	int bit_per_pixel;
+	int line_length;
+	int endian;
+	int height;
+	int width;
+} t_window;
+
 typedef struct s_game
 {
 	t_map *map;
@@ -102,6 +115,7 @@ void cleanup_map(t_map *map);
 // ======
 // Window
 // ======
+void init_window(t_window *win);
 
 // =======
 // Raycast
