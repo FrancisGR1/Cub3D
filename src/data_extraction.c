@@ -3,12 +3,14 @@
 static bool extract_file_data_nums(t_file_data *map, t_string *line);
 //static void extract_map_data_texture_or_color(t_file_data *map, t_string *line);
 
-t_file_data *extract_file_data(int fd, t_file_data *map)
+t_file_data *extract_file_data(const char *map_data_file_path, t_file_data *map)
 {
 	int debug_idx = 0;
+	int fd;
 	t_string *line;
 
 	LOG_INFO("Extracting map info");
+	fd = open(map_data_file_path, O_RDONLY);
 	line = get_next_line_to_str(fd);
 	while (line != NULL)
 	{
@@ -89,6 +91,7 @@ t_file_data *extract_file_data(int fd, t_file_data *map)
 		LOG_DEBUG("RGB: Ceiling: %d; Floor: %d", map->ceiling, map->floor);
 		LOG_DEBUG_MAP_NUMS(map);
 	}
+	close(fd);
 	return (map);
 }
 
@@ -128,6 +131,9 @@ t_file_data *init_extracted_data(void)
 }
 
 //@NOTE: extract_file_data_data() version for norminette
+//@TODO: atualizar func: 
+//recebe string do caminho do ficheiro .cub
+//gerir ficheiro, open() e close()
 //t_file_data *extract_file_data_data(int fd, t_file_data *map)
 //{
 //	t_string *line;

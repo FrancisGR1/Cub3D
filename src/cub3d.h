@@ -117,7 +117,7 @@ typedef struct s_game
 // ===============
 //
 // data extraction
-t_file_data *extract_file_data(int fd, t_file_data *map);
+t_file_data *extract_file_data(const char *map_data_file_path, t_file_data *map);
 //
 // utils
 bool extract_texture(t_file_data *map, t_string *id, t_string *texture_path);

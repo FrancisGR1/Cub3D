@@ -18,11 +18,7 @@ int main(int argc, char **argv)
 	extracted_data = init_extracted_data();
 	if (extracted_data == NULL)
 		return (1);
-	//@REFACTOR: isto pode ir possivelmente
-	//para dentro de extract_map_data
-	int fd = open(argv[1], O_RDONLY);
-	extract_file_data(fd, extracted_data);
-	close(fd);
+	extract_file_data(argv[1], extracted_data);
 	check_if_map_nums_are_valid(extracted_data);
 	if (extracted_data->parser_error)
 	{
@@ -31,19 +27,11 @@ int main(int argc, char **argv)
 		LOG_ERROR("Error: exiting off main");
 		return (1);
 	}
-	//@TODO: posso libertar a informação 
-	//do mapa se copiar o necessário para
-	//a struct principal
-	//inicializar janela
 	game = ft_calloc(1, sizeof(t_game));
 	game->win = ft_calloc(1, sizeof(t_window));
 	game->extracted_data = extracted_data;
 	init_window(game->win);
 	event_loop(game);
-	//inicializar jogo
-	//game loop:
-	//renderizar
-	//esperar por input
 	LOG_DEBUG("Success: exiting off main");
 	return 0;
 }
