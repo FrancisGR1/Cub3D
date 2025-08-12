@@ -60,7 +60,7 @@ typedef struct s_window
 	void *mlx_win;
 	void *img;
 	char *addr;
-	int bit_per_pixel;
+	int bits_per_pixel;
 	int line_length;
 	int endian;
 	int height;
@@ -70,6 +70,7 @@ typedef struct s_window
 typedef struct s_game
 {
 	t_map *extracted_data;
+	t_window *win;
 } t_game;
 
 //@TEMP:
@@ -77,72 +78,86 @@ typedef struct s_game
 # define LOG_LEVEL 5
 #endif
 
+
+
 // ===============
 // Data Extraction
 // ===============
-
+//
 // initialization
 t_map *init_map(void);
-
+//
 // data extraction
 t_map *extract_map_data(int fd, t_map *map);
 t_map *extract_map_data_new(int fd, t_map *map);
 //-utils
 bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 int map_value_from_char(char c);
-
+//
 // validate
 //-map data
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
 bool check_if_map_nums_are_valid(t_map *map);
-
 //-file
 bool is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
 //-program args
 bool is_valid_input(int argc, char **argv);
-
+//
 // rgb
 bool is_rgb_id(t_string *line);
 bool rgb_str_is_valid(t_string **colors, int colors_num);
 bool extract_rgb(t_map *map, t_string *id, t_string *colors);
-
+//
 // free
 //@TODO: mudar nome
 void cleanup_map(t_map *map);
+
+
 
 // ======
 // Window
 // ======
 void init_window(t_window *win);
 
+
+
 // =======
 // Raycast
 // =======
+
+
 
 // ======
 // Render
 // ======
 
+
+
 // ==========
 // Event Loop
 // ==========
-void event_loop(t_game *g);
+void event_loop(t_game *game);
+int	handle_key(int keycode, t_game *game);
+//free
+int	end_game(t_game *game);
+
+
 
 // =====
 // Utils
 // =====
-
+//
 //accessors
 int get_col_value(t_dynamic_array *row, int col);
 int get_map_value(t_dynamic_array *map, int row, int col);
 void set_map_value(t_dynamic_array *map, int value, int row, int col);
 int get_map_size(t_dynamic_array *map);
 int get_map_row_size(t_dynamic_array *map, int row);
-
-//-debug
+//
+//debug
 void LOG_DEBUG_MAP_NUMS(t_map *map);
 
 #endif /*CUB3D_H*/

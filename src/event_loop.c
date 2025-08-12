@@ -1,16 +1,29 @@
 #include "cub3d.h"
 
-static void setup_event_listeners(t_window *win, void *main_struct);
+static void setup_event_listeners(t_window *win, t_game *game);
 
-void event_loop(t_game *g)
+void event_loop(t_game *game)
 {
-	setup_event_listeners(g->win, (void *)g);
-	mlx_loop(g->win->mlx);
+	LOG_INFO("Event Loop");
+	setup_event_listeners(game->win, game);
+	LOG_DEBUG("Mlx: entering mlx loop");
+	mlx_loop(game->win->mlx);
 }
 
-static void setup_event_listeners(t_window *win, void *main_struct)
+int	handle_key(int keycode, t_game *game)
 {
-	//@TODO: fazer cast type à struct_to_pass
-	mlx_hook(win->mlx_win, 17, 0L, close_window, &main_struct);
-	mlx_hook(win->mlx_win, 2, 1L << 0, handle_key, &main_struct);
+	LOG_DEBUG("Handling key");
+	//@TODO:
+	//<- -> arrow keys
+	//WASD
+	//ESC
+	(void) keycode, (void) game;
+	return (EXIT_SUCCESS);
+}
+
+static void setup_event_listeners(t_window *win, t_game *game)
+{
+	LOG_DEBUG("Setup even listeners");
+	mlx_hook(win->mlx_win, 17, 0L, end_game, game);
+	mlx_hook(win->mlx_win, 2, 1L << 0, handle_key, game);
 }

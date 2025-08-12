@@ -11,7 +11,7 @@ MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
 # log level default 
-LOG_LEVEL ?= 7
+LOG_LEVEL ?= 0
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources
@@ -20,6 +20,7 @@ SRC_FILES = \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
+	    event_loop.c \
 	    free.c  \
 	    init.c \
 	    is_valid.c \
