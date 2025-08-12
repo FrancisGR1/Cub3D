@@ -1,7 +1,25 @@
 #include "cub3d.h"
 
-//@TODO: init_game_struct
-//
+//@TODO: alocação
+t_game *alloc_init_game(t_file_data *map)
+{
+	t_game *game;
+	t_arena *game_memory;
+
+	LOG_DEBUG("Allocating and Initializing game");
+	game_memory = arena_init(GAME_DATA_BUFFER);
+	game = arena_alloc(&game_memory, sizeof(t_game), 1);
+	game->game_memory = game_memory;
+	game->extracted_data = map;
+	game->win = alloc_init_window(game->game_memory);
+	//@TODO: initialize player here
+	//@TODO: initialize draw here
+	//@TODO: initialize ray here
+	LOG_DEBUG("Success: initialized game struct");
+	return (game);
+}
+
+//@TODO: inicialização
 
 int	end_game(t_game *game)
 {
@@ -18,8 +36,7 @@ int	end_game(t_game *game)
 	free(game->win->mlx);
 	cleanup_extracted_data(game->extracted_data);
 	//@TODO: fazer cleanup_game()
-	free(game->win);
-	free(game);
+	arena_destroy(game->game_memory);
 	LOG_DEBUG("Success: ended game - exiting");
 	exit(EXIT_SUCCESS);
 }

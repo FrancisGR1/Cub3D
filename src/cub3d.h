@@ -21,6 +21,10 @@
 # define SCREENWIDTH 1280
 # define SCREENHEIGHT 1024
 
+//@NOTE: this is where all the game data goes
+//(excluding extracted data from .cub)
+# define GAME_DATA_BUFFER 50000
+
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
 
@@ -102,6 +106,7 @@ typedef struct s_draw_info
 
 typedef struct s_game
 {
+	t_arena *game_memory;
 	t_file_data *extracted_data;
 	t_window *win;
 	t_draw_info *draw;
@@ -148,11 +153,17 @@ t_file_data *init_extracted_data(void);
 void cleanup_extracted_data(t_file_data *map);
 
 
+// ===========
+// Game Struct
+// ===========
+t_game *alloc_init_game(t_file_data *map);
+int	end_game(t_game *game);
+
 
 // ======
 // Window
 // ======
-void init_window(t_window *win);
+t_window *alloc_init_window(t_arena *game_memory);
 
 
 

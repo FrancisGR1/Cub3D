@@ -1,6 +1,5 @@
 #include "cub3d.h"
 
-
 int main(int argc, char **argv)
 {
 	t_file_data *extracted_data;
@@ -27,10 +26,7 @@ int main(int argc, char **argv)
 		LOG_ERROR("Error: exiting off main");
 		return (1);
 	}
-	game = ft_calloc(1, sizeof(t_game));
-	game->win = ft_calloc(1, sizeof(t_window));
-	game->extracted_data = extracted_data;
-	init_window(game->win);
+	game = alloc_init_game(extracted_data);
 	event_loop(game);
 	LOG_DEBUG("Success: exiting off main");
 	return 0;
