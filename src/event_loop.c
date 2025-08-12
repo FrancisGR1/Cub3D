@@ -10,17 +10,6 @@ void event_loop(t_game *game)
 	mlx_loop(game->win->mlx);
 }
 
-int	handle_key(int keycode, t_game *game)
-{
-	LOG_DEBUG("Handling key");
-	//@TODO:
-	//<- -> arrow keys
-	//WASD
-	//ESC
-	(void) keycode, (void) game;
-	return (EXIT_SUCCESS);
-}
-
 static void setup_event_listeners(t_window *win, t_game *game)
 {
 	LOG_DEBUG("Setup even listeners");

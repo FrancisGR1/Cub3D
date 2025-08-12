@@ -57,3 +57,40 @@ bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 	LOG_DEBUG("Success: Texture paths extracted");
 	return (true);
 }
+
+bool should_extract_colors(t_map *map)
+{
+	if (map->floor.r == -1)
+	{
+		return (true);
+	}
+	if (map->ceiling.r == -1)
+	{
+		LOG_DEBUG("Ceiling color not set");
+		return (true);
+	}
+	LOG_TRACE("Don't need to extract colors");
+	return (false);
+
+}
+
+bool should_extract_textures(t_map *map)
+{
+	size_t i;
+
+	LOG_TRACE("Checking if we need to extract textures");
+	i = 0;
+	while (i < MAX_TEXTURES)
+	{
+		LOG_TRACE("Checking if texture %zu exists", i);
+		if (map->textures[i] == NULL)
+		{
+			LOG_DEBUG("Texture %zu has not been extracted", i);
+			return (true);
+		}
+		i++;
+	}
+	LOG_TRACE("Don't need to extract textures");
+	return (false);
+}
+

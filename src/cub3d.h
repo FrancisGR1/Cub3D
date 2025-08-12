@@ -4,6 +4,7 @@
 #include "libft.h"
 #include "logger.h"
 #include "mlx.h"
+#include "vector.h"
 
 
 //@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
@@ -16,6 +17,9 @@
 # define MAX_ROWS 100
 # define MAX_COLS 100
 
+
+# define SCREENWIDTH 1280
+# define SCREENHEIGHT 1024
 
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
@@ -43,6 +47,7 @@ enum e_extraction_phase
 	EXTRACTION_FINISHED,
 };
 
+//@REFACTOR: mudar isto para parsed_data
 typedef struct s_map
 {
 	t_string *textures[MAX_TEXTURES];
@@ -67,16 +72,44 @@ typedef struct s_window
 	int width;
 } t_window;
 
+typedef struct s_player
+{
+	t_vec2d position;
+	t_vec2d direction;
+	t_vec2d plane;
+	float fov;
+
+} t_player;
+
+typedef struct s_ray
+{
+	t_vec2d direction;
+	int camera_x;
+	t_vec2i map_position;
+	t_vec2d side_dist;
+	t_vec2d delta_dist;
+	t_vec2i step;
+	int perp_wall_dis; //@NOTE: corrected distance to avoid fish eye effect
+	int side;
+	bool hit_wall;
+} t_ray;
+
+typedef struct s_draw_info
+{
+	int line_height;
+	int draw_start;
+	int draw_end;
+} t_draw_info;
+
 typedef struct s_game
 {
 	t_map *extracted_data;
 	t_window *win;
+	t_draw_info *draw;
+	t_dynamic_array *map;
+	t_player *player;
+	t_ray *r;
 } t_game;
-
-//@TEMP:
-#ifndef LOG_LEVEL
-# define LOG_LEVEL 5
-#endif
 
 
 
@@ -90,20 +123,22 @@ t_map *init_map(void);
 // data extraction
 t_map *extract_map_data(int fd, t_map *map);
 t_map *extract_map_data_new(int fd, t_map *map);
-//-utils
+//
+// utils
 bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
 int map_value_from_char(char c);
+bool should_extract_textures(t_map *map);
+bool should_extract_colors(t_map *map);
 //
-// validate
-//-map data
+// validate map data
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
 bool check_if_map_nums_are_valid(t_map *map);
-//-file
+// validate file
 bool is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
-//-program args
+// validate program args
 bool is_valid_input(int argc, char **argv);
 //
 // rgb
@@ -140,8 +175,9 @@ void init_window(t_window *win);
 // Event Loop
 // ==========
 void event_loop(t_game *game);
+// keys
 int	handle_key(int keycode, t_game *game);
-//free
+// free
 int	end_game(t_game *game);
 
 
@@ -150,14 +186,14 @@ int	end_game(t_game *game);
 // Utils
 // =====
 //
-//accessors
+// accessors
 int get_col_value(t_dynamic_array *row, int col);
 int get_map_value(t_dynamic_array *map, int row, int col);
 void set_map_value(t_dynamic_array *map, int value, int row, int col);
 int get_map_size(t_dynamic_array *map);
 int get_map_row_size(t_dynamic_array *map, int row);
 //
-//debug
+// debug
 void LOG_DEBUG_MAP_NUMS(t_map *map);
 
 #endif /*CUB3D_H*/

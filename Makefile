@@ -21,10 +21,10 @@ SRC_FILES = \
 	    data_extraction_utils.c \
 	    debug.c \
 	    event_loop.c \
-	    free.c  \
-	    init.c \
+	    game.c \
 	    is_valid.c \
 	    is_valid_p2.c \
+	    keys.c \
 	    main.c \
 	    rgb.c \
 	    window.c
@@ -43,7 +43,8 @@ OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(filter $(SRC_DIR)/%.c,$(SRC))
 
 # headers
 HEADER_FILES = \
-	       cub3d.h
+	       cub3d.h \
+	       vector.h
 
 HEADERS = $(addprefix $(SRC_DIR)/,$(HEADER_FILES))
 

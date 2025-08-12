@@ -1,9 +1,42 @@
 #include "cub3d.h"
 
-static bool should_extract_textures(t_map *map);
-static bool should_extract_colors(t_map *map);
 static bool extract_map_nums(t_map *map, t_string *line);
 //static void extract_map_data_texture_or_color(t_map *map, t_string *line);
+
+t_map *init_map(void)
+{
+	t_map *map;
+	size_t i;
+
+	LOG_TRACE("Initializing map");
+	map = ft_calloc(sizeof(t_map), 1);
+	if (map == NULL)
+	{
+		LOG_FATAL("Error: failed allocation for map");
+		return (NULL);
+
+	}
+	map->rows = darr_init(sizeof(t_dynamic_array*), MAP_INITIAL_ROWS); 
+	if (map->rows == NULL)
+	{
+		LOG_FATAL("Error: failed allocation for map rows");
+		return (NULL);
+
+	}
+	map->player_position_is_set = false;
+	map->parser_error = false;
+	map->extraction_phase = TEXTURES_AND_COLORS;
+	map->floor = (t_rgb){-1, -1, -1};  
+	map->ceiling = (t_rgb){-1, -1, -1};
+	i = 0;
+	while (i < MAX_TEXTURES)
+	{
+		map->textures[i] = NULL;
+		i++;
+	}
+	LOG_DEBUG("Success: Map initialized");
+	return (map);
+}
 
 t_map *extract_map_data(int fd, t_map *map)
 {
@@ -158,42 +191,6 @@ t_map *extract_map_data(int fd, t_map *map)
 //	str_array_deallocate(split_strs, split_count);
 //}
 
-static bool should_extract_colors(t_map *map)
-{
-	if (map->floor.r == -1)
-	{
-		return (true);
-	}
-	if (map->ceiling.r == -1)
-	{
-		LOG_DEBUG("Ceiling color not set");
-		return (true);
-	}
-	LOG_TRACE("Don't need to extract colors");
-	return (false);
-
-}
-
-static bool should_extract_textures(t_map *map)
-{
-	size_t i;
-
-	LOG_TRACE("Checking if we need to extract textures");
-	i = 0;
-	while (i < MAX_TEXTURES)
-	{
-		LOG_TRACE("Checking if texture %zu exists", i);
-		if (map->textures[i] == NULL)
-		{
-			LOG_DEBUG("Texture %zu has not been extracted", i);
-			return (true);
-		}
-		i++;
-	}
-	LOG_TRACE("Don't need to extract textures");
-	return (false);
-}
-
 //@REFACTOR too long for norminette
 static bool extract_map_nums(t_map *map, t_string *line)
 {
@@ -249,3 +246,46 @@ static bool extract_map_nums(t_map *map, t_string *line)
 	LOG_DEBUG("Success: extracted map numbers from line into array at %zu size", map->rows->len);
 	return (true);
 }
+
+void cleanup_map(t_map *map)
+{
+	size_t i;
+	t_dynamic_array *row;
+
+	LOG_DEBUG("Cleaning up map");
+	if (map == NULL)
+	{
+		LOG_ERROR("Map is null");
+		return ;
+	}
+	i = 0;
+	while (i < MAX_TEXTURES)
+	{
+		LOG_TRACE("Looking to clean texture at: %zu\n", i);
+		if (map->textures[i] != NULL && map->textures[i]->data != NULL)
+		{
+			LOG_TRACE("Cleaned texture: %zu: %s", i, map->textures[i]->data);
+			str_deallocate(map->textures[i]);
+		}
+		else
+		{
+			LOG_TRACE("Skipping null ptr at: %zu", i);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < map->rows->len)
+	{
+		LOG_TRACE("Cleaning map row: %zu", i);
+		row = ((t_dynamic_array**)map->rows->data)[i];
+		if (row != NULL)
+			darr_free(row);
+		else
+			LOG_ERROR("Row %zu is NULL", i);
+		i++;
+	}
+	darr_free(map->rows);
+	free(map);
+	LOG_INFO("Success: Cleaned up map");
+}
+
