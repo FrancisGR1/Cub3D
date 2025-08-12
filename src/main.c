@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 	t_game *game;
 
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LOG_LEVEL);
+	logger_setLevel(7);
 	if (LOG_LEVEL < 7)
 		ft_fprintf(STDOUT, "Logging Level at %d\n", LOG_LEVEL);
 	if (!is_valid_input(argc, argv))
@@ -27,6 +27,15 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	game = alloc_init_game(extracted_data);
+	put_pixel(game->win, 300, 100, 16777215);
+	put_pixel(game->win, 301, 100, 16777215);
+	put_pixel(game->win, 302, 100, 16777215);
+	put_pixel(game->win, 303, 100, 16777215);
+	put_pixel(game->win, 304, 100, 16777215);
+	put_pixel(game->win, 305, 100, 16777215);
+	put_pixel(game->win, 306, 100, 16777215);
+	put_pixel(game->win, 307, 100, 16777215);
+	put_pixel(game->win, 308, 100, 16777215);
 	event_loop(game);
 	LOG_DEBUG("Success: exiting off main");
 	return 0;

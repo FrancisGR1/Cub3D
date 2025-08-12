@@ -88,6 +88,8 @@ bool extract_rgb(t_file_data *map, t_string *id, t_string *colors)
 	return (extraction_success);
 }
 
+//@TODO: conversão() RGB -> int
+
 //@NOTE extract_rgb() version for norminette
 //bool extract_rgb_new(t_map *map, t_string *id, t_string *colors)
 //{

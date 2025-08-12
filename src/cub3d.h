@@ -167,6 +167,11 @@ t_window *alloc_init_window(t_arena *game_memory);
 
 
 
+// ====
+// Draw
+// ====
+void put_pixel(t_window *win, int x, int y, int color);
+
 // =======
 // Raycast
 // =======
