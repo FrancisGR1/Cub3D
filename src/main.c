@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-	t_map *extracted_data;
+	t_file_data *extracted_data;
 	t_game *game;
 
 	logger_initConsoleLogger(stderr);
@@ -15,19 +15,19 @@ int main(int argc, char **argv)
 		ft_fprintf(STDERR, "Error\n");
 		return (1);
 	}
-	extracted_data = init_map();
+	extracted_data = init_extracted_data();
 	if (extracted_data == NULL)
 		return (1);
 	//@REFACTOR: isto pode ir possivelmente
 	//para dentro de extract_map_data
 	int fd = open(argv[1], O_RDONLY);
-	extract_map_data(fd, extracted_data);
+	extract_file_data(fd, extracted_data);
 	close(fd);
 	check_if_map_nums_are_valid(extracted_data);
 	if (extracted_data->parser_error)
 	{
 		ft_fprintf(STDERR, "Error\n");
-		cleanup_map(extracted_data);
+		cleanup_extracted_data(extracted_data);
 		LOG_ERROR("Error: exiting off main");
 		return (1);
 	}

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-bool check_if_map_nums_are_valid(t_map *map)
+bool check_if_map_nums_are_valid(t_file_data *map)
 {
 	size_t row;
 	size_t row_size;

@@ -16,7 +16,7 @@ int	end_game(t_game *game)
 	mlx_destroy_display(game->win->mlx);
 	LOG_TRACE("Mlx: free mlx ptr");
 	free(game->win->mlx);
-	cleanup_map(game->extracted_data);
+	cleanup_extracted_data(game->extracted_data);
 	//@TODO: fazer cleanup_game()
 	free(game->win);
 	free(game);

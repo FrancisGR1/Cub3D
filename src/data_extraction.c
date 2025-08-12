@@ -1,44 +1,9 @@
 #include "cub3d.h"
 
-static bool extract_map_nums(t_map *map, t_string *line);
-//static void extract_map_data_texture_or_color(t_map *map, t_string *line);
+static bool extract_file_data_nums(t_file_data *map, t_string *line);
+//static void extract_map_data_texture_or_color(t_file_data *map, t_string *line);
 
-t_map *init_map(void)
-{
-	t_map *map;
-	size_t i;
-
-	LOG_TRACE("Initializing map");
-	map = ft_calloc(sizeof(t_map), 1);
-	if (map == NULL)
-	{
-		LOG_FATAL("Error: failed allocation for map");
-		return (NULL);
-
-	}
-	map->rows = darr_init(sizeof(t_dynamic_array*), MAP_INITIAL_ROWS); 
-	if (map->rows == NULL)
-	{
-		LOG_FATAL("Error: failed allocation for map rows");
-		return (NULL);
-
-	}
-	map->player_position_is_set = false;
-	map->parser_error = false;
-	map->extraction_phase = TEXTURES_AND_COLORS;
-	map->floor = (t_rgb){-1, -1, -1};  
-	map->ceiling = (t_rgb){-1, -1, -1};
-	i = 0;
-	while (i < MAX_TEXTURES)
-	{
-		map->textures[i] = NULL;
-		i++;
-	}
-	LOG_DEBUG("Success: Map initialized");
-	return (map);
-}
-
-t_map *extract_map_data(int fd, t_map *map)
+t_file_data *extract_file_data(int fd, t_file_data *map)
 {
 	int debug_idx = 0;
 	t_string *line;
@@ -100,7 +65,7 @@ t_map *extract_map_data(int fd, t_map *map)
 		else
 		{
 			map->extraction_phase = MAP_VALUES;
-			if (!extract_map_nums(map, line))
+			if (!extract_file_data_nums(map, line))
 			{
 				LOG_ERROR("Error: something went wrong with map numbers extraction");
 				map->parser_error = true;
@@ -127,8 +92,43 @@ t_map *extract_map_data(int fd, t_map *map)
 	return (map);
 }
 
-//@NOTE: extract_map_data() version for norminette
-//t_map *extract_map_data(int fd, t_map *map)
+t_file_data *init_extracted_data(void)
+{
+	t_file_data *map;
+	size_t i;
+
+	LOG_TRACE("Allocing map");
+	map = ft_calloc(sizeof(t_file_data), 1);
+	if (map == NULL)
+	{
+		LOG_FATAL("Error: failed allocation for map");
+		return (NULL);
+
+	}
+	map->rows = darr_init(sizeof(t_dynamic_array*), MAP_INITIAL_ROWS); 
+	if (map->rows == NULL)
+	{
+		LOG_FATAL("Error: failed allocation for map rows");
+		return (NULL);
+
+	}
+	map->player_position_is_set = false;
+	map->parser_error = false;
+	map->extraction_phase = TEXTURES_AND_COLORS;
+	map->floor = (t_rgb){-1, -1, -1};  
+	map->ceiling = (t_rgb){-1, -1, -1};
+	i = 0;
+	while (i < MAX_TEXTURES)
+	{
+		map->textures[i] = NULL;
+		i++;
+	}
+	LOG_DEBUG("Success: Map initialized");
+	return (map);
+}
+
+//@NOTE: extract_file_data_data() version for norminette
+//t_file_data *extract_file_data_data(int fd, t_file_data *map)
 //{
 //	t_string *line;
 //
@@ -144,9 +144,9 @@ t_map *extract_map_data(int fd, t_map *map)
 //				map->parser_error = true;
 //		}
 //		else if (should_extract_textures(map) || should_extract_colors(map))
-//			extract_map_data_texture_or_color(map, line);
+//			extract_file_data_data_texture_or_color(map, line);
 //		else
-//			if (!extract_map_nums(map, line))
+//			if (!extract_file_data_nums(map, line))
 //				map->parser_error = true;
 //		str_deallocate(line);
 //	}
@@ -155,7 +155,7 @@ t_map *extract_map_data(int fd, t_map *map)
 //	return (map);
 //}
 //
-//static void extract_map_data_texture_or_color(t_map *map, t_string *line)
+//static void extract_file_data_data_texture_or_color(t_file_data *map, t_string *line)
 //{
 //	t_string **split_strs;
 //	int split_count;
@@ -192,7 +192,7 @@ t_map *extract_map_data(int fd, t_map *map)
 //}
 
 //@REFACTOR too long for norminette
-static bool extract_map_nums(t_map *map, t_string *line)
+static bool extract_file_data_nums(t_file_data *map, t_string *line)
 {
 	t_dynamic_array *cols;
 	char c;
@@ -247,7 +247,7 @@ static bool extract_map_nums(t_map *map, t_string *line)
 	return (true);
 }
 
-void cleanup_map(t_map *map)
+void cleanup_extracted_data(t_file_data *map)
 {
 	size_t i;
 	t_dynamic_array *row;

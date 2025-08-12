@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 //@TODO: transformar isto num macro!
-void LOG_DEBUG_MAP_NUMS(t_map *map)
+void LOG_DEBUG_MAP_NUMS(t_file_data *map)
 {
 	for (size_t i = 0; i < map->rows->len; i++)
 	{

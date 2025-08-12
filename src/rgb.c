@@ -34,7 +34,7 @@ bool rgb_str_is_valid(t_string **colors, int colors_num)
 	return (true);
 }
 
-bool extract_rgb(t_map *map, t_string *id, t_string *colors)
+bool extract_rgb(t_file_data *map, t_string *id, t_string *colors)
 {
 	t_rgb *rgb_ptr;
 	t_string **split_colors;

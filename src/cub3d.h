@@ -47,8 +47,7 @@ enum e_extraction_phase
 	EXTRACTION_FINISHED,
 };
 
-//@REFACTOR: mudar isto para parsed_data
-typedef struct s_map
+typedef struct s_file_data
 {
 	t_string *textures[MAX_TEXTURES];
 	t_rgb floor;
@@ -57,7 +56,7 @@ typedef struct s_map
 	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
 	bool parser_error;
-} t_map;
+} t_file_data;
 
 typedef struct s_window
 {
@@ -103,7 +102,7 @@ typedef struct s_draw_info
 
 typedef struct s_game
 {
-	t_map *extracted_data;
+	t_file_data *extracted_data;
 	t_window *win;
 	t_draw_info *draw;
 	t_dynamic_array *map;
@@ -117,24 +116,20 @@ typedef struct s_game
 // Data Extraction
 // ===============
 //
-// initialization
-t_map *init_map(void);
-//
 // data extraction
-t_map *extract_map_data(int fd, t_map *map);
-t_map *extract_map_data_new(int fd, t_map *map);
+t_file_data *extract_file_data(int fd, t_file_data *map);
 //
 // utils
-bool extract_texture(t_map *map, t_string *id, t_string *texture_path);
+bool extract_texture(t_file_data *map, t_string *id, t_string *texture_path);
 int map_value_from_char(char c);
-bool should_extract_textures(t_map *map);
-bool should_extract_colors(t_map *map);
+bool should_extract_textures(t_file_data *map);
+bool should_extract_colors(t_file_data *map);
 //
 // validate map data
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
-bool check_if_map_nums_are_valid(t_map *map);
+bool check_if_map_nums_are_valid(t_file_data *map);
 // validate file
 bool is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
@@ -144,11 +139,13 @@ bool is_valid_input(int argc, char **argv);
 // rgb
 bool is_rgb_id(t_string *line);
 bool rgb_str_is_valid(t_string **colors, int colors_num);
-bool extract_rgb(t_map *map, t_string *id, t_string *colors);
+bool extract_rgb(t_file_data *map, t_string *id, t_string *colors);
+// initialization
+t_file_data *init_extracted_data(void);
 //
 // free
-//@TODO: mudar nome
-void cleanup_map(t_map *map);
+//@TODO: mudar nome cleanup_extracted_map_data
+void cleanup_extracted_data(t_file_data *map);
 
 
 
@@ -194,6 +191,6 @@ int get_map_size(t_dynamic_array *map);
 int get_map_row_size(t_dynamic_array *map, int row);
 //
 // debug
-void LOG_DEBUG_MAP_NUMS(t_map *map);
+void LOG_DEBUG_MAP_NUMS(t_file_data *map);
 
 #endif /*CUB3D_H*/

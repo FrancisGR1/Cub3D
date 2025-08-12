@@ -20,7 +20,7 @@ int map_value_from_char(char c)
 	}
 }
 
-bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
+bool extract_texture(t_file_data *map, t_string *id, t_string *texture_path)
 {
 	size_t idx;
 
@@ -58,7 +58,7 @@ bool extract_texture(t_map *map, t_string *id, t_string *texture_path)
 	return (true);
 }
 
-bool should_extract_colors(t_map *map)
+bool should_extract_colors(t_file_data *map)
 {
 	if (map->floor.r == -1)
 	{
@@ -74,7 +74,7 @@ bool should_extract_colors(t_map *map)
 
 }
 
-bool should_extract_textures(t_map *map)
+bool should_extract_textures(t_file_data *map)
 {
 	size_t i;
 
