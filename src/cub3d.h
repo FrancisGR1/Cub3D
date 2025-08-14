@@ -17,6 +17,10 @@
 # define MAX_ROWS 100
 # define MAX_COLS 100
 
+//@NOTE: o -1 sinaliza que chegámos ao fim da linha
+//e mapa (se for map[i][0] == -1)
+# define ROW_END -1
+
 
 # define SCREENWIDTH 1280
 # define SCREENHEIGHT 1024
@@ -110,7 +114,8 @@ typedef struct s_game
 	t_file_data *extracted_data;
 	t_window *win;
 	t_draw_info *draw;
-	t_dynamic_array *map;
+	t_dynamic_array *jagged_map;
+	int map[MAX_ROWS][MAX_COLS];
 	t_player *player;
 	t_ray *r;
 } t_game;
@@ -191,7 +196,6 @@ void event_loop(t_game *game);
 // keys
 int	handle_key(int keycode, t_game *game);
 // free
-int	end_game(t_game *game);
 
 
 
@@ -207,6 +211,7 @@ int get_map_size(t_dynamic_array *map);
 int get_map_row_size(t_dynamic_array *map, int row);
 //
 // debug
-void LOG_DEBUG_MAP_NUMS(t_file_data *map);
+void LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map);
+void LOG_DEBUG_MAP_NUMS(int map[MAX_ROWS][MAX_COLS]);
 
 #endif /*CUB3D_H*/

@@ -1,6 +1,7 @@
 #include "cub3d.h"
 
-//@TODO: alocação
+static void normalize_jagged_map(t_game *game, t_file_data *map);
+
 t_game *alloc_init_game(t_file_data *map)
 {
 	t_game *game;
@@ -12,14 +13,12 @@ t_game *alloc_init_game(t_file_data *map)
 	game->game_memory = game_memory;
 	game->extracted_data = map;
 	game->win = alloc_init_window(game->game_memory);
-	//@TODO: initialize player here
-	//@TODO: initialize draw here
-	//@TODO: initialize ray here
+	normalize_jagged_map(game, map);
+	//@TODO: inicializar jogador
+	//@TODO: inicializar raycast
 	LOG_DEBUG("Success: initialized game struct");
 	return (game);
 }
-
-//@TODO: inicialização
 
 int	end_game(t_game *game)
 {
@@ -39,4 +38,66 @@ int	end_game(t_game *game)
 	arena_destroy(game->game_memory);
 	LOG_DEBUG("Success: ended game - exiting");
 	exit(EXIT_SUCCESS);
+}
+
+//@REFACTOR: norminette 
+//@BUG: isto não está a produzir os números normais
+//@TODO - NOW
+static void normalize_jagged_map(t_game *game, t_file_data *map)
+{
+	int largest_row;
+	int row_size;
+	int rows;
+	int row;
+	int col;
+
+	LOG_INFO("Normalizing jagged map");
+	largest_row = 0;
+	rows = get_map_size(map->rows);
+	row = 0;
+	LOG_DEBUG("Find largest row");
+	while (row < rows)
+	{
+		row_size = get_map_row_size(map->rows, row);
+		LOG_TRACE("Largest row: %d[%d]", largest_row, row);
+		if (largest_row < row_size)
+			largest_row = row_size;
+		row++;
+	}
+	row = 0;
+	LOG_TRACE("Largest row: %d", largest_row);
+	while (row < rows)
+	{
+		col = 0;
+		row_size = get_map_row_size(map->rows, row);
+		LOG_TRACE("Filling line %d of size %d", row, row_size);
+		while (col < row_size)
+		{
+			game->map[row][col] = get_map_value(map->rows, row, col); 
+			col++;
+		}
+		if (col < row_size)
+			LOG_TRACE("Filling rest with 1s");
+		while (col < largest_row)
+		{
+			game->map[row][col] = 1; 
+			col++;
+		}
+		if (col < MAX_COLS)
+			game->map[row][col] = ROW_END;
+		row++;
+	}
+	if (row < MAX_ROWS)
+	{
+		LOG_TRACE("Filling final row with -1s");
+		col = 0;
+		while (col < largest_row)
+		{
+			//@ASSUMPTION: ROW_END = não existem mais linhas
+			game->map[row][col] = ROW_END;
+			col++;
+		}
+	}
+	LOG_DEBUG_MAP_NUMS(game->map);
+	LOG_DEBUG("Success: Normalized jaggedd map");
 }
