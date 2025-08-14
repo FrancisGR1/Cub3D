@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
-//@TODO: transformar isto num macro!
-void LOG_DEBUG_MAP_NUMS(t_file_data *map)
+//@TODO: transformar estas funcs em macros!
+void LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map)
 {
 	for (size_t i = 0; i < map->rows->len; i++)
 	{
@@ -14,4 +14,28 @@ void LOG_DEBUG_MAP_NUMS(t_file_data *map)
 		}
 		LOG_TRACE("---");
 	}
+}
+
+void LOG_DEBUG_MAP_NUMS(int map[MAX_ROWS][MAX_COLS])
+{
+	if (LOG_LEVEL > LogLevel_DEBUG)
+		return ;
+	//@ASSUMPTION: -1 = fim da coluna
+	size_t i;
+	for (i = 0; i < MAX_ROWS && map[i][0] != ROW_END; i++)
+	{
+		printf("%2zu: ", i);
+		size_t j;
+		for (j = 0; j < MAX_COLS && map[i][j] != ROW_END; j++)
+		{
+			printf("%d", map[i][j]);
+		}
+		if (j < MAX_COLS)
+		{
+			printf("%d", map[i][j]);
+		}
+		printf("\n");
+	}
+	if (i < MAX_ROWS)
+		printf("%zu: %d\n", i, map[i][0]);
 }

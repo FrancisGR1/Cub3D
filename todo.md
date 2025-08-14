@@ -12,8 +12,8 @@ mudar mensagens de erros da libft para nada
 - [x] mudar nomes para que façam mais sentido
 - [x] reorganizar inicialização/alocação e destruição de recursos
 - [x] normalizar mapa: transformar dynamic_array em array 2D
-- [ ] pintar céu
-- [ ] pintar chão
+- [x] pintar céu
+- [x] pintar chão
 - [ ] raycast
 - como projetar texturas?
 - [ ] pintar texturas
