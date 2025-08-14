@@ -22,8 +22,8 @@
 # define ROW_END -1
 
 
-# define SCREENWIDTH 1280
-# define SCREENHEIGHT 1024
+# define SCREENWIDTH 1920
+# define SCREENHEIGHT 1080
 
 //@NOTE: this is where all the game data goes
 //(excluding extracted data from .cub)
@@ -31,6 +31,9 @@
 
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
+
+//@NOTE: 60º degrees in radians
+# define DEFAULT_FOV 1.04719755
 
 typedef struct s_rgb
 {
@@ -96,28 +99,32 @@ typedef struct s_ray
 	t_vec2d side_dist;
 	t_vec2d delta_dist;
 	t_vec2i step;
-	int perp_wall_dis; //@NOTE: corrected distance to avoid fish eye effect
+	int perp_wall_dist; //@NOTE: corrected distance to avoid fish eye effect
 	int side;
 	bool hit_wall;
 } t_ray;
 
-typedef struct s_draw_info
+typedef struct s_render_context
 {
 	int line_height;
 	int draw_start;
 	int draw_end;
-} t_draw_info;
+	int total_pixels;
+	int floor_color;
+	int ceiling_color;
+	//@TODO: colocar aqui o conteúdo de cada .xpm
+} t_render_context;
 
 typedef struct s_game
 {
 	t_arena *game_memory;
 	t_file_data *extracted_data;
 	t_window *win;
-	t_draw_info *draw;
+	t_render_context *render_ctx;
 	t_dynamic_array *jagged_map;
 	int map[MAX_ROWS][MAX_COLS];
 	t_player *player;
-	t_ray *r;
+	t_ray *ray;
 } t_game;
 
 
@@ -150,6 +157,8 @@ bool is_valid_input(int argc, char **argv);
 bool is_rgb_id(t_string *line);
 bool rgb_str_is_valid(t_string **colors, int colors_num);
 bool extract_rgb(t_file_data *map, t_string *id, t_string *colors);
+int rgb_to_int(t_rgb color);
+//
 // initialization
 t_file_data *init_extracted_data(void);
 //
@@ -172,20 +181,28 @@ t_window *alloc_init_window(t_arena *game_memory);
 
 
 
-// ====
-// Draw
-// ====
-void put_pixel(t_window *win, int x, int y, int color);
+// ======
+// Render
+// ======
+void render(t_game *game);
+void paint_background(t_window *win);
+t_render_context *alloc_init_render_ctx(t_arena *game_memory, t_window *win, t_file_data *extracted_data);
+
+
+
+// ======
+// Player
+// ======
+t_player *alloc_init_player(t_arena *game_memory);
+void set_player_position(t_player *player, double x, double y);
+void set_player_direction(t_player *player, size_t direction);
+
+
 
 // =======
 // Raycast
 // =======
-
-
-
-// ======
-// Render
-// ======
+t_ray *alloc_init_raycast(t_arena *game_memory);
 
 
 

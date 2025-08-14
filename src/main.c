@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	game = alloc_init_game(extracted_data);
+	render(game);
 	event_loop(game);
 	LOG_DEBUG("Success: exiting off main");
 	return 0;
