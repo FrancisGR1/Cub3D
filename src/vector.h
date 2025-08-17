@@ -19,4 +19,8 @@ typedef struct s_vec2d
 	double y;
 } t_vec2d;
 
-# endif /*VECTOR_H*/
+t_vec2f make_vec2f(float x, float y);
+t_vec2i make_vec2i(int x, int y);
+t_vec2d make_vec2d(double x, double y);
+
+# endif /* VECTOR_H */
