@@ -47,5 +47,5 @@ t_render_context *alloc_init_render_ctx(t_arena *game_memory, t_window *win, t_f
 	LOG_TRACE("Success: render ctx struct allocated/initialized");
 	return (render_ctx);
 }
-
+//
 //@TODO: draw textures

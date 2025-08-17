@@ -14,5 +14,6 @@ static void setup_event_listeners(t_window *win, t_game *game)
 {
 	LOG_DEBUG("Setup even listeners");
 	mlx_hook(win->mlx_win, 17, 0L, end_game, game);
-	mlx_hook(win->mlx_win, 2, 1L << 0, handle_key, game);
+	mlx_hook(win->mlx_win, 2, 1L<<0, key_press, game->player);
+	mlx_hook(win->mlx_win, 3, 1L<<1, key_release, game->player);
 }

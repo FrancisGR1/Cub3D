@@ -5,6 +5,7 @@
 #include "logger.h"
 #include "mlx.h"
 #include "vector.h"
+#include <X11/keysym.h>
 
 
 //@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
@@ -87,6 +88,12 @@ typedef struct s_player
 	t_vec2d position;
 	t_vec2d direction;
 	t_vec2d plane;
+	bool move_up;
+	bool move_down;
+	bool move_left;
+	bool move_right;
+	bool rotate_left;
+	bool rotate_right;
 	float fov;
 
 } t_player;
@@ -212,6 +219,8 @@ t_ray *alloc_init_raycast(t_arena *game_memory);
 void event_loop(t_game *game);
 // keys
 int	handle_key(int keycode, t_game *game);
+int key_release(int keycode, t_player *player);
+int key_press(int keycode, t_player *player);
 // free
 
 
