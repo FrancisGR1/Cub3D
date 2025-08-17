@@ -89,7 +89,7 @@ t_file_data *extract_file_data(const char *map_data_file_path, t_file_data *map)
 		LOG_INFO("Success: Map info extracted");
 		LOG_DEBUG("Textures:\n\t%s\n\t%s\n\t%s\n\t%s", map->textures[0]->data, map->textures[1]->data, map->textures[2]->data, map->textures[3]->data);
 		LOG_DEBUG("RGB: Ceiling: %d; Floor: %d", map->ceiling, map->floor);
-		LOG_DEBUG_MAP_NUMS(map);
+		LOG_DEBUG_JAGGED_MAP_NUMS(map);
 	}
 	close(fd);
 	return (map);
@@ -294,4 +294,3 @@ void cleanup_extracted_data(t_file_data *map)
 	free(map);
 	LOG_INFO("Success: Cleaned up map");
 }
-
