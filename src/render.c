@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/09 18:56:05 by frmiguel          #+#    #+#             */
+/*   Updated: 2025/09/09 19:03:13 by frmiguel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 
@@ -205,6 +217,11 @@ void draw_vertical_line(t_game *game, t_draw *d, int screen_x)
 	float tex_pos = (d->draw_start - (WINDOW_HEIGHT / 2.0) + (d->line_height / 2.0)) * tex_step;
 
 	LOG_TRACE("Paint vertical tex");
+	for (screen_y = 0; screen_y < d->draw_start; screen_y++)
+	{
+		unsigned int color = rgb_to_int(d->ceiling_color);
+		pixel_put(game->win, screen_x, screen_y, color);
+	}
 	for (screen_y = d->draw_start; screen_y <= d->draw_end; screen_y++)
 	{
 		int tex_y = (int)tex_pos;
@@ -218,28 +235,11 @@ void draw_vertical_line(t_game *game, t_draw *d, int screen_x)
 
 		tex_pos += tex_step;
 	}
-}
-
-
-//@TODO: mudar as vars abaixo para t_render_context
-void paint_background(t_window *win, t_draw *draw_info)
-{
-	unsigned int *pixels;
-	int total_pixels = win->width * win->height;
-	int ceiling_color = rgb_to_int(draw_info->ceiling_color);
-	int floor_color   = rgb_to_int(draw_info->floor_color);
-	int half = total_pixels / 2;
-
-	LOG_DEBUG("Painting background");
-	pixels = (unsigned int *)win->addr;
-
-	LOG_TRACE("Painting ceiling");
-	for (int i = 0; i < half; i++)
-		pixels[i] = ceiling_color;
-
-	LOG_TRACE("Painting floor");
-	for (int i = half; i < total_pixels; i++)
-		pixels[i] = floor_color;
+	for (; screen_y < WINDOW_HEIGHT; screen_y++)
+	{
+		unsigned int color = rgb_to_int(d->floor_color);
+		pixel_put(game->win, screen_x, screen_y, color);
+	}
 }
 
 t_draw *alloc_draw_info(t_arena *game_memory, t_file_data *extracted_data)
@@ -319,11 +319,12 @@ void render(t_game *game)
 	LOG_INFO("Render");
 	win = game->win;
 	//@TODO: passar isto para draw_vertical_line
-	paint_background(win, game->draw_info);
+	//paint_background(win, game->draw_info);
 	screen_x = 0;
 	LOG_DEBUG("Raycasting loop");
 	while (screen_x < WINDOW_WIDTH)
 	{
+		//@TODO: expandir esta parte ao reduzir raycasting()
 		raycasting(game, screen_x);
 		screen_x++;	
 	}

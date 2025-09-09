@@ -3,11 +3,11 @@
 - [x] Organizar texturas
 - [x] Bug no minimapa
 
-- [ ] Pintar céu/chão em draw_vertical_line
+- [x] Pintar céu/chão em draw_vertical_line
 - [ ] Pintar rays no minimapa
-- [ ] Separar código de bónus/mandatório
 - [ ] Passar todos os testes
 - [ ] Verificar com eval sheet
 - [ ] Testar leaks
 - [ ] Adicionar teste com texturas erradas
+- [ ] Separar código de bónus/mandatório
 - [ ] Norminette
