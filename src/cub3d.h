@@ -5,6 +5,8 @@
 #include "logger.h"
 #include "mlx.h"
 #include "vector.h"
+#include <X11/keysym.h>
+#include <math.h>
 
 
 //@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
@@ -22,8 +24,10 @@
 # define ROW_END -1
 
 
-# define SCREENWIDTH 1920
-# define SCREENHEIGHT 1080
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
+
+# define MINIMAP_SCALE 10
 
 //@NOTE: this is where all the game data goes
 //(excluding extracted data from .cub)
@@ -58,14 +62,19 @@ enum e_extraction_phase
 	EXTRACTION_FINISHED,
 };
 
+
 typedef struct s_file_data
 {
+	//@REFACTOR: isto deve ser t_texture
 	t_string *textures[MAX_TEXTURES];
 	t_rgb floor;
 	t_rgb ceiling;
 	t_dynamic_array *rows;
 	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
+	//@REFACTOR implementar isto abaixo
+	t_vec2i player_pos;
+	t_vec2i player_dir;
 	bool parser_error;
 } t_file_data;
 
@@ -82,47 +91,78 @@ typedef struct s_window
 	int width;
 } t_window;
 
+typedef struct	s_texture
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	int			width;
+	int			height;
+}				t_texture;
+
 typedef struct s_player
 {
-	t_vec2d position;
-	t_vec2d direction;
-	t_vec2d plane;
-	float fov;
+	t_vec2d		pos; /* posicao no jogador no mapa (5, 5)*/
+	t_vec2d		dir; /* direcao onde o jogador esta olhando (-1, 0) */
+	t_vec2d		plane; /* vetor perpendicular a direction: define o FOV */
+	double		move_speed; /* unidades por frame */
+	double		rot_speed; /* radianos por frame para rotacionar */
+	double		collision_buffer; /* distancia para nao encostar na parede */
+	// @TODO: fov?
+	double		fov;
+	bool 		move_up;
+	bool 		move_down;
+	bool 		move_left;
+	bool 		move_right;
+	bool 		rot_left;
+	bool 		rot_right;
 
 } t_player;
 
 typedef struct s_ray
 {
-	t_vec2d direction;
-	int camera_x;
-	t_vec2i map_position;
-	t_vec2d side_dist;
-	t_vec2d delta_dist;
-	t_vec2i step;
-	int perp_wall_dist; //@NOTE: corrected distance to avoid fish eye effect
-	int side;
-	bool hit_wall;
+	t_vec2d		dir; /* direcao do raio */
+	double		camera_pixel;  /* -1 .. +1 para cada coluna */
+	t_vec2i		map_pos; /* celula atual do mapa (x, y) */
+	t_vec2d		side_dist;  /* distancia ate a proxima borda (x, y) */
+	t_vec2d		delta_dist; /* distancia para atravessar 1 celula (x, y) */
+	t_vec2i		step; /* +1 ou -1 para X e Y */
+	double		perp_dist; /* distancia perpendicular (corrige fish-eye) */
+	int			hit_side; /* 0 = vertical (X), 1 = horizontal (Y) */
 } t_ray;
 
-typedef struct s_render_context
+typedef struct s_draw
 {
-	int line_height;
-	int draw_start;
-	int draw_end;
-	int total_pixels;
-	int floor_color;
-	int ceiling_color;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	t_rgb			floor_color;
+	t_rgb			ceiling_color;
+	int			tex_x;
+	float			wall_x;
+	t_texture		*tex;
 	//@TODO: colocar aqui o conteúdo de cada .xpm
-} t_render_context;
+} t_draw;
+
+typedef struct	s_minimap
+{
+	int			x;
+	int			y;
+	int			size;
+	int			color;
+}				t_minimap;
 
 typedef struct s_game
 {
 	t_arena *game_memory;
 	t_file_data *extracted_data;
 	t_window *win;
-	t_render_context *render_ctx;
+	t_draw *draw_info;
 	t_dynamic_array *jagged_map;
 	int map[MAX_ROWS][MAX_COLS];
+	t_texture textures[MAX_TEXTURES];
 	t_player *player;
 	t_ray *ray;
 } t_game;
@@ -172,6 +212,7 @@ void cleanup_extracted_data(t_file_data *map);
 // ===========
 t_game *alloc_init_game(t_file_data *map);
 int	end_game(t_game *game);
+void	update(t_game *game);
 
 
 // ======
@@ -185,8 +226,10 @@ t_window *alloc_init_window(t_arena *game_memory);
 // Render
 // ======
 void render(t_game *game);
-void paint_background(t_window *win);
-t_render_context *alloc_init_render_ctx(t_arena *game_memory, t_window *win, t_file_data *extracted_data);
+void paint_background(t_window *win, t_draw *draw_info);
+t_draw *alloc_draw_info(t_arena *game_memory, t_file_data *extracted_data);
+void set_draw_info(t_draw *d, t_ray *ray, t_player *player, t_texture texture[MAX_TEXTURES]);
+void draw_vertical_line(t_game *game, t_draw *d, int screen_x);
 
 
 
@@ -202,16 +245,20 @@ void set_player_direction(t_player *player, size_t direction);
 // =======
 // Raycast
 // =======
-t_ray *alloc_init_raycast(t_arena *game_memory);
+t_ray *alloc_ray(t_arena *game_memory);
+void	raycasting(t_game *game, int screen_x);
 
 
 
 // ==========
 // Event Loop
 // ==========
-void event_loop(t_game *game);
+void setup_event_listeners(t_window *win, t_game *game);
+int event_loop(t_game *game);
 // keys
 int	handle_key(int keycode, t_game *game);
+int	key_press(int keycode, t_game *game);
+int	key_release(int keycode, t_game *game);
 // free
 
 

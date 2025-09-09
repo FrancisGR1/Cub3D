@@ -11,7 +11,7 @@ MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
 # log level default 
-LOG_LEVEL ?= 0
+LOG_LEVEL ?= 3
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources

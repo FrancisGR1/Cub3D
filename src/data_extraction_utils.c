@@ -22,6 +22,7 @@ int map_value_from_char(char c)
 
 bool extract_texture(t_file_data *map, t_string *id, t_string *texture_path)
 {
+	//@TODO: meter texturas diretamentmeter texturas diretamente
 	size_t idx;
 
 	LOG_DEBUG("Extracting texture path: %s %s", id->data, texture_path->data);

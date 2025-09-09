@@ -2,8 +2,36 @@
 
 static void normalize_jagged_map(t_game *game, t_file_data *map);
 
+//@TODO: remover todos
+
+bool	load_textures(t_game *game)
+{
+	t_texture	tex;
+	int idx;
+
+	idx = 0;
+	while (idx < MAX_TEXTURES)
+	{
+		tex.img = mlx_xpm_file_to_image(game->win->mlx, game->extracted_data->textures[idx]->data, &tex.width, &tex.height);
+		if (tex.img == NULL)
+		{
+			LOG_ERROR("Error: failed xpm to image conversion: %s", game->extracted_data->textures[idx]->data);
+			return (false);
+		}
+		tex.addr = mlx_get_data_addr(tex.img, &tex.bits_per_pixel, &tex.line_length, &tex.endian);
+		game->textures[idx] = tex;
+			idx++;
+	}
+	return (true);
+}
+
+
 t_game *alloc_init_game(t_file_data *map)
 {
+	//@TODO: falta carregar:
+	//texturas -> 1º no parser
+	//mapa -> onde?
+	//direção/posição do jogador -> 1º no parser -> dps no alloc_init_player()
 	t_game *game;
 	t_arena *game_memory;
 
@@ -14,13 +42,19 @@ t_game *alloc_init_game(t_file_data *map)
 	game->extracted_data = map;
 	game->win = alloc_init_window(game->game_memory);
 	game->player = alloc_init_player(game->game_memory);
-	game->render_ctx = alloc_init_render_ctx(game->game_memory, game->win, map);
-	game->ray = alloc_init_raycast(game->game_memory);
+	game->draw_info = alloc_draw_info(game->game_memory, map);
+	game->ray = alloc_ray(game->game_memory);
 	normalize_jagged_map(game, map);
 	LOG_DEBUG("Success: initialized game struct");
+	if (!load_textures(game))
+	{
+		end_game(game);
+		return (NULL);
+	}
 	return (game);
 }
 
+//@TODO: limpar texturas
 int	end_game(t_game *game)
 {
 	LOG_INFO("Ending game");
@@ -38,6 +72,20 @@ int	end_game(t_game *game)
 	arena_destroy(game->game_memory);
 	LOG_DEBUG("Success: ended game - exiting");
 	exit(EXIT_SUCCESS);
+}
+
+void cleanup_textures(t_game *game)
+{
+	int idx;
+	
+	if (game == NULL)
+		return ;
+	idx = 0;
+	while (idx < MAX_TEXTURES && game->textures[idx].img != NULL)
+	{
+		mlx_destroy_image(game->win->mlx_win, game->textures[idx].img);
+		idx++;
+	}
 }
 
 //@TODO: guardar posição do jogador e substituir por 0
@@ -75,9 +123,11 @@ static void normalize_jagged_map(t_game *game, t_file_data *map)
 			if (game->map[row][col] != 0 && game->map[row][col] != 1)
 			{
 				//@ASSUMPTION se não for 1 ou 0, é a direção/posição do ray
-				//@REFACTOR: isto não devia ser feito aqui 
+				//@REFACTOR: isto não devia ser feito aqui, mas sim do 
+				//lado do parser
 				set_player_position(game->player, col, row);
 				set_player_direction(game->player, game->map[row][col]);
+				game->map[row][col] = 0;
 			}
 			col++;
 		}

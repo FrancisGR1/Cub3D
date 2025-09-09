@@ -1,27 +1,13 @@
-Avaliação:
-verificar @TEMP antes da avaliação
-remover logs
-mudar mensagens de erros da libft para nada
-    verifica os erros de t_string, dynamic_arrays e... mais algum?
+- [x] Colocar valores do player (dir, pos)
+- [x] Coloar valores do chão/céu na draw struct
+- [x] Organizar texturas
+- [x] Bug no minimapa
 
-### [[Cub3D]]
-- [x] limpeza (close window);
-- [x] criar o layout da estrutura principal
-- [x] setup image?
-- [x] reorganizar structs
-- [x] mudar nomes para que façam mais sentido
-- [x] reorganizar inicialização/alocação e destruição de recursos
-- [x] normalizar mapa: transformar dynamic_array em array 2D
-- [x] pintar céu
-- [x] pintar chão
-- [ ] raycast
-- como projetar texturas?
-- [ ] pintar texturas
-- [ ] apanhar teclas:
-- [ ] ESC
-- [ ] W
-- [ ] S
-- [ ] A
-- [ ] D
-- [ ] ->
-- [ ] <-
+- [ ] Pintar céu/chão em draw_vertical_line
+- [ ] Pintar rays no minimapa
+- [ ] Separar código de bónus/mandatório
+- [ ] Passar todos os testes
+- [ ] Verificar com eval sheet
+- [ ] Testar leaks
+- [ ] Adicionar teste com texturas erradas
+- [ ] Norminette
