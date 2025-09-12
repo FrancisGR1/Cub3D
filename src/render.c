@@ -279,6 +279,8 @@ void	draw_minimap(t_game *game)
 {
 	t_minimap m;
 
+	if (!BONUS)
+		return ;
 	m.y = 0;
 	/* percorro o mapa e desenho um quadrado com a cor baseado na celula */
 	while (game->map[m.y][0] != -1)

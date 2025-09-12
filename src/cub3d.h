@@ -12,6 +12,10 @@
 # define LOG_LEVEL 7
 #endif
 
+#ifndef BONUS
+# define BONUS 0
+# endif
+
 //@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
 //de modo a evitar realocações, embora os maps que levem a isso sejam raros
 # define MAP_INITIAL_ROWS 30

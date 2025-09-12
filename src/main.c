@@ -5,6 +5,7 @@ int main(int argc, char **argv)
 	t_file_data *extracted_data;
 	t_game *game;
 
+	printf("bonus: %d\n", BONUS);
 	logger_initConsoleLogger(stderr);
 	logger_setLevel(LOG_LEVEL);
 	if (LOG_LEVEL < 7)

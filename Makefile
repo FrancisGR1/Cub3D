@@ -14,6 +14,11 @@ LOGGER_DIR = libs/c-logger/src
 LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
+
+# bonus for the project
+BONUS ?= 0
+CFLAGS += -DBONUS=$(BONUS)
+
 # sources
 SRC_FILES = \
 	    accessors.c \
@@ -113,6 +118,11 @@ fclean: clean
 	$(MAKE) -C $(MLX_DIR) fclean
 
 re: fclean all
+
+bonus:
+	rm -f $(NAME)
+	$(MAKE) all BONUS=1
+
 
 fast: clean $(NAME)
 
