@@ -8,6 +8,9 @@
 #include <X11/keysym.h>
 #include <math.h>
 
+#ifndef LOG_LEVEL
+# define LOG_LEVEL 7
+#endif
 
 //@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos? 
 //de modo a evitar realocações, embora os maps que levem a isso sejam raros
@@ -65,16 +68,12 @@ enum e_extraction_phase
 
 typedef struct s_file_data
 {
-	//@REFACTOR: isto deve ser t_texture
 	t_string *textures[MAX_TEXTURES];
 	t_rgb floor;
 	t_rgb ceiling;
 	t_dynamic_array *rows;
 	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
-	//@REFACTOR implementar isto abaixo
-	t_vec2i player_pos;
-	t_vec2i player_dir;
 	bool parser_error;
 } t_file_data;
 
@@ -110,7 +109,6 @@ typedef struct s_player
 	double		move_speed; /* unidades por frame */
 	double		rot_speed; /* radianos por frame para rotacionar */
 	double		collision_buffer; /* distancia para nao encostar na parede */
-	// @TODO: fov?
 	double		fov;
 	bool 		move_up;
 	bool 		move_down;
@@ -211,7 +209,7 @@ void cleanup_extracted_data(t_file_data *map);
 // Game Struct
 // ===========
 t_game *alloc_init_game(t_file_data *map);
-int	end_game(t_game *game);
+int	end_game(t_game *game, int exit_code);
 void	update(t_game *game);
 
 
@@ -256,7 +254,6 @@ void	raycasting(t_game *game, int screen_x);
 void setup_event_listeners(t_window *win, t_game *game);
 int event_loop(t_game *game);
 // keys
-int	handle_key(int keycode, t_game *game);
 int	key_press(int keycode, t_game *game);
 int	key_release(int keycode, t_game *game);
 // free

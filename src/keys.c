@@ -1,20 +1,9 @@
 #include "cub3d.h"
 
-int	handle_key(int keycode, t_game *game)
-{
-	LOG_DEBUG("Handling key");
-	//@TODO:
-	//<- -> arrow keys
-	//WASD
-	//ESC
-	(void) keycode, (void) game;
-	return (EXIT_SUCCESS);
-}
-
 int	key_press(int keycode, t_game *game)
 {
 	if (keycode == XK_Escape)
-		end_game(game);
+		end_game(game, EXIT_SUCCESS);
 	if (keycode == XK_w)
 		game->player->move_up = true;
 	if (keycode == XK_s)

@@ -219,7 +219,7 @@ static bool extract_file_data_nums(t_file_data *map, t_string *line)
 		return (false);
 	}
 	//@ASSUMPTION: os espaços à esq., dir. e meio foram eliminados
-	if (line->size > MAX_COLS)
+	if (line->size > MAX_COLS - 1)
 	{
 		LOG_ERROR("Error: line size larger than max cols: %zu > %zu", line->size, MAX_COLS);
 		return (false);

@@ -21,6 +21,12 @@ bool check_if_map_nums_are_valid(t_file_data *map)
 		map->parser_error = true;
 		return (false);
 	}
+	if (map->rows->len > MAX_ROWS - 1)
+	{
+		LOG_FATAL("Too many rows: %zu (max: %zu)", map->rows->len, MAX_ROWS - 1);
+		map->parser_error = true;
+		return (false);
+	}
 	if (map->parser_error == true)
 	{
 		LOG_ERROR("Error: there was a parse error before");

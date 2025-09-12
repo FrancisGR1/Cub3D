@@ -25,13 +25,23 @@ bool	load_textures(t_game *game)
 	return (true);
 }
 
+void cleanup_textures(t_window *win, t_texture textures[MAX_TEXTURES])
+{
+	size_t idx;
+
+	LOG_DEBUG("Cleaning textures");
+	idx = 0;
+	while (idx < MAX_TEXTURES)
+	{
+		LOG_TRACE("Cleaning tex: %zu", idx);
+		if (textures[idx].img != NULL)
+			mlx_destroy_image(win->mlx, textures[idx].img);
+		idx++;
+	}
+}
 
 t_game *alloc_init_game(t_file_data *map)
 {
-	//@TODO: falta carregar:
-	//texturas -> 1º no parser
-	//mapa -> onde?
-	//direção/posição do jogador -> 1º no parser -> dps no alloc_init_player()
 	t_game *game;
 	t_arena *game_memory;
 
@@ -47,19 +57,16 @@ t_game *alloc_init_game(t_file_data *map)
 	normalize_jagged_map(game, map);
 	LOG_DEBUG("Success: initialized game struct");
 	if (!load_textures(game))
-	{
-		end_game(game);
-		return (NULL);
-	}
+		end_game(game, EXIT_FAILURE);
 	return (game);
 }
 
-//@TODO: limpar texturas
-int	end_game(t_game *game)
+int	end_game(t_game *game, int exit_code)
 {
 	LOG_INFO("Ending game");
 	if (game == NULL)
 		LOG_FATAL("GAME NULL!");
+	cleanup_textures(game->win, game->textures); 
 	LOG_TRACE("Mlx: destroying image");
 	mlx_destroy_image(game->win->mlx, game->win->img);
 	LOG_TRACE("Mlx: destroying window");
@@ -70,22 +77,11 @@ int	end_game(t_game *game)
 	free(game->win->mlx);
 	cleanup_extracted_data(game->extracted_data);
 	arena_destroy(game->game_memory);
-	LOG_DEBUG("Success: ended game - exiting");
-	exit(EXIT_SUCCESS);
-}
-
-void cleanup_textures(t_game *game)
-{
-	int idx;
-	
-	if (game == NULL)
-		return ;
-	idx = 0;
-	while (idx < MAX_TEXTURES && game->textures[idx].img != NULL)
-	{
-		mlx_destroy_image(game->win->mlx_win, game->textures[idx].img);
-		idx++;
-	}
+	if (exit_code == 0)
+		LOG_DEBUG("Success: ended game - exiting");
+	else
+		ft_fprintf(STDERR, "Error\n");
+	exit(exit_code);
 }
 
 //@TODO: guardar posição do jogador e substituir por 0

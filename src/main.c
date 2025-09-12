@@ -27,8 +27,6 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	game = alloc_init_game(extracted_data);
-	if (game == NULL)
-		return (1);
 	setup_event_listeners(game->win, game);
 	mlx_loop(game->win->mlx);
 	LOG_DEBUG("Success: exiting off main");

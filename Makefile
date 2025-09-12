@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra #-g
 OPTIMIZE = -O3
 
 # directories
@@ -11,7 +11,7 @@ MLX_DIR = libs/minilibx-linux
 LOGGER_DIR = libs/c-logger/src
 
 # log level default 
-LOG_LEVEL ?= 3
+LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 # sources
@@ -64,7 +64,7 @@ LIBFT_LINKS = -L$(LIBFT_DIR) -lft
 INCLUDES = -I$(SRC_DIR) -I$(LOGGER_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -I/usr/include
 
 # tests
-TEST_MAP = assets/maps/subject_pdf_example.cub
+TEST_MAP = assets/maps/textures_faulty_xpm_content.cub
 
 # Colors for pretty output
 RED = \033[0;31m
@@ -117,7 +117,7 @@ re: fclean all
 fast: clean $(NAME)
 
 leaks: $(NAME)
-	valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
+	valgrind --suppressions=val.supp --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
 
 norm:
 	@norminette $(SRC_DIR) | grep -E "(Error|Warning)" || echo "$(GREEN)Norminette OK!$(RESET)"

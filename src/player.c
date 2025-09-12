@@ -28,7 +28,7 @@ t_player *alloc_init_player(t_arena *game_memory)
 void set_player_position(t_player *player, double x, double y)
 {
 	LOG_DEBUG("Setting player position");
-	player->pos = make_vec2d(x, y);
+	player->pos = make_vec2d(x + 0.5, y + 0.5);
 	LOG_TRACE("Success: player position set: %f %f", x, y);
 }
 
