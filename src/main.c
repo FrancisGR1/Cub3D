@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 		ft_fprintf(STDERR, "Error\n");
 		return (1);
 	}
-	extracted_data = init_extracted_data();
+	extracted_data = alloc_init_extracted_data();
 	if (extracted_data == NULL)
 		return (1);
 	extract_file_data(argv[1], extracted_data);

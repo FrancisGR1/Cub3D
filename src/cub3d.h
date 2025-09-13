@@ -28,6 +28,7 @@
 
 //@NOTE: o -1 sinaliza que chegámos ao fim da linha
 //e mapa (se for map[i][0] == -1)
+//@TODO: substituir todos os -1 por ROW_END
 # define ROW_END -1
 
 
@@ -62,21 +63,12 @@ enum e_textures
 	MAX_TEXTURES
 };
 
-enum e_extraction_phase
-{
-	TEXTURES_AND_COLORS = 0,
-	MAP_VALUES,
-	EXTRACTION_FINISHED,
-};
-
-
 typedef struct s_file_data
 {
 	t_string *textures[MAX_TEXTURES];
 	t_rgb floor;
 	t_rgb ceiling;
 	t_dynamic_array *rows;
-	enum e_extraction_phase extraction_phase;
 	bool player_position_is_set;
 	bool parser_error;
 } t_file_data;
@@ -145,7 +137,6 @@ typedef struct s_draw
 	int			tex_x;
 	float			wall_x;
 	t_texture		*tex;
-	//@TODO: colocar aqui o conteúdo de cada .xpm
 } t_draw;
 
 typedef struct	s_minimap
@@ -176,19 +167,19 @@ typedef struct s_game
 // ===============
 //
 // data extraction
-t_file_data *extract_file_data(const char *map_data_file_path, t_file_data *map);
+t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata);
 //
 // utils
-bool extract_texture(t_file_data *map, t_string *id, t_string *texture_path);
+bool extract_texture(t_file_data *fdata, t_string *id, t_string *texture_path);
 int map_value_from_char(char c);
-bool should_extract_textures(t_file_data *map);
-bool should_extract_colors(t_file_data *map);
+bool should_extract_textures(t_file_data *fdata);
+bool should_extract_colors(t_file_data *fdata);
 //
 // validate map data
 bool is_valid_map_num(char c);
 bool is_valid_map_player_pos(char c);
 bool starts_with_texture_id(t_string *line);
-bool check_if_map_nums_are_valid(t_file_data *map);
+void check_if_map_nums_are_valid(t_file_data *fdata);
 // validate file
 bool is_valid_file_path(const char *path);
 bool is_valid_extension(const char *path, const char *extension);
@@ -198,21 +189,20 @@ bool is_valid_input(int argc, char **argv);
 // rgb
 bool is_rgb_id(t_string *line);
 bool rgb_str_is_valid(t_string **colors, int colors_num);
-bool extract_rgb(t_file_data *map, t_string *id, t_string *colors);
+bool extract_rgb(t_file_data *fdata, t_string *id, t_string *colors);
 int rgb_to_int(t_rgb color);
 //
 // initialization
-t_file_data *init_extracted_data(void);
+t_file_data *alloc_init_extracted_data(void);
 //
 // free
-//@TODO: mudar nome cleanup_extracted_map_data
-void cleanup_extracted_data(t_file_data *map);
+void cleanup_extracted_data(t_file_data *fdata);
 
 
 // ===========
 // Game Struct
 // ===========
-t_game *alloc_init_game(t_file_data *map);
+t_game *alloc_init_game(t_file_data *fdata);
 int	end_game(t_game *game, int exit_code);
 void	update(t_game *game);
 

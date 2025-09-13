@@ -8,8 +8,14 @@
 - [x] Adicionar teste com texturas erradas - adicionar "Error\n"
 - [x] verificar se fd é fechado (valgrind track fds)
 - [x] Testar manualmente todo o tipo de mapas, sobretudo o 100x100
-- [ ] Separar código de bónus/mandatório
+- [x] Separar código de bónus/mandatório
 - [ ] Norminette
+    Refactor
+    Reorganização do header
+    Nomes mais intuitivos
+        event_loop => game_loop
+        map => file_data // fdata
+        event_listeners => hooks
 - [ ] Verificar com eval sheet
 
 ??

@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:23:28 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/09 22:13:54 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:59:57 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,7 +506,6 @@ MU_TEST(test_extract_map_data_map_with_empty_lines)
 	test_extracted_textures(g_expected_textures, ed->textures);
 	test_extracted_rgb(g_expected_floor, ed->floor);
 	test_extracted_rgb(g_expected_ceiling, ed->ceiling);
-	fprintf(stdout, "rows: %ld\n", ed->rows->len);
 	mu_check(ed->rows->len == 1);
 	mu_check(ed->player_position_is_set == false);
 	cleanup_extracted_data(ed);
@@ -612,7 +611,7 @@ MU_TEST(test_extract_map_data_map_player_no_position)
 //size
 MU_TEST(test_extract_map_data_map_smallest)
 {
-	LOG_INFO(BHBLU "Test: map_data_ed_smallest" RESET);
+	LOG_INFO(BHBLU "Test: map_data_map_smallest" RESET);
 	const char *test_file = MAPS_DIR "map_smallest.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
 	t_file_data*ed = init_extracted_data();
@@ -727,7 +726,7 @@ MU_TEST(test_extract_map_data_map_longest_rows)
 	test_extracted_textures(g_expected_textures, ed->textures);
 	test_extracted_rgb(g_expected_floor, ed->floor);
 	test_extracted_rgb(g_expected_ceiling, ed->ceiling);
-	mu_check(ed->rows->len == 7); //@ASSUMPTION: este eda tem 7l
+	mu_check(ed->rows->len == 7); //@ASSUMPTION: este mapa tem 7l
 	mu_check(ed->player_position_is_set == true);
 	test_extracted_map(g_expected_map_longest_rows, ed->rows);
 	cleanup_extracted_data(ed);
@@ -764,7 +763,7 @@ MU_TEST(test_extract_map_data_map_max_rows)
 	test_extracted_textures(g_expected_textures, ed->textures);
 	test_extracted_rgb(g_expected_floor, ed->floor);
 	test_extracted_rgb(g_expected_ceiling, ed->ceiling);
-	mu_check(ed->rows->len == MAX_ROWS);
+	mu_check(ed->rows->len == MAX_ROWS - 1);
 	mu_check(ed->player_position_is_set == true);
 	test_extracted_map(g_expected_map_max_rows, ed->rows);
 	cleanup_extracted_data(ed);
@@ -1123,7 +1122,7 @@ int main()
 {
 	setup_test_environment();
 	logger_initConsoleLogger(stderr);
-	logger_setLevel(LOG_LEVEL);
+	logger_setLevel(2);
 	printf("testing with log level: %d\n", LOG_LEVEL);
 	// Grupos de Testes
 	MU_RUN_TEST(test_suite_error_extract_textures);

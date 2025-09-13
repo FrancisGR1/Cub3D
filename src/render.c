@@ -184,7 +184,6 @@ void set_draw_info(t_draw *d, t_ray *ray, t_player *player, t_texture texture[MA
 		d->tex_x = d->tex->width - d->tex_x - 1;
 }
 
-// @TODO: deve desenhar o céu/chão
 void draw_vertical_line(t_game *game, t_draw *d, int screen_x)
 {
 	LOG_DEBUG("Draw Vertical Line");
@@ -197,7 +196,6 @@ void draw_vertical_line(t_game *game, t_draw *d, int screen_x)
 	if (d->draw_end >= WINDOW_HEIGHT)
 		d->draw_end = WINDOW_HEIGHT - 1;
 
-	//@TODO: mudar para textura escolhoia
 	LOG_TRACE("Getting wall texture");
 	t_texture *tex = get_wall_texture(game->ray, game->textures);
 
