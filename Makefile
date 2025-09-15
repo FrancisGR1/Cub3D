@@ -16,8 +16,9 @@ CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 
 # bonus for the project
-BONUS ?= 0
-CFLAGS += -DBONUS=$(BONUS)
+ifdef BONUS
+    CFLAGS += -DBONUS=1
+endif
 
 # sources
 SRC_FILES = \
@@ -128,8 +129,13 @@ re: fclean all
 
 bonus:
 	rm -f $(NAME)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) all BONUS=1
 
+.PHONY: tests
+tests:
+	cd tests/ && ./test_extraction.sh && ./test_extraction.out && cd ..
+	cd tests/ && ./test_errors.sh
 
 fast: clean $(NAME)
 
