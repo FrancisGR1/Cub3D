@@ -1,7 +1,7 @@
-NO assets/textures/bricks.xpm
-SO assets/textures/bricks.xpm
-WE assets/textures/bricks.xpm
-EA assets/textures/bricks.xpm
+NO assets/textures/wall_n.xpm
+SO assets/textures/wall_s.xpm
+WE assets/textures/wall_w.xpm
+EA assets/textures/wall_e.xpm
 F 220,100,0
 C 225,30,0
  1

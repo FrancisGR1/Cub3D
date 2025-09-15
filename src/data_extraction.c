@@ -89,7 +89,7 @@ t_file_data *extract_file_data(const char *map_data_file_path, t_file_data *map)
 		LOG_INFO("Success: Map info extracted");
 		LOG_DEBUG("Textures:\n\t%s\n\t%s\n\t%s\n\t%s", map->textures[0]->data, map->textures[1]->data, map->textures[2]->data, map->textures[3]->data);
 		LOG_DEBUG("RGB: Ceiling: %d; Floor: %d", map->ceiling, map->floor);
-		LOG_DEBUG_MAP_NUMS(map);
+		LOG_DEBUG_JAGGED_MAP_NUMS(map);
 	}
 	close(fd);
 	return (map);
@@ -219,7 +219,7 @@ static bool extract_file_data_nums(t_file_data *map, t_string *line)
 		return (false);
 	}
 	//@ASSUMPTION: os espaços à esq., dir. e meio foram eliminados
-	if (line->size > MAX_COLS)
+	if (line->size > MAX_COLS - 1)
 	{
 		LOG_ERROR("Error: line size larger than max cols: %zu > %zu", line->size, MAX_COLS);
 		return (false);
@@ -294,4 +294,3 @@ void cleanup_extracted_data(t_file_data *map)
 	free(map);
 	LOG_INFO("Success: Cleaned up map");
 }
-

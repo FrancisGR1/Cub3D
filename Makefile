@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra #-g
 OPTIMIZE = -O3
 
 # directories
@@ -14,20 +14,28 @@ LOGGER_DIR = libs/c-logger/src
 LOG_LEVEL ?= 7
 CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
+
+# bonus for the project
+BONUS ?= 0
+CFLAGS += -DBONUS=$(BONUS)
+
 # sources
 SRC_FILES = \
 	    accessors.c \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
-	    draw.c \
 	    event_loop.c \
 	    game.c \
 	    is_valid.c \
 	    is_valid_p2.c \
 	    keys.c \
 	    main.c \
+	    player.c \
+	    raycast.c \
+	    render.c \
 	    rgb.c \
+	    vector.c \
 	    window.c
 
 # need this for print debugging
@@ -61,7 +69,7 @@ LIBFT_LINKS = -L$(LIBFT_DIR) -lft
 INCLUDES = -I$(SRC_DIR) -I$(LOGGER_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -I/usr/include
 
 # tests
-TEST_MAP = assets/maps/subject_pdf_example.cub
+TEST_MAP = assets/maps/textures_faulty_xpm_content.cub
 
 # Colors for pretty output
 RED = \033[0;31m
@@ -111,10 +119,15 @@ fclean: clean
 
 re: fclean all
 
+bonus:
+	rm -f $(NAME)
+	$(MAKE) all BONUS=1
+
+
 fast: clean $(NAME)
 
 leaks: $(NAME)
-	valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
+	valgrind --suppressions=val.supp --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
 
 norm:
 	@norminette $(SRC_DIR) | grep -E "(Error|Warning)" || echo "$(GREEN)Norminette OK!$(RESET)"

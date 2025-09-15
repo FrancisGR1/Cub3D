@@ -142,3 +142,8 @@ static int count_comas(t_string *colors)
 	}
 	return (comas);
 }
+
+int rgb_to_int(t_rgb color)
+{
+    return ((color.r << 16) | (color.g << 8) | color.b);
+}

@@ -153,7 +153,6 @@ echo "==========="
 echo "SHOULD PASS"
 echo "==========="
 printf 'Expecting: Nothing in std error; Exit code always 0; No leaks\n'
-
 test_should_pass "map_longest_rows.cub"
 test_should_pass "map_max_rows.cub"
 test_should_pass "map_multiple_spaces_in_each_line.cub"
@@ -171,6 +170,7 @@ echo "==========="
 echo "SHOULD FAIL"
 echo "==========="
 printf 'Expecting: \"Error\\n\" in std error; Exit code always 1; No leaks\n'
+test_should_fail "textures_faulty_xpm_content.cub"
 test_should_fail "colors_1_string.cub"
 test_should_fail "colors_above_255.cub"
 test_should_fail "colors_below_0.cub"
