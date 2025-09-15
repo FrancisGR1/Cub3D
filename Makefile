@@ -25,17 +25,24 @@ SRC_FILES = \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
-	    event_loop.c \
+	    draw_utils.c \
+	    draw_vertical.c \
+	    game_loop.c \
 	    game.c \
 	    is_valid.c \
 	    is_valid_p2.c \
 	    keys.c \
 	    main.c \
+	    minimap_bonus.c \
+	    normalize_map.c \
 	    player.c \
 	    raycast.c \
 	    render.c \
 	    rgb.c \
+	    textures.c \
+	    update.c \
 	    vector.c \
+	    vector_operations.c \
 	    window.c
 
 # need this for print debugging

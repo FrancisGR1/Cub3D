@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 15:07:02 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/13 19:29:39 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/15 19:15:28 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	map_value_from_char(char c)
 	}
 }
 
-bool	extract_texture(t_file_data *fdata, t_string *id, t_string *texture_path)
+bool	extract_texture(t_file_data *fdata, t_string *id,
+		t_string *texture_path)
 {
 	size_t	idx;
 

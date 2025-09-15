@@ -87,7 +87,7 @@ MU_TEST(test_extract_map_data_textures_2_equal_ids)
 	LOG_INFO(BHBLU "textures_2_equal_ids" RESET);
 	const char *test_file = MAPS_DIR "textures_error_2_equal_ids.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data *ed = init_extracted_data();
+	t_file_data *ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	//@TODO este check mais os dois últimos antes de cleanup_map() 
@@ -111,7 +111,7 @@ MU_TEST(test_extract_map_data_textures_wrong_id)
 	// testar 2 ids das iguais das texturas
 	const char *test_file = MAPS_DIR "textures_error_wrong_id.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -133,7 +133,7 @@ MU_TEST(test_extract_map_data_textures_wrong_path)
 	// testar 2 ids das iguais das texturas
 	const char *test_file = MAPS_DIR "textures_error_wrong_path.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -155,7 +155,7 @@ MU_TEST(test_extract_map_data_textures_wrong_extension)
 	// testar 2 ids das iguais das texturas
 	const char *test_file = MAPS_DIR "textures_error_wrong_extension.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -177,7 +177,7 @@ MU_TEST(test_extract_map_data_textures_more_than_2_strings)
 	// testar 2 ids das iguais das texturas
 	const char *test_file = MAPS_DIR "textures_error_more_than_2_strings.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -199,7 +199,7 @@ MU_TEST(test_extract_map_data_textures_1_string)
 	// testar 2 ids das iguais das texturas
 	const char *test_file = MAPS_DIR "textures_error_1_string.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -232,7 +232,7 @@ MU_TEST(test_extract_map_data_colors_more_than_3_values)
 	LOG_INFO(BHBLU "Test: colors_more_than_3_values" RESET);
 	const char *test_file = MAPS_DIR "colors_more_than_3_values.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data *ed = init_extracted_data();
+	t_file_data *ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -250,7 +250,7 @@ MU_TEST(test_extract_map_data_colors_less_than_3_values)
 	LOG_INFO(BHBLU "Test: colors_less_than_3_values" RESET);
 	const char *test_file = MAPS_DIR "colors_less_than_3_values.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -268,7 +268,7 @@ MU_TEST(test_extract_map_data_colors_wrong_id)
 	LOG_INFO(BHBLU "Test: colors_wrong_id" RESET);
 	const char *test_file = MAPS_DIR "colors_wrong_id.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -286,7 +286,7 @@ MU_TEST(test_extract_map_data_colors_equal_ids)
 	LOG_INFO(BHBLU "Test: colors_equal_ids" RESET);
 	const char *test_file = MAPS_DIR "colors_equal_ids.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -304,7 +304,7 @@ MU_TEST(test_extract_map_data_colors_more_than_2_strings)
 	LOG_INFO(BHBLU "Test: colors_more_than_2_strings" RESET);
 	const char *test_file = MAPS_DIR "colors_more_than_2_strings.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -322,7 +322,7 @@ MU_TEST(test_extract_map_data_colors_1_string)
 	LOG_INFO(BHBLU "Test: colors_1_string" RESET);
 	const char *test_file = MAPS_DIR "colors_1_string.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -340,7 +340,7 @@ MU_TEST(test_extract_map_data_colors_above_255)
 	LOG_INFO(BHBLU "Test: colors_above_255" RESET);
 	const char *test_file = MAPS_DIR "colors_above_255.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -359,7 +359,7 @@ MU_TEST(test_extract_map_data_colors_below_0)
 	LOG_INFO(BHBLU "Test: colors_below_0" RESET);
 	const char *test_file = MAPS_DIR "colors_below_0.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -378,7 +378,7 @@ MU_TEST(test_extract_map_data_colors_multiple_comas)
 	LOG_INFO(BHBLU "Test: colors_multiple_comas" RESET);
 	const char *test_file = MAPS_DIR "colors_multiple_comas.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -413,7 +413,7 @@ MU_TEST(test_extract_map_data_mixed_colors_first)
 	LOG_INFO(BHBLU "Test: mixed_colors_first" RESET);
 	const char *test_file = MAPS_DIR "mixed_colors_first.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -432,7 +432,7 @@ MU_TEST(test_extract_map_data_mixed_colors_in_between_textures)
 	LOG_INFO(BHBLU "Test: mixed_colors_in_between_textures" RESET);
 	const char *test_file = MAPS_DIR "mixed_colors_first.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -460,7 +460,7 @@ MU_TEST(test_extract_map_data_map_at_beginning_of_file)
 	LOG_INFO(BHBLU "Test: map_at_beginning_of_file" RESET);
 	const char *test_file = MAPS_DIR "map_at_beginning_of_file.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -481,7 +481,7 @@ MU_TEST(test_extract_map_data_map_at_middle_of_file)
 	LOG_INFO(BHBLU "Test: ed_at_middle_of_file" RESET);
 	const char *test_file = MAPS_DIR "map_at_middle_of_file.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -499,7 +499,7 @@ MU_TEST(test_extract_map_data_map_with_empty_lines)
 	LOG_INFO(BHBLU "Test: map_with_empty_lines" RESET);
 	const char *test_file = MAPS_DIR "map_with_empty_lines.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -517,7 +517,7 @@ MU_TEST(test_extract_map_data_map_divided_in_multiple_parts_throughout_file)
 	LOG_INFO(BHBLU "Test: map_divided_in_multiple_parts_throughout_file" RESET);
 	const char *test_file = MAPS_DIR "map_divided_in_multiple_parts_throughout_file.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -541,7 +541,7 @@ MU_TEST(test_extract_map_data_map_with_multiple_player_positions)
 	LOG_INFO(BHBLU "Test: map_with_multiple_player_positions" RESET);
 	const char *test_file = MAPS_DIR "map_with_multiple_player_positions.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -559,7 +559,7 @@ MU_TEST(test_extract_map_data_map_player_position_case_sensitivity)
 	LOG_INFO(BHBLU "Test: map_player_position_case_sensitivity" RESET);
 	const char *test_file = MAPS_DIR "map_player_position_case_sensitivity.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -577,7 +577,7 @@ MU_TEST(test_extract_map_data_map_player_orientation_invalid_character)
 	LOG_INFO(BHBLU "Test: map_player_orientation_invalid_character" RESET);
 	const char *test_file = MAPS_DIR "map_player_orientation_invalid_character.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -595,7 +595,7 @@ MU_TEST(test_extract_map_data_map_player_no_position)
 	LOG_INFO(BHBLU "Test: map_player_no_position" RESET);
 	const char *test_file = MAPS_DIR "map_player_no_position.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -614,7 +614,7 @@ MU_TEST(test_extract_map_data_map_smallest)
 	LOG_INFO(BHBLU "Test: map_data_map_smallest" RESET);
 	const char *test_file = MAPS_DIR "map_smallest.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -638,7 +638,7 @@ MU_TEST(test_extract_map_data_map_too_big)
 	LOG_INFO(BHBLU "Test: map_data_map_too_big" RESET);
 	const char *test_file = MAPS_DIR "map_data_map_too_big.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -657,7 +657,7 @@ MU_TEST(test_extract_map_data_map_non_rectangular1)
 	LOG_INFO(BHBLU "Test:  map_non_rectangular1" RESET);
 	const char *test_file = MAPS_DIR "map_non_rectangular1.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -692,7 +692,7 @@ MU_TEST(test_extract_map_data_map_non_rectangular2)
 	LOG_INFO(BHBLU "Test: map_non_rectangular2" RESET);
 	const char *test_file = MAPS_DIR "map_non_rectangular2.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -719,7 +719,7 @@ MU_TEST(test_extract_map_data_map_longest_rows)
 	LOG_INFO(BHBLU "Test: map_longest_rows" RESET);
 	const char *test_file = MAPS_DIR "map_longest_rows.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -738,7 +738,7 @@ MU_TEST(test_extract_map_data_map_row_too_long)
 	LOG_INFO(BHBLU "Test: map_row_too_long" RESET);
 	const char *test_file = MAPS_DIR "map_row_too_long.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -756,7 +756,7 @@ MU_TEST(test_extract_map_data_map_max_rows)
 	LOG_INFO(BHBLU "Test: map_max_rows" RESET);
 	const char *test_file = MAPS_DIR "map_max_rows.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -775,7 +775,7 @@ MU_TEST(test_extract_map_data_map_too_many_rows)
 	LOG_INFO(BHBLU "Test: map_too_many_rows" RESET);
 	const char *test_file = MAPS_DIR "map_too_many_rows.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -796,7 +796,7 @@ MU_TEST(test_extract_map_data_map_only_walls)
 	LOG_INFO(BHBLU "Test: map_only_walls" RESET);
 	const char *test_file = MAPS_DIR "map_only_walls.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false); //@ASSUMPTION: só paredes não dá erro
@@ -815,7 +815,7 @@ MU_TEST(test_extract_map_data_map_no_walls)
 	LOG_INFO(BHBLU "Test: map_no_walls" RESET);
 	const char *test_file = MAPS_DIR "map_no_walls.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -833,7 +833,7 @@ MU_TEST(test_extract_map_data_map_open_middle_top)
 	LOG_INFO(BHBLU "Test: map_open_middle_top" RESET);
 	const char *test_file = MAPS_DIR "map_open_middle_top.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -851,7 +851,7 @@ MU_TEST(test_extract_map_data_map_open_middle_right)
 	LOG_INFO(BHBLU "Test: map_open_middle_right" RESET);
 	const char *test_file = MAPS_DIR "map_open_middle_right.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -869,7 +869,7 @@ MU_TEST(test_extract_map_data_map_open_middle_left)
 	LOG_INFO(BHBLU "Test: map_open_middle_left" RESET);
 	const char *test_file = MAPS_DIR "map_open_middle_left.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -887,7 +887,7 @@ MU_TEST(test_extract_map_data_map_open_middle_bottom)
 	LOG_INFO(BHBLU "Test: map_open_middle_bottom" RESET);
 	const char *test_file = MAPS_DIR "map_open_middle_bottom.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -905,7 +905,7 @@ MU_TEST(test_extract_map_data_map_open_top_right_corner)
 	LOG_INFO(BHBLU "Test: map_open_top_right_corner" RESET);
 	const char *test_file = MAPS_DIR "map_open_top_right_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -923,7 +923,7 @@ MU_TEST(test_extract_map_data_map_open_top_left_corner)
 	LOG_INFO(BHBLU "Test: map_open_top_left_corner" RESET);
 	const char *test_file = MAPS_DIR "map_open_top_left_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -941,7 +941,7 @@ MU_TEST(test_extract_map_data_map_open_bottom_right_corner)
 	LOG_INFO(BHBLU "Test: map_open_bottom_right_corner" RESET);
 	const char *test_file = MAPS_DIR "map_open_bottom_right_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -959,7 +959,7 @@ MU_TEST(test_extract_map_data_map_open_bottom_left_corner)
 	LOG_INFO(BHBLU "Test: map_open_bottom_left_corner" RESET);
 	const char *test_file = MAPS_DIR "map_open_bottom_left_corner.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -977,7 +977,7 @@ MU_TEST(test_extract_map_data_map_one_space_in_each_line)
 	LOG_INFO(BHBLU "Test: map_one_space_in_each_line" RESET);
 	const char *test_file = MAPS_DIR "map_one_space_in_each_line.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -996,7 +996,7 @@ MU_TEST(test_extract_map_data_map_multiple_spaces_in_each_line)
 	LOG_INFO(BHBLU "Test: map_multiple_spaces_in_each_line" RESET);
 	const char *test_file = MAPS_DIR "map_multiple_spaces_in_each_line.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -1015,7 +1015,7 @@ MU_TEST(test_extract_map_data_map_tabs_in_each_line)
 	LOG_INFO(BHBLU "Test: map_tabs_in_each_line" RESET);
 	const char *test_file = MAPS_DIR "map_tabs_in_each_line.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == false);
@@ -1034,7 +1034,7 @@ MU_TEST(test_extract_map_data_map_non_binary_nums)
 	LOG_INFO(BHBLU "Test: ed_non_binary_nums" RESET);
 	const char *test_file = MAPS_DIR "map_non_binary_nums.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data*ed = init_extracted_data();
+	t_file_data*ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
@@ -1052,7 +1052,7 @@ MU_TEST(test_extract_map_data_map_negative_nums)
 	LOG_INFO(BHBLU "Test: map_negative_nums" RESET);
 	const char *test_file = MAPS_DIR "map_negative_nums.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data *ed = init_extracted_data();
+	t_file_data ned = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);

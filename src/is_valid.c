@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:21:22 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/13 17:21:22 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/15 22:05:03 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,15 @@ bool	is_valid_file_path(const char *path)
 {
 	int	fd;
 
-	LOG_TRACE("Checking if %s is valid file path", path);
 	if (!path)
 	{
-		LOG_ERROR("Path to file is null");
 		return (false);
 	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		LOG_ERROR("Couldn't open: %s", path);
 		return (false);
 	}
-	LOG_DEBUG("Success: valid file path: %s", path);
 	close(fd);
 	return (true);
 }
