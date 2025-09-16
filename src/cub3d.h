@@ -47,6 +47,10 @@
 # define WINDOW_HEIGHT 1080
 
 # define MINIMAP_SCALE 10
+# define MINIMAP_PLAYER_SCALE 3
+# define MINIMAP_EMPTY_TILE_COLOR 0xFFFFFF
+# define MINIMAP_WALL_TILE_COLOR 0x000000
+# define MINIMAP_PLAYER_COLOR 0xFF0000
 
 //@NOTE: this is where all the game data goes
 //(excluding extracted data from .cub)
@@ -150,14 +154,6 @@ typedef struct s_draw
 	t_texture		*tex;
 	int				screen_y;
 }					t_draw;
-
-typedef struct s_minimap
-{
-	int				x;
-	int				y;
-	int				size;
-	int				color;
-}					t_minimap;
 
 typedef struct s_game
 {
