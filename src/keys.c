@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/15 19:10:35 by frmiguel          #+#    #+#             */
+/*   Updated: 2025/09/15 19:10:36 by frmiguel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	key_press(int keycode, t_game *game)
@@ -33,6 +45,5 @@ int	key_release(int keycode, t_game *game)
 		game->player->rot_left = false;
 	if (keycode == XK_Right)
 		game->player->rot_right = false;
-
 	return (0);
 }

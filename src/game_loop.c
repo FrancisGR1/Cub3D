@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 19:45:00 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/13 19:48:00 by frmiguel         ###   ########.fr       */
+/*   Created: 2025/09/13 23:28:49 by frmiguel          #+#    #+#             */
+/*   Updated: 2025/09/14 22:43:07 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include "cub3d.h"
 
-t_vec2f	make_vec2f(float x, float y)
+int	game_loop(t_game *game)
 {
-	t_vec2f	vec;
-
-	vec.x = x;
-	vec.y = y;
-	return (vec);
+	update_player_dir(game->player);
+	update_player_pos(game->map, game->player);
+	render(game);
+	return (0);
 }
 
-t_vec2i	make_vec2i(int x, int y)
+void	setup_hooks(t_window *win, t_game *game)
 {
-	t_vec2i	vec;
-
-	vec.x = x;
-	vec.y = y;
-	return (vec);
-}
-
-t_vec2d	make_vec2d(double x, double y)
-{
-	t_vec2d	vec;
-
-	vec.x = x;
-	vec.y = y;
-	return (vec);
+	mlx_hook(win->mlx_win, 2, 1L << 0, key_press, game);
+	mlx_hook(win->mlx_win, 3, 1L << 1, key_release, game);
+	mlx_hook(win->mlx_win, 17, 0L, end_game, game);
+	mlx_loop_hook(win->mlx, game_loop, game);
 }

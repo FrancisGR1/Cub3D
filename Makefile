@@ -16,8 +16,9 @@ CFLAGS += -DLOG_LEVEL=$(LOG_LEVEL)
 
 
 # bonus for the project
-BONUS ?= 0
-CFLAGS += -DBONUS=$(BONUS)
+ifdef BONUS
+    CFLAGS += -DBONUS=1
+endif
 
 # sources
 SRC_FILES = \
@@ -25,17 +26,24 @@ SRC_FILES = \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
-	    event_loop.c \
+	    draw_utils.c \
+	    draw_vertical.c \
+	    game_loop.c \
 	    game.c \
 	    is_valid.c \
 	    is_valid_p2.c \
 	    keys.c \
 	    main.c \
+	    minimap_bonus.c \
+	    normalize_map.c \
 	    player.c \
 	    raycast.c \
 	    render.c \
 	    rgb.c \
+	    textures.c \
+	    update.c \
 	    vector.c \
+	    vector_operations.c \
 	    window.c
 
 # need this for print debugging
@@ -121,8 +129,13 @@ re: fclean all
 
 bonus:
 	rm -f $(NAME)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) all BONUS=1
 
+.PHONY: tests
+tests:
+	cd tests/ && ./test_extraction.sh && ./test_extraction.out && cd ..
+	cd tests/ && ./test_errors.sh
 
 fast: clean $(NAME)
 
