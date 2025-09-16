@@ -6,20 +6,20 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:12:58 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 22:05:20 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/16 10:45:08 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_square(t_window *win, int start_x, int start_y, int color)
+void	draw_map_tile(t_window *win, int start_x, int start_y, int color)
 {
 	int	x;
 	int	y;
 	int	size;
 
 	y = start_y;
-	size = MINIMAP_SCALE / 2;
+	size = MINIMAP_SCALE;
 	while (y < start_y + size)
 	{
 		x = start_x;
@@ -32,29 +32,55 @@ void	draw_square(t_window *win, int start_x, int start_y, int color)
 	}
 }
 
+// stackoverflow.com/questions/1201200/fast-algorithm-for-drawing-filled-circles
+void	draw_circle(t_window *win, int center_x, int center_y, int color)
+{
+	int	y;
+	int	x;
+	int	radius;
+
+	x = center_x;
+	y = center_y;
+	radius = MINIMAP_PLAYER_SCALE;
+	y = -radius;
+	while (y <= radius)
+	{
+		x = -radius;
+		while (x <= radius)
+		{
+			if (x * x + y * y <= radius * radius)
+				pixel_put(win, center_x + x, center_y + y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	draw_minimap(t_game *game)
 {
-	t_minimap	m;
+	int				y;
+	int				x;
+	unsigned int	color;
 
 	if (!BONUS)
 		return ;
-	m.y = 0;
-	while (game->map[m.y][0] != -1)
+	y = 0;
+	while (game->map[y][0] != -1)
 	{
-		m.x = 0;
-		while (game->map[m.y][m.x] != -1)
+		x = 0;
+		while (game->map[y][x] != -1)
 		{
-			if (game->map[m.y][m.x] == 1)
-				m.color = 0x000000;
+			if (game->map[y][x] == 1)
+				color = MINIMAP_WALL_TILE_COLOR;
 			else
-				m.color = 0xFFFFFF;
-			draw_square(game->win, m.x * MINIMAP_SCALE, m.y * MINIMAP_SCALE,
-				m.color);
-			m.x++;
+				color = MINIMAP_EMPTY_TILE_COLOR;
+			draw_map_tile(game->win, x * MINIMAP_SCALE, y * MINIMAP_SCALE,
+				color);
+			x++;
 		}
-		m.y++;
+		y++;
 	}
-	m.x = (int)(game->player->pos.x * MINIMAP_SCALE);
-	m.y = (int)(game->player->pos.y * MINIMAP_SCALE);
-	draw_square(game->win, m.x - m.size / 2, m.y - m.size / 2, 0xFF0000);
+	x = (int)(game->player->pos.x * MINIMAP_SCALE);
+	y = (int)(game->player->pos.y * MINIMAP_SCALE);
+	draw_circle(game->win, x, y, MINIMAP_PLAYER_COLOR);
 }
