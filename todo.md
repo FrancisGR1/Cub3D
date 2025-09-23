@@ -1,22 +1,17 @@
-- [x] Colocar valores do player (dir, pos)
-- [x] Coloar valores do chão/céu na draw struct
-- [x] Organizar texturas
-- [x] Bug no minimapa
-- [x] Pintar céu/chão em draw_vertical_line
-- [x] Verificar pdf
-- [x] Refazer e Passar todos os testes
-- [x] Adicionar teste com texturas erradas - adicionar "Error\n"
-- [x] verificar se fd é fechado (valgrind track fds)
-- [x] Testar manualmente todo o tipo de mapas, sobretudo o 100x100
-- [x] Separar código de bónus/mandatório
-- [ ] Norminette
-    Refactor
-    Reorganização do header
-    Nomes mais intuitivos
-        event_loop => game_loop
-        map => file_data // fdata
-        event_listeners => hooks
-- [ ] Verificar com eval sheet
+- [x] substituir espaços por paredes
+- [x] verificar middle lines
+- [x] reorganizar header e norminette
+- [ ] fazer commit das mudanças
+- [ ] mudar tests em tests.sh
 
-??
-Remover -lbsd link no Makefile da mlx
+flood_fill algo
+void    flood_fill(t_data *data, int x, int y, char **map_copy)
+{
+    if (data->map.map[y][x] == '1' || map_copy[y][x] == 'V')
+        return ;
+    map_copy[y][x] = 'V';
+    flood_fill(data, x + 1, y, map_copy);
+    flood_fill(data, x - 1, y, map_copy);
+    flood_fill(data, x, y + 1, map_copy);
+    flood_fill(data, x, y - 1, map_copy);
+}

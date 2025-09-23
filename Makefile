@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = #-Wall -Werror -Wextra -g
 OPTIMIZE = -O3
 
 # directories
@@ -30,6 +30,7 @@ SRC_FILES = \
 	    draw_vertical.c \
 	    game_loop.c \
 	    game.c \
+	    is_valid_map.c \
 	    is_valid.c \
 	    is_valid_p2.c \
 	    keys.c \

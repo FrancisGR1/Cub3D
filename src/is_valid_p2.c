@@ -18,26 +18,35 @@ void	check_if_map_nums_are_valid(t_file_data *fdata)
 	size_t	row_size;
 	size_t	col;
 
+	printf("spc?: %d\n", get_map_value(fdata->rows, 1, 0));
 	if (fdata == NULL || fdata->rows == NULL || fdata->parser_error == true)
-		return ;
-	row = 0;
-	while (!fdata->parser_error && row < fdata->rows->len)
 	{
-		row_size = get_map_row_size(fdata->rows, row);
-		if (row == 0 || row == fdata->rows->len - 1)
-		{
-			col = 0;
-			while (!fdata->parser_error && col < row_size)
-			{
-				if (get_map_value(fdata->rows, row, col) != 1)
-					fdata->parser_error = true;
-				col++;
-			}
-		}
-		else if (!middle_line_valid(fdata, row, row_size))
-			fdata->parser_error = true;
-		row++;
+		return ;
 	}
+	if (break_in_map_from_outside(fdata))
+	{
+		printf("break_in_map_from_outside\n");
+		fdata->parser_error = true;
+		return ;
+	}
+//	row = 0;
+	//while (!fdata->parser_error && row < fdata->rows->len)
+	//{
+	//	row_size = get_map_row_size(fdata->rows, row);
+	//	if (row == 0 || row == fdata->rows->len - 1)
+	//	{
+	//		col = 0;
+	//		while (!fdata->parser_error && col < row_size)
+	//		{
+	//			if (get_map_value(fdata->rows, row, col) != 1)
+	//				fdata->parser_error = true;
+	//			col++;
+	//		}
+	//	}
+	//	else if (!middle_line_valid(fdata, row, row_size))
+	//		fdata->parser_error = true;
+	//	row++;
+	//}
 }
 
 bool	is_valid_input(int argc, char **argv)
@@ -59,20 +68,16 @@ bool	is_valid_input(int argc, char **argv)
 
 void	substitute_spaces(t_file_data *fdata, t_string *line)
 {
-	int	i;
+	size_t i;
 
-	i = 0;
 	if (should_extract_textures(fdata) || should_extract_colors(fdata))
 		str_trim(line);
 	else
 	{
+		i = 0;
 		while (line->data[i])
 		{
-			if (line->data[i] == ' ')
-			{
-				line->data[i] = '1';
-			}
-			else if (line->data[i] == '\n')
+			if (line->data[i] == '\n')
 			{
 				line->data[i] = '\0';
 				line->size--;

@@ -18,6 +18,8 @@ void	draw_map_tile(t_window *win, int start_x, int start_y, int color)
 	int	y;
 	int	size;
 
+	if (color == -1)
+		return ;
 	y = start_y;
 	size = MINIMAP_SCALE;
 	while (y < start_y + size)
@@ -56,9 +58,6 @@ void	draw_circle(t_window *win, int center_x, int center_y, int color)
 	}
 }
 
-//@TODO: colocar isto na escala relativa ao tamanho do mapa
-//de modo a mapas pequenos/grandes serem da mesma dimensão
-//https://chatgpt.com/c/68c92c53-1b28-832d-b2d9-279c1397d240
 void	draw_minimap(t_game *game)
 {
 	int				y;
@@ -75,8 +74,10 @@ void	draw_minimap(t_game *game)
 		{
 			if (game->map[y][x] == 1)
 				color = MINIMAP_WALL_TILE_COLOR;
-			else
+			else if (game->map[y][x] == 0)
 				color = MINIMAP_EMPTY_TILE_COLOR;
+			else
+				color = -1;
 			draw_map_tile(game->win, x * MINIMAP_SCALE, y * MINIMAP_SCALE,
 				color);
 			x++;

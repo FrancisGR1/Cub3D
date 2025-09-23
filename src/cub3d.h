@@ -27,11 +27,14 @@
 # define MAP_INITIAL_ROWS 30
 # define MAP_INITIAL_COLS 30
 
+//@WARNING: INCUBATION is MAX + 2
 # define MAX_ROWS 100
+//@TODO: MUDAR ISTO
+# define INCUBATION_ROWS 102
 # define MAX_COLS 100
+# define INCUBATION_COLS 102
 
-//@NOTE: o -1 sinaliza que chegámos ao fim da linha
-// e mapa (se for map[i][0] == -1)
+
 # define ROW_END -1
 
 # define WINDOW_WIDTH 1920
@@ -183,6 +186,8 @@ bool				starts_with_texture_id(t_string *line);
 void				check_if_map_nums_are_valid(t_file_data *fdata);
 bool				middle_line_valid(t_file_data *fdata,\
 					int current_row, int row_size);
+int	break_in_map_from_outside(t_file_data *fdata);
+
 // validate file
 bool				is_valid_file_path(const char *path);
 bool				is_valid_extension(const char *path, const char *extension);
@@ -276,9 +281,8 @@ void				draw_minimap(t_game *game);
 // accessors
 int					get_col_value(t_dynamic_array *row, int col);
 int					get_map_value(t_dynamic_array *map, int row, int col);
-void				set_map_value(t_dynamic_array *map, int value, int row,
-						int col);
 int					get_map_size(t_dynamic_array *map);
 int					get_map_row_size(t_dynamic_array *map, int row);
+int					get_map_total_cells(t_dynamic_array *map);
 
 #endif /*CUB3D_H*/

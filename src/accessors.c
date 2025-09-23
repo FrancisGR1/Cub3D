@@ -22,11 +22,6 @@ int	get_map_value(t_dynamic_array *map, int row, int col)
 	return (((int *)(((t_dynamic_array **)map->data)[row]->data))[col]);
 }
 
-void	set_map_value(t_dynamic_array *map, int value, int row, int col)
-{
-	((int *)(((t_dynamic_array **)map->data)[row]->data))[col] = value;
-}
-
 int	get_map_size(t_dynamic_array *map)
 {
 	return (map->len);
@@ -35,4 +30,30 @@ int	get_map_size(t_dynamic_array *map)
 int	get_map_row_size(t_dynamic_array *map, int row)
 {
 	return (((t_dynamic_array **)map->data)[row]->len);
+}
+
+int	get_map_total_cells(t_dynamic_array *map)
+{
+	int i;
+	int j;
+	int rows;
+	int cols;
+	int total_cells;
+	
+	i = 0;
+	rows = get_map_size(map);
+	//printf("rows: %d\n", rows);
+	total_cells = 0;
+	while (i < rows)
+	{
+		j = 0;
+		cols = get_map_row_size(map, i);
+		while (j < cols)
+		{
+			total_cells++;
+			j++;
+		}
+		i++;
+	}
+	return (total_cells);
 }

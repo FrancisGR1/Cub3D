@@ -22,6 +22,10 @@ int	map_value_from_char(char c)
 	{
 		return (c);
 	}
+	else if (c == ' ')
+	{
+		return (c);
+	}
 	else
 	{
 		return (-1);

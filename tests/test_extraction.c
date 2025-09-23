@@ -18,6 +18,8 @@
 #define MAX_ROWS_TEST MAX_ROWS + 1
 #define MAX_COLS_TEST MAX_COLS + 1
 
+# define LOG_LEVEL 4
+
 #define	MAPS_DIR	"assets/maps/"
 #define	TEXTURES_DIR	"assets/textures/"
 
@@ -1052,7 +1054,7 @@ MU_TEST(test_extract_map_data_map_negative_nums)
 	LOG_INFO(BHBLU "Test: map_negative_nums" RESET);
 	const char *test_file = MAPS_DIR "map_negative_nums.cub";
 	LOG_DEBUG("Testing with file: %s", test_file);
-	t_file_data ned = alloc_init_extracted_data();
+	t_file_data *ed = alloc_init_extracted_data();
 	extract_file_data(test_file, ed);
 	mu_check(ed != NULL);
 	mu_check(ed->parser_error == true);
