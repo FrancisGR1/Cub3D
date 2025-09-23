@@ -25,7 +25,7 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 	line = get_next_line_to_str(fd);
 	while (line != NULL)
 	{
-		str_trim(line);
+		substitute_spaces(fdata, line);
 		if (line->size == 0)
 		{
 			if (fdata->rows->len != 0)
@@ -77,9 +77,9 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	int				value;
 	int				i;
 
-	str_erase_if(line, ft_isspace, 0);
 	if ((fdata->player_position_is_set == true && !str_is_digit(line))
-		|| get_map_size(fdata->rows) == MAX_ROWS || line->size > MAX_COLS - 1)
+		|| get_map_size(fdata->rows) == MAX_ROWS
+		|| line->size > MAX_COLS - 1)
 		return (false);
 	cols = darr_init(sizeof(int), MAP_INITIAL_COLS);
 	i = -1;

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Werror -Wextra #-g
+CFLAGS = -Wall -Werror -Wextra -g
 OPTIMIZE = -O3
 
 # directories
