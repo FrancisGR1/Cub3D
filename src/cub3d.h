@@ -62,6 +62,8 @@
 //@NOTE: 60º degrees in radians
 # define DEFAULT_FOV 1.04719755
 
+# define PI 3.14159265359
+
 typedef struct s_rgb
 {
 	int				r;
