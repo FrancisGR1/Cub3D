@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:12:58 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/16 10:45:08 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/16 10:44:36 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,35 +58,8 @@ void	draw_circle(t_window *win, int center_x, int center_y, int color)
 	}
 }
 
-// stackoverflow.com/questions/1201200/fast-algorithm-for-drawing-filled-circles
-void	draw_circle(t_window *win, int center_x, int center_y, int color)
-{
-	int	y;
-	int	x;
-	int	radius;
-
-	x = center_x;
-	y = center_y;
-	radius = MINIMAP_PLAYER_SCALE;
-	y = -radius;
-	while (y <= radius)
-	{
-		x = -radius;
-		while (x <= radius)
-		{
-			if (x * x + y * y <= radius * radius)
-				pixel_put(win, center_x + x, center_y + y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
 void	draw_minimap(t_game *game)
 {
-	int				y;
-	int				x;
-	unsigned int	color;
 	int				y;
 	int				x;
 	unsigned int	color;
@@ -95,28 +68,22 @@ void	draw_minimap(t_game *game)
 		return ;
 	y = 0;
 	while (game->map[y][0] != -1)
-	y = 0;
-	while (game->map[y][0] != -1)
 	{
-		x = 0;
-		while (game->map[y][x] != -1)
 		x = 0;
 		while (game->map[y][x] != -1)
 		{
 			if (game->map[y][x] == 1)
 				color = MINIMAP_WALL_TILE_COLOR;
-			else
+			else if (game->map[y][x] == 0)
 				color = MINIMAP_EMPTY_TILE_COLOR;
+			else
+				color = -1;
 			draw_map_tile(game->win, x * MINIMAP_SCALE, y * MINIMAP_SCALE,
 				color);
 			x++;
 		}
 		y++;
-		y++;
 	}
-	x = (int)(game->player->pos.x * MINIMAP_SCALE);
-	y = (int)(game->player->pos.y * MINIMAP_SCALE);
-	draw_circle(game->win, x, y, MINIMAP_PLAYER_COLOR);
 	x = (int)(game->player->pos.x * MINIMAP_SCALE);
 	y = (int)(game->player->pos.y * MINIMAP_SCALE);
 	draw_circle(game->win, x, y, MINIMAP_PLAYER_COLOR);
