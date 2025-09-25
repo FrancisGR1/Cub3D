@@ -94,5 +94,5 @@ static bool	is_walkable(int map[MAX_ROWS][MAX_COLS], double x, double y)
 		return (false);
 	if (my >= MAX_ROWS || mx >= MAX_COLS)
 		return (false);
-	return (map[my][mx] == 0);
+	return (map[my][mx] == 0 || map[my][mx] == ' ');
 }

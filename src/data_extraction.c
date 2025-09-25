@@ -73,6 +73,20 @@ static void	extract_file_data_first_phase(t_file_data *fdata,
 	str_array_deallocate(split_strs, split_count);
 }
 
+static bool	only_digit_or_space(const t_string *str)
+{
+	size_t	i;
+
+	if (str == NULL || str->data == NULL)
+		return (false);
+	i = 0;
+	while ((ft_isdigit(str->data[i]) || str->data[i] == ' ') && str->data[i] != '\0')
+	{
+		i++;
+	}
+	return (str->data[i] == '\0');
+}
+
 static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 {
 	t_dynamic_array	*cols;
@@ -80,7 +94,7 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	int				value;
 	int				i;
 
-	if ((fdata->player_position_is_set == true && !str_is_digit(line))
+	if ((fdata->player_position_is_set == true && !only_digit_or_space(line))
 		|| get_map_size(fdata->rows) == MAX_ROWS
 		|| line->size > MAX_COLS - 1)
 		return (false);
@@ -90,7 +104,7 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	{
 		c = str_at(line, i);
 		printf("evaluating: %d\n", c);
-		if (is_valid_map_num(c) || is_valid_map_player_pos(c) || c == ' ')
+		if (is_valid_map_num(c) || (is_valid_map_player_pos(c) && fdata->player_position_is_set == false) || c == ' ')
 		{
 			value = map_value_from_char(c);
 			printf("value: %d\n", value);
