@@ -72,7 +72,8 @@ static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
 		{
 			game->map[*row][*col] = get_map_value(game->extracted_data->rows,
 					*row, *col);
-			if (game->map[*row][*col] != 0 && game->map[*row][*col] != 1)
+			printf("evaluating: %d\n", game->map[*row][*col]);
+			if (game->map[*row][*col] != 0 && game->map[*row][*col] != 1 && game->map[*row][*col] != 32)
 			{
 				set_player_position(game->player, *col, *row);
 				set_player_direction(game->player, game->map[*row][*col]);

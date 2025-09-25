@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 	if (extracted_data == NULL)
 		return (1);
 	extract_file_data(argv[1], extracted_data);
+	printf("2nd phase. Parser error? %d\n", extracted_data->parser_error);
 	check_if_map_nums_are_valid(extracted_data);
 	if (extracted_data->parser_error)
 	{

@@ -18,6 +18,8 @@ void	draw_map_tile(t_window *win, int start_x, int start_y, int color)
 	int	y;
 	int	size;
 
+	if (color == -1)
+		return ;
 	y = start_y;
 	size = MINIMAP_SCALE;
 	while (y < start_y + size)
@@ -56,8 +58,35 @@ void	draw_circle(t_window *win, int center_x, int center_y, int color)
 	}
 }
 
+// stackoverflow.com/questions/1201200/fast-algorithm-for-drawing-filled-circles
+void	draw_circle(t_window *win, int center_x, int center_y, int color)
+{
+	int	y;
+	int	x;
+	int	radius;
+
+	x = center_x;
+	y = center_y;
+	radius = MINIMAP_PLAYER_SCALE;
+	y = -radius;
+	while (y <= radius)
+	{
+		x = -radius;
+		while (x <= radius)
+		{
+			if (x * x + y * y <= radius * radius)
+				pixel_put(win, center_x + x, center_y + y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	draw_minimap(t_game *game)
 {
+	int				y;
+	int				x;
+	unsigned int	color;
 	int				y;
 	int				x;
 	unsigned int	color;
@@ -66,7 +95,11 @@ void	draw_minimap(t_game *game)
 		return ;
 	y = 0;
 	while (game->map[y][0] != -1)
+	y = 0;
+	while (game->map[y][0] != -1)
 	{
+		x = 0;
+		while (game->map[y][x] != -1)
 		x = 0;
 		while (game->map[y][x] != -1)
 		{
@@ -79,7 +112,11 @@ void	draw_minimap(t_game *game)
 			x++;
 		}
 		y++;
+		y++;
 	}
+	x = (int)(game->player->pos.x * MINIMAP_SCALE);
+	y = (int)(game->player->pos.y * MINIMAP_SCALE);
+	draw_circle(game->win, x, y, MINIMAP_PLAYER_COLOR);
 	x = (int)(game->player->pos.x * MINIMAP_SCALE);
 	y = (int)(game->player->pos.y * MINIMAP_SCALE);
 	draw_circle(game->win, x, y, MINIMAP_PLAYER_COLOR);

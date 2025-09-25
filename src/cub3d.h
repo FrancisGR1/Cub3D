@@ -20,27 +20,21 @@
 # include <X11/keysym.h>
 # include <math.h>
 
-# ifndef LOG_LEVEL
-#  define LOG_LEVEL 7
-# endif
-
 # ifndef BONUS
 #  define BONUS 0
 # endif
 
-//@QUESTION: provavelmente seria melhor definir tamanhos iniciais como máximos?
-// de modo a evitar realocações, embora os maps que levem a isso sejam raros
 # define MAP_INITIAL_ROWS 30
 # define MAP_INITIAL_COLS 30
 
-//@QUESTION: é possível fazer isto?
-// eles não dizem no subject o tamanho máximo
+//@WARNING: INCUBATION is MAX + 2
 # define MAX_ROWS 100
+//@TODO: MUDAR ISTO
+# define INCUBATION_ROWS 102
 # define MAX_COLS 100
+# define INCUBATION_COLS 102
 
-//@NOTE: o -1 sinaliza que chegámos ao fim da linha
-// e mapa (se for map[i][0] == -1)
-//@TODO: substituir todos os -1 por ROW_END
+
 # define ROW_END -1
 
 # define WINDOW_WIDTH 1920
@@ -184,12 +178,18 @@ bool				extract_texture(t_file_data *fdata, t_string *id,
 int					map_value_from_char(char c);
 bool				should_extract_textures(t_file_data *fdata);
 bool				should_extract_colors(t_file_data *fdata);
+void				substitute_spaces(t_file_data *fdata, t_string *line);
+
 //
 // validate map data
 bool				is_valid_map_num(char c);
 bool				is_valid_map_player_pos(char c);
 bool				starts_with_texture_id(t_string *line);
 void				check_if_map_nums_are_valid(t_file_data *fdata);
+bool				middle_line_valid(t_file_data *fdata,\
+					int current_row, int row_size);
+int	break_in_map_from_outside(t_file_data *fdata);
+
 // validate file
 bool				is_valid_file_path(const char *path);
 bool				is_valid_extension(const char *path, const char *extension);
@@ -208,7 +208,6 @@ t_file_data			*alloc_init_extracted_data(void);
 //
 // free
 void				cleanup_extracted_data(t_file_data *fdata);
-//@TODO: descrição
 void				normalize_jagged_map(t_game *game, t_file_data *map);
 
 // ===========
@@ -267,7 +266,6 @@ int					game_loop(t_game *game);
 // keys
 int					key_press(int keycode, t_game *game);
 int					key_release(int keycode, t_game *game);
-// free
 
 // ==========
 // Bonus
@@ -285,13 +283,8 @@ void				draw_minimap(t_game *game);
 // accessors
 int					get_col_value(t_dynamic_array *row, int col);
 int					get_map_value(t_dynamic_array *map, int row, int col);
-void				set_map_value(t_dynamic_array *map, int value, int row,
-						int col);
 int					get_map_size(t_dynamic_array *map);
 int					get_map_row_size(t_dynamic_array *map, int row);
-//
-// debug
-void				LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map);
-void				LOG_DEBUG_MAP_NUMS(int map[MAX_ROWS][MAX_COLS]);
+int					get_map_total_cells(t_dynamic_array *map);
 
 #endif /*CUB3D_H*/
