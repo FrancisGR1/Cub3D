@@ -81,8 +81,8 @@ static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
 			}
 			(*col)++;
 		}
-		while (*col < get_largest_row(game->extracted_data->rows))
-			game->map[*row][(*col)++] = 1;
+		// while (*col < get_largest_row(game->extracted_data->rows))
+		// 	game->map[*row][(*col)++] = 1;
 		if (*col < MAX_COLS)
 			game->map[*row][*col] = ROW_END;
 		(*row)++;
