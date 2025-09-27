@@ -95,11 +95,11 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	while (++i < (int)line->size)
 	{
 		c = str_at(line, i);
-		printf("evaluating: %d -> %c (%d)\n", c, c, i);
+		//printf("evaluating: %d -> %c (%d)\n", c, c, i);
 		if (is_valid_map_num(c) || (is_valid_map_player_pos(c) && fdata->player_position_is_set == false) || c == ' ')
 		{
 			value = map_value_from_char(c);
-			printf("value: %d\n", value);
+			//printf("value: %d\n", value);
 			//@TODO: guardar posição do jogador aqui
 			if (value != 0 && value != 1 && value != ' ')
 				fdata->player_position_is_set = true;

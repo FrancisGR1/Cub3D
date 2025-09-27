@@ -93,28 +93,28 @@ void	substitute_spaces(t_file_data *fdata, t_string *line)
 
 bool	middle_line_valid(t_file_data *fdata, int current_row, int row_size)
 {
-	int	first_col;
-	int	last_col;
-	int	start_idx;
-	int	neighbor_size;
+	//int	first_col;
+	//int	last_col;
+	//int	start_idx;
+	//int	neighbor_size;
 
-	first_col = get_map_value(fdata->rows, current_row, 0);
-	last_col = get_map_value(fdata->rows, current_row, row_size - 1);
-	if (first_col != 1 || last_col != 1)
-		return (false);
-	neighbor_size = get_map_row_size(fdata->rows, current_row - 1);
-	start_idx = row_size;
-	if (neighbor_size < row_size)
-		start_idx = neighbor_size;
-	neighbor_size = get_map_row_size(fdata->rows, current_row + 1);
-	if (neighbor_size < start_idx)
-		start_idx = neighbor_size;
-	while (start_idx < row_size)
-	{
-		if (get_map_value(fdata->rows, current_row, start_idx) != 1)
-			return (false);
-		start_idx++;
-	}
+	//first_col = get_map_value(fdata->rows, current_row, 0);
+	//last_col = get_map_value(fdata->rows, current_row, row_size - 1);
+	//if (first_col != 1 || last_col != 1)
+	//	return (false);
+	//neighbor_size = get_map_row_size(fdata->rows, current_row - 1);
+	//start_idx = row_size;
+	//if (neighbor_size < row_size)
+	//	start_idx = neighbor_size;
+	//neighbor_size = get_map_row_size(fdata->rows, current_row + 1);
+	//if (neighbor_size < start_idx)
+	//	start_idx = neighbor_size;
+	//while (start_idx < row_size)
+	//{
+	//	if (get_map_value(fdata->rows, current_row, start_idx) != 1)
+	//		return (false);
+	//	start_idx++;
+	//}
 	return (true);
 }
 

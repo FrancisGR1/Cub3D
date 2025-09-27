@@ -289,4 +289,8 @@ int					get_map_total_cells(t_dynamic_array *map);
 // setters
 void	set_map_value(t_dynamic_array *map, int value, int row, int col);
 
+// debugger @REFACTOR delete!
+void LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map);
+void LOG_DEBUG_MAP_NUMS(int map[MAX_ROWS][MAX_COLS]);
+
 #endif /*CUB3D_H*/
