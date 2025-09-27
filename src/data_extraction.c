@@ -96,7 +96,7 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	{
 		c = str_at(line, i);
 		printf("evaluating: %d -> %c (%d)\n", c, c, i);
-		if (is_valid_map_num(c) || is_valid_map_player_pos(c) || c == ' ')
+		if (is_valid_map_num(c) || (is_valid_map_player_pos(c) && fdata->player_position_is_set == false) || c == ' ')
 		{
 			value = map_value_from_char(c);
 			printf("value: %d\n", value);
