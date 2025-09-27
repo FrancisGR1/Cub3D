@@ -44,13 +44,13 @@ void	update_player_pos(int map[MAX_ROWS][MAX_COLS], t_player *p)
 	if (p->move_left)
 	{
 		step = mult_vector(p->dir, p->move_speed);
-		rotate_vector(&step, -M_PI / 2);
+		rotate_vector(&step, -PI / 2);
 		desloc = sum_vector(desloc, step);
 	}
 	if (p->move_right)
 	{
 		step = mult_vector(p->dir, p->move_speed);
-		rotate_vector(&step, M_PI / 2);
+		rotate_vector(&step, PI / 2);
 		desloc = sum_vector(desloc, step);
 	}
 	update_player_pos_p2(desloc, map, p);

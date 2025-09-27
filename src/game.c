@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 23:19:09 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 18:12:53 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:29:18 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ t_game	*alloc_init_game(t_file_data *map)
 	game->ray = alloc_ray(game->game_memory);
 	normalize_jagged_map(game, map);
 	if (!load_textures(game))
-		end_game(game, EXIT_FAILURE);
+		end_game(game);
 	return (game);
 }
 
-int	end_game(t_game *game, int exit_code)
+int	end_game(t_game *game)
 {
 	cleanup_textures(game->win, game->textures);
 	mlx_destroy_image(game->win->mlx, game->win->img);
@@ -40,7 +40,5 @@ int	end_game(t_game *game, int exit_code)
 	free(game->win->mlx);
 	cleanup_extracted_data(game->extracted_data);
 	arena_destroy(game->game_memory);
-	if (exit_code != 0)
-		ft_fprintf(STDERR, "Error\n");
-	exit(exit_code);
+	exit(0);
 }

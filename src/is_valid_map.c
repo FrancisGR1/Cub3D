@@ -103,12 +103,12 @@ int break_in_map_from_outside(t_file_data *fdata, int incubation_arr[INCUBATION_
 	}
 	if (marked_cells != expected_marked_cells)
 	{
-		printf("Error: Expected: %d\nMarked: %d\n", expected_marked_cells, marked_cells);
+		//printf("Error: Expected: %d\nMarked: %d\n", expected_marked_cells, marked_cells);
 		return (1);
 	}
 	else
 	{
-		printf("Success: Expected: %d\nMarked: %d\n", expected_marked_cells, marked_cells);
+		//printf("Success: Expected: %d\nMarked: %d\n", expected_marked_cells, marked_cells);
 		return (0);
 	}
 }

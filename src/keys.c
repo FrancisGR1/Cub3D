@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:10:35 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 19:10:36 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:29:10 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_press(int keycode, t_game *game)
 {
 	if (keycode == XK_Escape)
-		end_game(game, EXIT_SUCCESS);
+		end_game(game);
 	if (keycode == XK_w)
 		game->player->move_up = true;
 	if (keycode == XK_s)

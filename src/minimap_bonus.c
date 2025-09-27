@@ -41,8 +41,6 @@ void	draw_circle(t_window *win, int center_x, int center_y, int color)
 	int	x;
 	int	radius;
 
-	x = center_x;
-	y = center_y;
 	radius = MINIMAP_PLAYER_SCALE;
 	y = -radius;
 	while (y <= radius)
@@ -79,7 +77,7 @@ void	draw_minimap(t_game *game)
 			else
 				color = -1;
 			draw_map_tile(game->win, x * MINIMAP_SCALE, y * MINIMAP_SCALE,
-				color);
+					color);
 			x++;
 		}
 		y++;

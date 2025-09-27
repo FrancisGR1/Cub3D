@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:10:05 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 22:08:36 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:29:27 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # define MAP_INITIAL_ROWS 30
 # define MAP_INITIAL_COLS 30
+
+# define PI 3.14159265358979323846
 
 //@WARNING: INCUBATION is MAX + 2
 # define MAX_ROWS 100
@@ -213,7 +215,7 @@ void				normalize_jagged_map(t_game *game, t_file_data *map);
 // Game Struct
 // ===========
 t_game				*alloc_init_game(t_file_data *fdata);
-int					end_game(t_game *game, int exit_code);
+int					end_game(t_game *game);
 void				update_player_pos(int map[MAX_ROWS][MAX_COLS], t_player *p);
 void				update_player_dir(t_player *p);
 

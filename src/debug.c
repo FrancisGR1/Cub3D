@@ -22,7 +22,10 @@ void LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map)
 		for (size_t j = 0; j < cols->len; j++)
 		{
 			int num = ((int *)cols->data)[j];
-			printf("%d", num);
+			if (num == 32)
+				printf(BLU"%d"RESET, num);
+			else
+				printf("%d", num);
 		}
 		printf("\n");
 	}

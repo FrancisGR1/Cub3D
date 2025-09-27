@@ -25,11 +25,9 @@ void	set_draw_info(t_draw *d, t_ray *ray, t_player *player,
 		d->draw_end = WINDOW_HEIGHT - 1;
 	d->tex = get_wall_texture(ray, texture);
 	if (ray->hit_side == 0)
-		d->wall_x = player->pos.y + (ray->map_pos.x - player->pos.x + (1
-					- ray->step.x) / 2) / ray->dir.x * ray->dir.y;
+		d->wall_x = player->pos.y + ray->perp_dist * ray->dir.y;
 	else
-		d->wall_x = player->pos.x + (ray->map_pos.y - player->pos.y + (1
-					- ray->step.y) / 2) / ray->dir.y * ray->dir.x;
+		d->wall_x = player->pos.x + ray->perp_dist * ray->dir.x;
 	d->wall_x -= floor(d->wall_x);
 	d->tex_x = (int)(d->wall_x * (float)d->tex->width);
 	if ((ray->hit_side == 0 && ray->dir.x < 0) || (ray->hit_side == 1

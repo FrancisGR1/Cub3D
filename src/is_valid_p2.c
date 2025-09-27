@@ -20,14 +20,12 @@ void	validate_and_replace(t_file_data *fdata)
 	size_t	cols;
 	int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS];
 
-	printf("spc?: %d\n", get_map_value(fdata->rows, 1, 0));
 	if (fdata == NULL || fdata->rows == NULL || fdata->parser_error == true)
 	{
 		return ;
 	}
 	if (break_in_map_from_outside(fdata, incubation_arr))
 	{
-		printf("break_in_map_from_outside\n");
 		fdata->parser_error = true;
 		return ;
 	}
@@ -36,7 +34,7 @@ void	validate_and_replace(t_file_data *fdata)
 	while (row < rows)
 	{
 		col = 0;
-		cols = get_map_row_size(fdata->rows, 0);
+		cols = get_map_row_size(fdata->rows, row);
 		while (col < cols)
 		{
 			if (incubation_arr[row + 1][col + 1] == ' ')
@@ -73,7 +71,6 @@ void	substitute_spaces(t_file_data *fdata, t_string *line)
 
 	if (should_extract_textures(fdata) || should_extract_colors(fdata))
 	{
-		printf("TRIMMING\n");
 		str_trim(line);
 	}
 	else
@@ -91,6 +88,7 @@ void	substitute_spaces(t_file_data *fdata, t_string *line)
 	}
 }
 
+//@REFACTOR: remover
 bool	middle_line_valid(t_file_data *fdata, int current_row, int row_size)
 {
 	//int	first_col;

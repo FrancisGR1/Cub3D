@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:18:09 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 19:07:41 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:22:38 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 	line = get_next_line_to_str(fd);
 	while (line != NULL)
 	{
-		printf("LINE: %d\n", i++);
 		substitute_spaces(fdata, line);
 		if (line->size == 0)
 		{
@@ -79,27 +78,21 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	int				value;
 	int				i;
 
-	printf("%s\n", line->data);
 	//@TODO a primeira condição é um assassínio
-	printf("Player position is set: %s", fdata->player_position_is_set ? "YES\n" : "no\n");
 	if ((fdata->player_position_is_set == true && !str_is_only_this(line, digit_or_space))
 			|| get_map_size(fdata->rows) == MAX_ROWS
 			|| line->size > MAX_COLS - 1)
 	{
-		printf("failed protection in efdn\n");
 		return (false);
 	}
 	cols = darr_init(sizeof(int), MAP_INITIAL_COLS);
 	i = -1;
-	printf("%d < %zu\n", i + 1, line->size);
 	while (++i < (int)line->size)
 	{
 		c = str_at(line, i);
-		//printf("evaluating: %d -> %c (%d)\n", c, c, i);
 		if (is_valid_map_num(c) || (is_valid_map_player_pos(c) && fdata->player_position_is_set == false) || c == ' ')
 		{
 			value = map_value_from_char(c);
-			//printf("value: %d\n", value);
 			//@TODO: guardar posição do jogador aqui
 			if (value != 0 && value != 1 && value != ' ')
 				fdata->player_position_is_set = true;
@@ -107,7 +100,6 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 		}
 		else
 		{
-			printf("not valid: %d -> %c (%d)\n", c, c, i);
 			return (darr_free(cols), (false));
 		}
 	}
