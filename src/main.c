@@ -26,8 +26,14 @@ int	main(int argc, char **argv)
 	if (extracted_data == NULL)
 		return (1);
 	extract_file_data(argv[1], extracted_data);
-	printf("2nd phase. Parser error? %d\n", extracted_data->parser_error);
-	check_if_map_nums_are_valid(extracted_data);
+		printf("Parser error at 1st phase: %s", extracted_data->parser_error ? "YES\n" : "no\n");
+	if (extracted_data->parser_error == false)
+	{
+		//@TODO: esta função tem de mudar de nome
+		//não faz o que está a dizer
+		validate_and_replace(extracted_data);
+		printf("Parser error at 2nd phase: %s", extracted_data->parser_error ? "YES\n" : "no\n");
+	}
 	if (extracted_data->parser_error)
 	{
 		ft_fprintf(STDERR, "Error\n");

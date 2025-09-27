@@ -57,3 +57,8 @@ int	get_map_total_cells(t_dynamic_array *map)
 	}
 	return (total_cells);
 }
+
+void	set_map_value(t_dynamic_array *map, int value, int row, int col)
+{
+	((int *)(((t_dynamic_array**)map->data)[row]->data))[col] = value;
+}

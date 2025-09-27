@@ -183,10 +183,11 @@ void				substitute_spaces(t_file_data *fdata, t_string *line);
 bool				is_valid_map_num(char c);
 bool				is_valid_map_player_pos(char c);
 bool				starts_with_texture_id(t_string *line);
-void				check_if_map_nums_are_valid(t_file_data *fdata);
+void	validate_and_replace(t_file_data *fdata);
 bool				middle_line_valid(t_file_data *fdata,\
 					int current_row, int row_size);
-int	break_in_map_from_outside(t_file_data *fdata);
+bool digit_or_space(char c);
+int break_in_map_from_outside(t_file_data *fdata, int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS]);
 
 // validate file
 bool				is_valid_file_path(const char *path);
@@ -284,5 +285,8 @@ int					get_map_value(t_dynamic_array *map, int row, int col);
 int					get_map_size(t_dynamic_array *map);
 int					get_map_row_size(t_dynamic_array *map, int row);
 int					get_map_total_cells(t_dynamic_array *map);
+
+// setters
+void	set_map_value(t_dynamic_array *map, int value, int row, int col);
 
 #endif /*CUB3D_H*/

@@ -22,9 +22,11 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 	t_string	*line;
 
 	fd = open(game_data_path, O_RDONLY);
+	int i = 0;
 	line = get_next_line_to_str(fd);
 	while (line != NULL)
 	{
+		printf("LINE: %d\n", i++);
 		substitute_spaces(fdata, line);
 		if (line->size == 0)
 		{
@@ -34,10 +36,7 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 		else if (should_extract_textures(fdata) || should_extract_colors(fdata))
 			extract_file_data_first_phase(fdata, line);
 		else if (!extract_file_data_nums(fdata, line))
-		{
-			printf("!extract_file_data_nums\n");
 			fdata->parser_error = true;
-		}
 		str_deallocate(line);
 		if (fdata->parser_error)
 			break ;
@@ -80,26 +79,35 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	int				value;
 	int				i;
 
-	if ((fdata->player_position_is_set == true && !str_is_digit(line))
-		|| get_map_size(fdata->rows) == MAX_ROWS
-		|| line->size > MAX_COLS - 1)
+	printf("%s\n", line->data);
+	//@TODO a primeira condição é um assassínio
+	printf("Player position is set: %s", fdata->player_position_is_set ? "YES\n" : "no\n");
+	if ((fdata->player_position_is_set == true && !str_is_only_this(line, digit_or_space))
+			|| get_map_size(fdata->rows) == MAX_ROWS
+			|| line->size > MAX_COLS - 1)
+	{
+		printf("failed protection in efdn\n");
 		return (false);
+	}
 	cols = darr_init(sizeof(int), MAP_INITIAL_COLS);
 	i = -1;
+	printf("%d < %zu\n", i + 1, line->size);
 	while (++i < (int)line->size)
 	{
 		c = str_at(line, i);
-		printf("evaluating: %d\n", c);
+		printf("evaluating: %d -> %c (%d)\n", c, c, i);
 		if (is_valid_map_num(c) || is_valid_map_player_pos(c) || c == ' ')
 		{
 			value = map_value_from_char(c);
 			printf("value: %d\n", value);
+			//@TODO: guardar posição do jogador aqui
 			if (value != 0 && value != 1 && value != ' ')
 				fdata->player_position_is_set = true;
 			darr_append(cols, &value);
 		}
 		else
 		{
+			printf("not valid: %d -> %c (%d)\n", c, c, i);
 			return (darr_free(cols), (false));
 		}
 	}

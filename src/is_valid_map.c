@@ -1,5 +1,12 @@
 #include "cub3d.h"
 
+/*
+ * Isto faz o seguinte:
+ * no arr de incubação:
+ * substitui os ' ' e os 0 por 2
+ * conta o nº de susbtituições (células marcadas)
+ * regista no pointer spaces o nº de espaços encontrados (células marcadas que eram espaços)
+ */
 static int flood_fill(int arr[INCUBATION_ROWS][INCUBATION_COLS], int x, int y, int *spaces)
 {
 	int marked_cells;
@@ -20,11 +27,10 @@ static int flood_fill(int arr[INCUBATION_ROWS][INCUBATION_COLS], int x, int y, i
 	return (marked_cells);
 }
 
-int break_in_map_from_outside(t_file_data *fdata)
+int break_in_map_from_outside(t_file_data *fdata, int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS])
 {
 	//incubar mapa
 	//copiar para array stático
-	int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS];
 	int i = 0;
 	int j;
 	//preencher mapa com -1
@@ -74,7 +80,6 @@ int break_in_map_from_outside(t_file_data *fdata)
 	int marked_cells;
 
 	//calcular nº correto de pontos marcados esperados
-	//@TODO: fazer uma func que calcule isto mais inteligentemente
 	int map_size = get_map_total_cells(fdata->rows);
 	//printf("map size: %d\n", map_size);
 	//int outside_spaces = count_spaces_from_outside_and_mark(incubation_arr, 0, 0);

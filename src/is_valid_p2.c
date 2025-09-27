@@ -12,41 +12,41 @@
 
 #include "cub3d.h"
 
-void	check_if_map_nums_are_valid(t_file_data *fdata)
+void	validate_and_replace(t_file_data *fdata)
 {
 	size_t	row;
-	size_t	row_size;
+	size_t	rows;
 	size_t	col;
+	size_t	cols;
+	int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS];
 
 	printf("spc?: %d\n", get_map_value(fdata->rows, 1, 0));
 	if (fdata == NULL || fdata->rows == NULL || fdata->parser_error == true)
 	{
 		return ;
 	}
-	if (break_in_map_from_outside(fdata))
+	if (break_in_map_from_outside(fdata, incubation_arr))
 	{
 		printf("break_in_map_from_outside\n");
 		fdata->parser_error = true;
 		return ;
 	}
-//	row = 0;
-	//while (!fdata->parser_error && row < fdata->rows->len)
-	//{
-	//	row_size = get_map_row_size(fdata->rows, row);
-	//	if (row == 0 || row == fdata->rows->len - 1)
-	//	{
-	//		col = 0;
-	//		while (!fdata->parser_error && col < row_size)
-	//		{
-	//			if (get_map_value(fdata->rows, row, col) != 1)
-	//				fdata->parser_error = true;
-	//			col++;
-	//		}
-	//	}
-	//	else if (!middle_line_valid(fdata, row, row_size))
-	//		fdata->parser_error = true;
-	//	row++;
-	//}
+	rows = get_map_size(fdata->rows);
+	row = 0;
+	while (row < rows)
+	{
+		col = 0;
+		cols = get_map_row_size(fdata->rows, 0);
+		while (col < cols)
+		{
+			if (incubation_arr[row + 1][col + 1] == ' ')
+				set_map_value(fdata->rows, 0, row, col);
+			col++;
+		}
+		row++;
+	}
+	//agora o mapa é válido,
+	//substituímos os espaços por 0s
 }
 
 bool	is_valid_input(int argc, char **argv)
@@ -66,12 +66,16 @@ bool	is_valid_input(int argc, char **argv)
 	return (true);
 }
 
+//@TODO: isto é um crime de guerra! tem de ser removido o mais depressa possível!
 void	substitute_spaces(t_file_data *fdata, t_string *line)
 {
 	size_t i;
 
 	if (should_extract_textures(fdata) || should_extract_colors(fdata))
+	{
+		printf("TRIMMING\n");
 		str_trim(line);
+	}
 	else
 	{
 		i = 0;
@@ -112,4 +116,9 @@ bool	middle_line_valid(t_file_data *fdata, int current_row, int row_size)
 		start_idx++;
 	}
 	return (true);
+}
+
+bool digit_or_space(char c)
+{
+	return (ft_isdigit(c) || c == ' ');
 }
