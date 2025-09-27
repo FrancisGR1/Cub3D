@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:15 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/23 09:21:12 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:20:17 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	validate_and_replace(t_file_data *fdata)
 	size_t	cols;
 	int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS];
 
-	if (fdata == NULL || fdata->rows == NULL || fdata->parser_error == true)
+	if (fdata == NULL || fdata->rows == NULL || fdata->parser_error)
 	{
 		return ;
 	}
 	if (break_in_map_from_outside(fdata, incubation_arr))
 	{
-		fdata->parser_error = true;
+		fdata->parser_error = MAP_IS_OPEN;
 		return ;
 	}
 	rows = get_map_size(fdata->rows);

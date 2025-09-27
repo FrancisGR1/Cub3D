@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:18:09 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 17:22:38 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:01:55 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 		if (line->size == 0)
 		{
 			if (fdata->rows->len != 0)
-				fdata->parser_error = true;
+				fdata->parser_error = EMPTY_LINE_IN_MAP;
 		}
 		else if (should_extract_textures(fdata) || should_extract_colors(fdata))
 			extract_file_data_first_phase(fdata, line);
 		else if (!extract_file_data_nums(fdata, line))
-			fdata->parser_error = true;
+			fdata->parser_error = INVALID_MAP_CHARACTER;
 		str_deallocate(line);
 		if (fdata->parser_error)
 			break ;
 		line = get_next_line_to_str(fd);
 	}
 	if (fdata->player_position_is_set == false && fdata->parser_error == false)
-		fdata->parser_error = true;
+		fdata->parser_error = MISSING_PLAYER_POSITION;
 	return (close(fd), (fdata));
 }
 
@@ -55,19 +55,19 @@ static void	extract_file_data_first_phase(t_file_data *fdata,
 	split_strs = str_split_using_char_as_delim(line, STRING_WHITESPACE,
 			&split_count);
 	if (split_count != 2)
-		fdata->parser_error = true;
+		fdata->parser_error = MORE_THAN_TWO_LINES;
 	else if (starts_with_texture_id(line))
 	{
 		if (!extract_texture(fdata, split_strs[0], split_strs[1]))
-			fdata->parser_error = true;
+			fdata->parser_error = INVALID_TEXTURE;
 	}
 	else if (is_rgb_id(line))
 	{
 		if (!extract_rgb(fdata, split_strs[0], split_strs[1]))
-			fdata->parser_error = true;
+			fdata->parser_error = INVALID_RGB;
 	}
 	else
-		fdata->parser_error = true;
+		fdata->parser_error = UNKOWN_LINE;
 	str_array_deallocate(split_strs, split_count);
 }
 
@@ -118,7 +118,7 @@ t_file_data	*alloc_init_extracted_data(void)
 	if (fdata_buf->rows == NULL)
 		return (NULL);
 	fdata_buf->player_position_is_set = false;
-	fdata_buf->parser_error = false;
+	fdata_buf->parser_error = 0;
 	fdata_buf->floor = (t_rgb){-1, -1, -1};
 	fdata_buf->ceiling = (t_rgb){-1, -1, -1};
 	i = 0;

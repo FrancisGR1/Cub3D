@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:10:05 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 17:29:27 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:08:20 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,19 @@ enum				e_textures
 	MAX_TEXTURES
 };
 
+enum e_parser_errors
+{
+	MORE_THAN_TWO_LINES = 1,
+	INVALID_TEXTURE,
+	INVALID_RGB,
+	EMPTY_LINE_IN_MAP,
+	INVALID_MAP_CHARACTER,
+	MISSING_PLAYER_POSITION,
+	MAP_IS_OPEN,
+	UNKOWN_LINE,
+	ERRORS
+};
+
 typedef struct s_file_data
 {
 	t_string		*textures[MAX_TEXTURES];
@@ -81,7 +94,7 @@ typedef struct s_file_data
 	t_rgb			ceiling;
 	t_dynamic_array	*rows;
 	bool			player_position_is_set;
-	bool			parser_error;
+	enum e_parser_errors			parser_error;
 }					t_file_data;
 
 typedef struct s_window
@@ -170,11 +183,11 @@ typedef struct s_game
 //
 // data extraction
 t_file_data			*extract_file_data(const char *game_data_path,
-						t_file_data *fdata);
+		t_file_data *fdata);
 //
 // utils
 bool				extract_texture(t_file_data *fdata, t_string *id,
-						t_string *texture_path);
+		t_string *texture_path);
 int					map_value_from_char(char c);
 bool				should_extract_textures(t_file_data *fdata);
 bool				should_extract_colors(t_file_data *fdata);
@@ -187,7 +200,7 @@ bool				is_valid_map_player_pos(char c);
 bool				starts_with_texture_id(t_string *line);
 void	validate_and_replace(t_file_data *fdata);
 bool				middle_line_valid(t_file_data *fdata,\
-					int current_row, int row_size);
+		int current_row, int row_size);
 bool digit_or_space(char c);
 int break_in_map_from_outside(t_file_data *fdata, int incubation_arr[INCUBATION_ROWS][INCUBATION_COLS]);
 
@@ -201,7 +214,7 @@ bool				is_valid_input(int argc, char **argv);
 bool				is_rgb_id(t_string *line);
 bool				rgb_str_is_valid(t_string **colors, int colors_num);
 bool				extract_rgb(t_file_data *fdata, t_string *id,
-						t_string *colors);
+		t_string *colors);
 int					rgb_to_int(t_rgb color);
 //
 // initialization
@@ -231,18 +244,18 @@ t_window			*alloc_init_window(t_arena *game_memory);
 void				render(t_game *game);
 void				pixel_put(t_window *win, int x, int y, int color);
 t_draw				*alloc_draw_info(t_arena *game_memory,
-						t_file_data *extracted_data);
+		t_file_data *extracted_data);
 void				set_draw_info(t_draw *d, t_ray *ray, t_player *player,
-						t_texture texture[MAX_TEXTURES]);
+		t_texture texture[MAX_TEXTURES]);
 void				draw_vertical_line(t_game *game, t_draw *d, int screen_x);
 //
 // textures
 bool				load_textures(t_game *game);
 void				cleanup_textures(t_window *win,
-						t_texture textures[MAX_TEXTURES]);
+		t_texture textures[MAX_TEXTURES]);
 int					get_pixel_from_texture(t_texture *tex, int x, int y);
 t_texture			*get_wall_texture(t_ray *ray,
-						t_texture texture[MAX_TEXTURES]);
+		t_texture texture[MAX_TEXTURES]);
 
 // ======
 // Player
@@ -274,7 +287,7 @@ int					key_release(int keycode, t_game *game);
 //
 // minimap
 void				draw_square(t_window *win, int start_x, int start_y,
-						int color);
+		int color);
 void				draw_minimap(t_game *game);
 
 // =====

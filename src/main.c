@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:09:56 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 17:17:59 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:20:49 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ int	main(int argc, char **argv)
 
 	if (!is_valid_input(argc, argv))
 	{
-		ft_fprintf(STDERR, "Error\n");
+		ft_fprintf(STDERR, "Error: Invalid Input\n");
 		return (1);
 	}
 	extracted_data = alloc_init_extracted_data();
-	if (extracted_data == NULL)
-		return (1);
 	extract_file_data(argv[1], extracted_data);
 	//printf("before:\n");
 	//LOG_DEBUG_JAGGED_MAP_NUMS(extracted_data);

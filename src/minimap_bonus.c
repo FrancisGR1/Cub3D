@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:12:58 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/16 10:44:36 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:27:46 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void	draw_minimap(t_game *game)
 	if (!BONUS)
 		return ;
 	y = 0;
-	while (game->map[y][0] != -1)
+	while (game->map[y][0] != -1 && y < MAX_ROWS)
 	{
 		x = 0;
-		while (game->map[y][x] != -1)
+		while (game->map[y][x] != -1 && x < MAX_COLS)
 		{
 			if (game->map[y][x] == 1)
 				color = MINIMAP_WALL_TILE_COLOR;
