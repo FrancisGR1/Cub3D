@@ -1,9 +1,9 @@
-NO assets/textures/bricks.xpm
-SO assets/textures/bricks.xpm
-WE assets/textures/bricks.xpm
-EA assets/textures/bricks.xpm
-F 220,100,0
-C 225,30,0
+NO assets/textures/wall_n.xpm
+SO assets/textures/wall_s.xpm
+WE assets/textures/wall_w.xpm
+EA assets/textures/wall_e.xpm
+F 59,59,59
+C 135,206,235
          111111111  111111111111111111
          100000001  100000000000000001
          10110000111100000001111111111
