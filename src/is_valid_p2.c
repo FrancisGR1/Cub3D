@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:15 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/28 10:44:23 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 11:58:37 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	digit_or_space(char c)
 void	print_error(enum e_parser_errors e)
 {
 	if (e == MORE_THAN_TWO_LINES)
-		ft_fprintf(STDERR, "Error: more than 2 split strings\n");
+		ft_fprintf(STDERR, "Error: not 2 split strings\n");
 	else if (e == INVALID_TEXTURE)
 		ft_fprintf(STDERR, "Error: invalid texture\n");
 	else if (e == INVALID_RGB)

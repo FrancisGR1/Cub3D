@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 15:07:02 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 17:52:53 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 11:14:24 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ bool	should_extract_textures(t_file_data *fdata)
 
 bool	should_extract_map_nums(t_file_data *fdata, t_string *line)
 {
-	return ((fdata->player_position_is_set == true
+	return (!((fdata->player_position_is_set == true
 			&& !str_is_only_this(line, digit_or_space))
 		|| get_map_size(fdata->rows) == MAX_ROWS
-		|| line->size > MAX_COLS - 1);
+		|| line->size > MAX_COLS - 1));
 }
