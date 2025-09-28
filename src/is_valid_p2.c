@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:15 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 18:20:17 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 19:20:52 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,24 @@ bool	middle_line_valid(t_file_data *fdata, int current_row, int row_size)
 bool digit_or_space(char c)
 {
 	return (ft_isdigit(c) || c == ' ');
+}
+
+void print_error(enum e_parser_errors e)
+{
+	if (e == MORE_THAN_TWO_LINES)
+		ft_fprintf(STDERR, "Error: more than 2 split strings\n");
+	else if (e == INVALID_TEXTURE)
+		ft_fprintf(STDERR, "Error: invalid texture\n");
+	else if (e == INVALID_RGB)
+		ft_fprintf(STDERR, "Error: invalid rgb\n");
+	else if (e == EMPTY_LINE_IN_MAP)
+		ft_fprintf(STDERR, "Error: found an empty line while parsing the map\n");
+	else if (e == INVALID_MAP_CHARACTER)
+		ft_fprintf(STDERR, "Error: unknown map character\n");
+	else if (e == MISSING_PLAYER_POSITION)
+		ft_fprintf(STDERR, "Error: no player position\n");
+	else if (e == MAP_IS_OPEN)
+		ft_fprintf(STDERR, "Error: map is not surrounded by walls\n");
+	else
+		ft_fprintf(STDERR, "Error: wrong data\n");
 }

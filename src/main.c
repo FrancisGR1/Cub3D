@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:09:56 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 18:20:49 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 19:27:06 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	if (!is_valid_input(argc, argv))
 	{
-		ft_fprintf(STDERR, "Error: Invalid Input\n");
+		ft_fprintf(STDERR, "Error: Invalid Input: ./Cub3D <file>.cub\n");
 		return (1);
 	}
 	extracted_data = alloc_init_extracted_data();
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	}
 	if (extracted_data->parser_error)
 	{
-		ft_fprintf(STDERR, "Error\n");
+		print_error(extracted_data->parser_error);
 		cleanup_extracted_data(extracted_data);
 		return (1);
 	}

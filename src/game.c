@@ -27,7 +27,10 @@ t_game	*alloc_init_game(t_file_data *map)
 	game->ray = alloc_ray(game->game_memory);
 	normalize_jagged_map(game, map);
 	if (!load_textures(game))
+	{
+		ft_fprintf(STDERR, "Error: Faulty texture\n");
 		end_game(game);
+	}
 	return (game);
 }
 

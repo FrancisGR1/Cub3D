@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:10:05 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 18:08:20 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/27 19:05:53 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int					map_value_from_char(char c);
 bool				should_extract_textures(t_file_data *fdata);
 bool				should_extract_colors(t_file_data *fdata);
 void				substitute_spaces(t_file_data *fdata, t_string *line);
+void print_error(enum e_parser_errors e);
 
 //
 // validate map data

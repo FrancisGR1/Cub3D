@@ -1,7 +1,7 @@
 
 
 
-- [ ] erros explícitos
+- [x] erros explícitos
 - [ ] limpar código morto
 - [ ] norminette
 - [ ] se passar das 100 linhas está a dar crash
