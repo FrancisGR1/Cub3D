@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
+/*   By: luiz-dos <luiz-dos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:10:05 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/28 13:10:24 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 16:30:46 by luiz-dos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@
 
 //@WARNING: INCUBATION is MAX + 2
 # define MAX_ROWS 100
-//@TODO: MUDAR ISTO
+
 # define INCUBATION_ROWS 102
 # define MAX_COLS 100
 # define INCUBATION_COLS 102
 
 # define ROW_END -1
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 
 # define MINIMAP_SCALE 10
 # define MINIMAP_PLAYER_SCALE 3
@@ -54,8 +54,7 @@
 # define TEXTURE_EXTENSION ".xpm"
 # define MAP_DATA_EXTENSION ".cub"
 
-//@NOTE: 60º degrees in radians
-# define DEFAULT_FOV 1.04719755
+# define FOV 0.66
 
 typedef struct s_rgb
 {
@@ -128,7 +127,6 @@ typedef struct s_player
 	double					move_speed;
 	double					rot_speed;
 	double					collision_buffer;
-	double					fov;
 	bool					move_up;
 	bool					move_down;
 	bool					move_left;

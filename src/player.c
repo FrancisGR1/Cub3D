@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
+/*   By: luiz-dos <luiz-dos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:09:26 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/15 19:09:26 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 16:31:02 by luiz-dos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ t_player	*alloc_init_player(t_arena *game_memory)
 	p->pos = make_vec2d(0, 0);
 	p->dir = make_vec2d(0, 0);
 	p->plane = make_vec2d(0, 0);
-	p->fov = DEFAULT_FOV;
-	p->move_speed = 0.3;
-	p->rot_speed = 0.1;
+	p->move_speed = 0.020;
+	p->rot_speed = 0.012;
 	p->collision_buffer = 0.1;
 	p->move_up = false;
 	p->move_down = false;
@@ -43,21 +42,21 @@ void	set_player_direction(t_player *player, size_t direction)
 	if (direction == 'N')
 	{
 		player->dir = make_vec2d(0.0, -1.0);
-		player->plane = make_vec2d(0.66, 0.0);
+		player->plane = make_vec2d(FOV, 0.0);
 	}
 	else if (direction == 'S')
 	{
 		player->dir = make_vec2d(0.0, 1.0);
-		player->plane = make_vec2d(-0.66, 0.0);
+		player->plane = make_vec2d(-FOV, 0.0);
 	}
 	else if (direction == 'E')
 	{
 		player->dir = make_vec2d(1.0, 0.0);
-		player->plane = make_vec2d(0.0, 0.66);
+		player->plane = make_vec2d(0.0, FOV);
 	}
 	else if (direction == 'W')
 	{
 		player->dir = make_vec2d(-1.0, 0.0);
-		player->plane = make_vec2d(0.0, -0.66);
+		player->plane = make_vec2d(0.0, -FOV);
 	}
 }
