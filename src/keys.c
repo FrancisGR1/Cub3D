@@ -28,6 +28,13 @@ int	key_press(int keycode, t_game *game)
 		game->player->rot_left = true;
 	if (keycode == XK_Right)
 		game->player->rot_right = true;
+	if (keycode == XK_m)
+	{
+		if (game->show_minimap == false)
+			game->show_minimap = true;
+		else
+			game->show_minimap = false;
+	}
 	return (0);
 }
 

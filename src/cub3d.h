@@ -175,6 +175,7 @@ typedef struct s_game
 	t_texture		textures[MAX_TEXTURES];
 	t_player		*player;
 	t_ray			*ray;
+	bool			show_minimap;
 }					t_game;
 
 // ===============

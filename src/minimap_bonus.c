@@ -62,7 +62,7 @@ void	draw_minimap(t_game *game)
 	int				x;
 	unsigned int	color;
 
-	if (!BONUS)
+	if (!BONUS && game->show_minimap == false)
 		return ;
 	y = 0;
 	while (game->map[y][0] != -1 && y < MAX_ROWS)
