@@ -24,9 +24,9 @@ endif
 SRC_FILES = \
 	    data_extraction.c \
 	    data_extraction_utils.c \
-	    debug.c \
 	    draw_utils.c \
 	    draw_vertical.c \
+	    dynamic_array_to_fixed_array.c \
 	    game.c \
 	    game_loop.c \
 	    getters.c \
@@ -36,7 +36,6 @@ SRC_FILES = \
 	    keys.c \
 	    main.c \
 	    minimap_bonus.c \
-	    normalize_map.c \
 	    player.c \
 	    raycast.c \
 	    render.c \
@@ -134,23 +133,22 @@ bonus:
 	rm -rf $(OBJ_DIR)
 	$(MAKE) all BONUS=1
 
-.PHONY: tests
-tests:
-	cd tests/ && ./test_extraction.sh && ./test_extraction.out && cd ..
-	cd tests/ && ./test_errors.sh
-
 fast: clean $(NAME)
 
-leaks: $(NAME)
-	valgrind --suppressions=val.supp --track-origins=yes --show-leak-kinds=all --leak-check=full ./$(NAME) $(TEST_MAP)
 
-norm:
-	@norminette $(SRC_DIR) | grep -E "(Error|Warning)" || echo "$(GREEN)Norminette OK!$(RESET)"
+# go grab the assets and the test script
+REPO_URL = https://github.com/FrancisGR1/Cub3D.git
+TMP_DIR = ../tmp_repo
+ASSETS_DIR = assets
+TEST_SCRIPT = test_errors.sh
+TESTS_DIR = tests
 
-# quick test runs
-test:
-	./$(NAME) $(TEST_MAP)
-
-debug: CFLAGS += -fsanitize=address -fsanitize=undefined -g3
-debug: OPTIMIZE = -00
-debug: re
+.PHONY: tests
+tests:
+	git clone $(REPO_URL) $(TMP_DIR); \
+	mv $(TMP_DIR)/assets ./; \
+	mkdir -p $(TESTS_DIR); \
+	mv $(TMP_DIR)/tests/$(TEST_SCRIPT) $(TESTS_DIR)/; \
+	chmod +x $(TESTS_DIR)/$(TEST_SCRIPT); \
+	rm -rf $(TMP_DIR); \
+	cd $(TESTS_DIR) && ./$(TEST_SCRIPT)
