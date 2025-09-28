@@ -24,14 +24,7 @@ int	main(int argc, char **argv)
 	}
 	extracted_data = alloc_init_extracted_data();
 	extract_file_data(argv[1], extracted_data);
-	//printf("before:\n");
-	//LOG_DEBUG_JAGGED_MAP_NUMS(extracted_data);
-	if (extracted_data->parser_error == false)
-	{
-		//@TODO: esta função tem de mudar de nome
-		//não faz o que está a dizer
-		validate_and_replace(extracted_data);
-	}
+	validate_and_replace(extracted_data);
 	if (extracted_data->parser_error)
 	{
 		print_error(extracted_data->parser_error);

@@ -88,9 +88,6 @@ static int	count_comas(t_string *colors)
 	return (comas);
 }
 
-//10101010101
-//10111010111
-//1011
 int	rgb_to_int(t_rgb color)
 {
 	return ((color.r << 16) | (color.g << 8) | color.b);

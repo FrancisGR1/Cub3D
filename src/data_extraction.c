@@ -6,14 +6,13 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:18:09 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/27 18:58:28 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 10:44:35 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	extract_file_data_first_phase(t_file_data *fdata,
-				t_string *line);
+static void	extract_file_data_first_phase(t_file_data *fdata, t_string *line);
 static bool	extract_file_data_nums(t_file_data *fdata, t_string *line);
 
 t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
@@ -22,7 +21,6 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 	t_string	*line;
 
 	fd = open(game_data_path, O_RDONLY);
-	int i = 0;
 	line = get_next_line_to_str(fd);
 	while (line != NULL)
 	{
@@ -46,8 +44,7 @@ t_file_data	*extract_file_data(const char *game_data_path, t_file_data *fdata)
 	return (close(fd), (fdata));
 }
 
-static void	extract_file_data_first_phase(t_file_data *fdata,
-		t_string *line)
+static void	extract_file_data_first_phase(t_file_data *fdata, t_string *line)
 {
 	int			split_count;
 	t_string	**split_strs;
@@ -71,6 +68,7 @@ static void	extract_file_data_first_phase(t_file_data *fdata,
 	str_array_deallocate(split_strs, split_count);
 }
 
+//@TODO: a posição/direção do jogador devia ser guardada aqui
 static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 {
 	t_dynamic_array	*cols;
@@ -78,30 +76,23 @@ static bool	extract_file_data_nums(t_file_data *fdata, t_string *line)
 	int				value;
 	int				i;
 
-	//@TODO a primeira condição é um assassínio
-	if ((fdata->player_position_is_set == true && !str_is_only_this(line, digit_or_space))
-			|| get_map_size(fdata->rows) == MAX_ROWS
-			|| line->size > MAX_COLS - 1)
-	{
+	if (!should_extract_map_nums(fdata, line))
 		return (false);
-	}
 	cols = darr_init(sizeof(int), MAP_INITIAL_COLS);
 	i = -1;
 	while (++i < (int)line->size)
 	{
 		c = str_at(line, i);
-		if (is_valid_map_num(c) || (is_valid_map_player_pos(c) && fdata->player_position_is_set == false) || c == ' ')
+		if (is_valid_map_num(c) || (is_valid_map_player_pos(c)
+				&& fdata->player_position_is_set == false) || c == ' ')
 		{
 			value = map_value_from_char(c);
-			//@TODO: guardar posição do jogador aqui
 			if (value != 0 && value != 1 && value != ' ')
 				fdata->player_position_is_set = true;
 			darr_append(cols, &value);
 		}
 		else
-		{
 			return (darr_free(cols), (false));
-		}
 	}
 	return (darr_append(fdata->rows, &cols), (true));
 }

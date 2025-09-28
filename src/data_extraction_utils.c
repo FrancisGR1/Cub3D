@@ -85,3 +85,11 @@ bool	should_extract_textures(t_file_data *fdata)
 	}
 	return (false);
 }
+
+bool	should_extract_map_nums(t_file_data *fdata, t_string *line)
+{
+	return ((fdata->player_position_is_set == true
+			&& !str_is_only_this(line, digit_or_space))
+		|| get_map_size(fdata->rows) == MAX_ROWS
+		|| line->size > MAX_COLS - 1);
+}

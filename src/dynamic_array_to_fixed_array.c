@@ -13,10 +13,10 @@
 #include "cub3d.h"
 
 static int	get_largest_row(t_dynamic_array *jmap);
-static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
-				int rows);
+static void	dynamic_array_to_fixed_array_inner_loop(t_game *game, int *row,\
+		int *col, int rows);
 
-void	normalize_jagged_map(t_game *game, t_file_data *map)
+void	dynamic_array_to_fixed_array(t_game *game, t_file_data *map)
 {
 	int	largest_row;
 	int	rows;
@@ -27,7 +27,7 @@ void	normalize_jagged_map(t_game *game, t_file_data *map)
 	rows = get_map_size(map->rows);
 	row = 0;
 	largest_row = get_largest_row(map->rows);
-	normalize_jagged_map_inner_loop(game, &row, &col, rows);
+	dynamic_array_to_fixed_array_inner_loop(game, &row, &col, rows);
 	if (row < MAX_ROWS)
 	{
 		col = 0;
@@ -59,8 +59,8 @@ static int	get_largest_row(t_dynamic_array *jmap_rows)
 	return (largest_row);
 }
 
-static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
-		int rows)
+static void	dynamic_array_to_fixed_array_inner_loop(t_game *game, int *row,\
+		int *col, int rows)
 {
 	int	row_size;
 
@@ -72,7 +72,8 @@ static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
 		{
 			game->map[*row][*col] = get_map_value(game->extracted_data->rows,
 					*row, *col);
-			if (game->map[*row][*col] != 0 && game->map[*row][*col] != 1 && game->map[*row][*col] != 32)
+			if (game->map[*row][*col] != 0 && game->map[*row][*col] != 1
+					&& game->map[*row][*col] != 32)
 			{
 				set_player_position(game->player, *col, *row);
 				set_player_direction(game->player, game->map[*row][*col]);
@@ -80,8 +81,6 @@ static void	normalize_jagged_map_inner_loop(t_game *game, int *row, int *col,
 			}
 			(*col)++;
 		}
-		//while (*col < get_largest_row(game->extracted_data->rows))
-		//	game->map[*row][(*col)++] = 1;
 		if (*col < MAX_COLS)
 			game->map[*row][*col] = ROW_END;
 		(*row)++;

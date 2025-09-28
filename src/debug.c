@@ -13,6 +13,7 @@
 #include "cub3d.h"
 
 //@TODO: transformar estas funcs em macros!
+//@REFACTOR: eliminar para avaliação
 void LOG_DEBUG_JAGGED_MAP_NUMS(t_file_data *map)
 {
 	for (size_t i = 0; i < map->rows->len; i++)

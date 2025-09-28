@@ -26,7 +26,7 @@ t_game	*alloc_init_game(t_file_data *map)
 	game->draw_info = alloc_draw_info(game->game_memory, map);
 	game->show_minimap = false;
 	game->ray = alloc_ray(game->game_memory);
-	normalize_jagged_map(game, map);
+	dynamic_array_to_fixed_array(game, map);
 	if (!load_textures(game))
 	{
 		ft_fprintf(STDERR, "Error: Faulty texture\n");

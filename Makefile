@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = #-Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra #-g
 OPTIMIZE = -O3
 
 # directories
@@ -22,16 +22,16 @@ endif
 
 # sources
 SRC_FILES = \
-	    accessors.c \
 	    data_extraction.c \
 	    data_extraction_utils.c \
 	    debug.c \
 	    draw_utils.c \
 	    draw_vertical.c \
-	    game_loop.c \
 	    game.c \
-	    is_valid_map.c \
+	    game_loop.c \
+	    getters.c \
 	    is_valid.c \
+	    is_valid_map.c \
 	    is_valid_p2.c \
 	    keys.c \
 	    main.c \
@@ -41,6 +41,7 @@ SRC_FILES = \
 	    raycast.c \
 	    render.c \
 	    rgb.c \
+	    setters.c \
 	    textures.c \
 	    update.c \
 	    vector.c \

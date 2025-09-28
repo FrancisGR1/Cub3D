@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:33:54 by frmiguel          #+#    #+#             */
-/*   Updated: 2025/09/13 17:33:54 by frmiguel         ###   ########.fr       */
+/*   Updated: 2025/09/28 10:44:05 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,14 @@ int	get_map_row_size(t_dynamic_array *map, int row)
 
 int	get_map_total_cells(t_dynamic_array *map)
 {
-	int i;
-	int j;
-	int rows;
-	int cols;
-	int total_cells;
-	
+	int	i;
+	int	j;
+	int	rows;
+	int	cols;
+	int	total_cells;
+
 	i = 0;
 	rows = get_map_size(map);
-	//printf("rows: %d\n", rows);
 	total_cells = 0;
 	while (i < rows)
 	{
@@ -56,9 +55,4 @@ int	get_map_total_cells(t_dynamic_array *map)
 		i++;
 	}
 	return (total_cells);
-}
-
-void	set_map_value(t_dynamic_array *map, int value, int row, int col)
-{
-	((int *)(((t_dynamic_array**)map->data)[row]->data))[col] = value;
 }
